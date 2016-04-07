@@ -1,0 +1,13 @@
+language: python
+branches:
+  only:
+  - master
+install:
+- pip install pelican 
+- pip install ghp-import
+- pip install pelican_gist
+script:
+- make publish github
+env:
+  global:
+    secure: GkY75D+wAZRiMfdzgcQkeJKIvUQqwYyZezO6BXieMRoUaRO/9mVkWGuZwH3qiahcZke64dUm0ccUBSEky/r40HoRIeZPE72z53Rne6fST8PjRDwDJ8xNdYYJ4fuvTb+A1H7eeKPztxEZNdYzCcvkmLHEfPrIqLM/txcuVqyZe2OJgNJN1oZWVzTvPrbwtLQdu2YFL+KaWXho7Uo2pXlbNSGly8Y/rnUfsGJuI4sL5VKYcQS3QuJYSw+mMi3AphdJLKRAr3cri9YK8TWOODmqdNVC70qAD5PlJXz/1RzsDtl0p16/QF47ci3iwZ7bXSNqaF1wln45OKnliG3GanZ/cMQILz17G8KZfMz03MRqMXHvJyygsvmU2ycuyThbPNyBcmH40NsYYKMibV8pfYVMBgzMK+XCyFr9iP9d+REooylCc7es/4e4oAdyKBLCehmjeZw17YRQoWLPdiowYgykYfjqfOlAkhIu2NhePpSyLbzWrFnLiKqXHKyT93Qg/83n2rLN+DjZYnc33X+6kKlT5viucC58X+vixyeLukqR1h07bg4X1CdD3ENd066RpPnbFM82OMBZMjw0p3X7HrT4j1f1TFrqLzEj8o5felXD+VsgoPUlOM4ryeP+ZuVCfl1vJX4iv/C8mchpGvfWZGOzx/bCriGwqcH8ackfYp2Ch+Q=
