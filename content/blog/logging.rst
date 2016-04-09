@@ -6,7 +6,7 @@ Http and websockets logging handlers
 :category: blog
 :slug: http-websockets-logging-handlers
 :summary: Quick introduction to HTTP and Websockets logging handlers.
-:header_cover: /images/covers/logs.jpg
+:header_cover: /images/covers/log.jpg
 
 **Hello, this posts will be about 3 specific logging handlers:
 HTTPHandler, SocketHandler and DatagramHandler.**
@@ -231,4 +231,4 @@ Updates
 
 -  23.01.16 Thanks to RooTer answer I added UDP log handler
 
-Cover image by `liz west <https://www.flickr.com/photos/calliope/>`_ under `CC BY 2.0 <https://creativecommons.org/licenses/by/2.0/>`_.
+Cover image by `Quinn Dombrowski <https://www.flickr.com/photos/quinnanya/>`_ under `CC BY 2.0 <https://creativecommons.org/licenses/by/2.0/>`_.

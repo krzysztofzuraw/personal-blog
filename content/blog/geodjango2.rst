@@ -6,7 +6,7 @@ GeoDjango and Leaflet.js- part two
 :category: blog
 :slug: geodjango-leaflet-part-two
 :summary: How to setup basic GeoDjango application second part.
-:header_cover: /images/covers/map_small.jpg
+:header_cover: /images/covers/geodjango.jpg
 
 **This is the second post from GeoDjango i Leaflet.js series.
 You can find the previous post under this** `link <{filename}/blog/geodjango1.rst>`_.
@@ -271,6 +271,6 @@ web page, django will get results from cache.
 
 That's all: you have working GeoDjango application. The github repo is
 under this
-`link <https://github.com/krzysztofzuraw/blog-geodjango-leaflet>`__
+`link <https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_geodjango_leaflet>`__
 
 Cover image present `1570 Abraham Ortelius <https://en.wikipedia.org/wiki/File:OrteliusWorldMap1570.jpg>`_ map.

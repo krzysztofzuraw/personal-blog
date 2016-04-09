@@ -271,7 +271,7 @@ Then running server and going to `/search` will be shown as follows:
     </video>
 
 And that's all. We got working search! You can find the repo on
-`github <https://github.com/krzysztofzuraw/blog-haystack-elasticsearch>`__.
+`github <https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_haystack>`__.
 If you feel that this post was valuable please comment or send me email.
 Thanks!
 

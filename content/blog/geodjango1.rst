@@ -6,7 +6,7 @@ GeoDjango and Leaflet.js- part one
 :category: blog
 :slug: geodjango-leaflet-part-one
 :summary: How to setup basic GeoDjango application first part.
-:header_cover: /images/covers/map_small.jpg
+:header_cover: /images/covers/geodjango.jpg
 
 **Today is the day, when I will start my blog. I would like to publish new posts once a week.**
 **The comments and feedback will be pretty much appreciated as I have just started blogging in English.**

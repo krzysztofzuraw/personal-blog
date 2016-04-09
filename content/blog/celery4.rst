@@ -130,6 +130,6 @@ solution to this? I'm really keen to hear about your view on this issue
 or other comments so feel free to write comments or send me an email!
 Thanks to all people who give me feedback- I really appreciate this!
 Code for this series can be found on
-`github <https://github.com/krzysztofzuraw/blog-celery-rabbit>`__.
+`github <https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_celery_rabbit>`__.
 
 Cover image that presents queue by `Aykapog <https://pixabay.com/pl/users/aykapog-185475/>`_ under `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.

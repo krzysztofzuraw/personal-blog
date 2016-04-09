@@ -1,5 +1,5 @@
 Django + Celery & Rabbit - part one
-###########################################
+###################################
 
 :date: 2016-02-26 10:20
 :tags: django, celery, rabbit

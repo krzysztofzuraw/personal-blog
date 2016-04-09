@@ -27,7 +27,8 @@ MENUITEMS = (('Archive', '/archives.html'),
 
 RELATIVE_URLS = False
 PLUGINS = ['pelican_gist']
-DISQUS_SITENAME = 'krzysztofzurawblog'
+DISQUS_SITENAME = 'krzysztofzuraw'
+GOOGLE_ANALYTICS = 'UA-72188452-2'
 HEADER_COVER = 'theme/images/codes.jpg'
 ARTICLE_PATHS = ['blog']
 ARTICLE_SAVE_AS = 'blog/{date:%Y}/{slug}.html'
