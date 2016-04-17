@@ -29,9 +29,13 @@ What is exactly this workshop about? In about 7 hours my task was to present bas
 that it sounds a little bit overwhelmed but I believe that is a nice start to have. 
 
 So what is exactly on agenda?
+
 * loops, data types, declaration of functions, module importing, common operations on data, debugging
+
 * list/dict comprehensions, generators and iterators
+
 * pep8, pylint, unittests
+
 * writing algorithm
 
 As you can see almost all necessary topics are covered. What I really enjoyed was questions from
