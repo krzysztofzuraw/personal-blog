@@ -67,4 +67,25 @@ After some investigation, I found out that positional arguments are processed be
 keyword ones. So, in this case, unpacking tuple will assign ``13`` to ``a``. More on this
 can be found in `PEP 3102 <https://www.python.org/dev/peps/pep-3102/>`_.
 
+Update 18.04.16
+---------------
+
+I almost forget to include source code from this workshop. You can find code and presentation
+under this github `repo <https://github.com/stxnext/php-sources>`_.
+
+What is more, below I present my solutions for tasks that were on PHP.
+
+Solutions for part one:
+
+[gist:id=cf8a693325dfb9a1202d2511d7287aee]
+
+Part two:
+
+[gist:id=3387cba2b3a7a65ee6c4b1c39db4181b]
+
+Last part:
+
+[gist:id=d19f9191964d6cabf6c718ed83b144f3]
+
+
 Cover picture by `Petar Milošević <petarmslo@gmail.com>`_ under `CC BY-SA 4.0 <http://creativecommons.org/licenses/by-sa/4.0/>`_.
