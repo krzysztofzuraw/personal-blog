@@ -172,11 +172,15 @@ So running our TCP server and sending log looks like this:
 
 Full gist with socket logger looks like this:
 
-[gist:id=dea92aad16cd157e5ea6]
+.. raw:: html
+
+   <script src="https://gist.github.com/krzysztofzuraw/dea92aad16cd157e5ea6.js"></script>
 
 And with socket sender:
 
-[gist:id=8d7684664ba16fc43b6c]
+.. raw:: html
+
+  <script src="https://gist.github.com/krzysztofzuraw/8d7684664ba16fc43b6c.js"></script>
 
 DatagramHandler
 ===============
@@ -209,7 +213,9 @@ contain length of dumped object.
 
 So the full upd_server looks as follows:
 
-[gist:id=24e21feeadaff88ae6f5]
+.. raw:: html
+
+   <script src="https://gist.github.com/krzysztofzuraw/24e21feeadaff88ae6f5.js"></script>
 
 Which works like this:
 

@@ -77,15 +77,20 @@ What is more, below I present my solutions for tasks that were on PHP.
 
 Solutions for part one:
 
-[gist:id=cf8a693325dfb9a1202d2511d7287aee]
+.. raw:: html
+
+   <script src="https://gist.github.com/krzysztofzuraw/cf8a693325dfb9a1202d2511d7287aee.js"></script>
 
 Part two:
 
-[gist:id=3387cba2b3a7a65ee6c4b1c39db4181b]
+.. raw:: html
+
+   <script src="https://gist.github.com/krzysztofzuraw/3387cba2b3a7a65ee6c4b1c39db4181b.js"></script>
 
 Last part:
 
-[gist:id=d19f9191964d6cabf6c718ed83b144f3]
+.. raw:: html
 
+   <script src="https://gist.github.com/krzysztofzuraw/d19f9191964d6cabf6c718ed83b144f3.js"></script>         
 
 Cover picture by `Petar Milošević <petarmslo@gmail.com>`_ under `CC BY-SA 4.0 <http://creativecommons.org/licenses/by-sa/4.0/>`_.

@@ -26,7 +26,6 @@ MENUITEMS = (('Archive', '/archives.html'),
              ('Feeds', '/feeds/all.atom.xml'))
 
 RELATIVE_URLS = False
-PLUGINS = ['pelican_gist']
 DISQUS_SITENAME = 'krzysztofzuraw'
 GOOGLE_ANALYTICS = 'UA-72188452-2'
 HEADER_COVER = 'theme/images/codes.jpg'
