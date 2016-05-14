@@ -3,7 +3,7 @@ About
 
 :slug: about
 :category: page
-:header_cover: /theme/images/about-bg.jpg
+:header_cover: /images/covers/author.jpg
 
 
 Welcome!
