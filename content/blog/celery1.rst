@@ -130,23 +130,23 @@ The transcoder need file to transcode so I created a model, form and view for mp
     from django.db import models
 
 
-    def md5_directory_path(instance, filename):
+    def unique_file_path(instance, filename):
         new_file_name = uuid.uuid4()
         return str(new_file_name)
 
     class AudioFile(models.Model):
         name = models.CharField(max_length=100, blank=True)
-        mp3_file = models.FileField(upload_to=md5_directory_path)
-        ogg_file = models.FileField(blank=True, upload_to=md5_directory_path)
-        wav_file = models.FileField(blank=True, upload_to=md5_directory_path)
-        ac3_file = models.FileField(blank=True, upload_to=md5_directory_path)
+        mp3_file = models.FileField(upload_to=unique_file_path)
+        ogg_file = models.FileField(blank=True, upload_to=unique_file_path)
+        wav_file = models.FileField(blank=True, upload_to=unique_file_path)
+        ac3_file = models.FileField(blank=True, upload_to=unique_file_path)
 
         def __str__(self):
             return self.name
 
 To avoid filename duplication of uploaded files I changed their names to
 be unique. the ``upload_to`` argument takes function
-``md5_directory_path`` which will generate unique name. This function
+``unique_file_path`` which will generate unique name. This function
 has to take 2 arguments: ``instance`` and ``filename``.
 
 ``audio_transcoder/forms.py``:
