@@ -12,7 +12,7 @@ Ports and Adapters in python - part one
 django application.**
 
 Let me explain a little bit what exactly ports and adapters design pattern is. According to this
-`article <http://a.cockburn.us/1807>`_ (which by the way I strongly recommend to read it) it is a
+`article <http://a.cockburn.us/1807>`_ (which by the way I strongly recommend to read) it is a
 way to separate business logic from user code.
 
 What I mean by that? Let pretend that you want to create simple django application which connects to reddit
@@ -27,7 +27,7 @@ case you just add DuckDuckGo Adapter and you are all set. Because port don't car
 adapter as long as it provides necessary methods. As I mentioned before, port is communicating only with adapters.
 And what is adapter? It is part of code designed only for calling in this case Reddit API and passing results.
 To test port you need fake adapter with all methods that original has.
-But how you test adapter? You will have to write implementation tests.
+But how you test adapter? You will have to write integration tests.
 
 Such design pattern is also called hexagonal architecture.
 
@@ -49,13 +49,12 @@ File ``external_api_ports.py``:
        def __init__(self, adapter):
            self.adapter = adapter
 
-       def search(self, query, subreddit=None):
-           raw_results = self.adapter.search(query, subreddit)
-           for result in raw_results['data']['children']:
-               yield result['data']['title']
+       def search(self, query, *args, **kwargs):
+           return self.adapter.search(query, *args, **kwargs)
 
-As you can see port takes adapter in ``__init__``. Then in ``search`` it uses adapter method for searching and processing
-the results. I only needed the title of a post that comes from search so I generate them using generator expression.
+As you can see port takes adapter in ``__init__``. Then in ``search`` it uses adapter method for searching and passing results.
+I only needed the title of a post that comes from search so I generate them using generator expression. Moreover here we have
+*contract* that tell us that adapter has to have such method as ``search`` that uses query arguments (at least).
 
 And how adapter look like?
 
@@ -115,6 +114,12 @@ And how adapter look like?
             )
             return response.json()
 
+            search_result = []
+            for result in raw_response['data']['children']:
+                search_result.append(result['data']['title'])
+            
+            return search_result
+        
 What is happening here? Start from ``init`` (line 6) which takes ``reddit_client_id`` and ``reddit_client_secret``
 arguments. There are created by going to apps tab under preferences:
 
@@ -139,6 +144,7 @@ After initialization, there is method called ``authorize`` (line 16) which takes
 
 Lastly, there is ``search`` (line 35) which retrieves JSON response from reddit API from given subreddit or globally from
 all subreddits.
+
 
 So how to test it?
 
@@ -221,7 +227,11 @@ First by creating ``FakeRedditAdapter``:
            return 'oauth2-authorized-key'
 
        def search(self, query, subreddit=None):
-           return REDDIT_RESPONSE
+           search_result = []
+           for result in REDDIT_RESPONSE['data']['children']:
+               search_result.append(result['data']['title'])            
+           return search_result
+
 
 As you can see ``FakeRedditAdapter`` returns hardcoded response from reddit API that can be used in test:
 
@@ -246,4 +256,10 @@ As you can see ``FakeRedditAdapter`` returns hardcoded response from reddit API 
 That's all for today. In the next post, I will show how to combine these ports and adapters
 with django application. Code for this you can find under this `repo <https://github.com/krzysztofzuraw/reddit-stars>`_.
 
+Changes from 23.05.16:
+------------------------
+* Removing coupling from ``ExternalAPIPort``
+* Adding new test
+* Adding word about contracts
+  
 Cover image by `Creative Magic <https://pixabay.com/pl/users/CreativeMagic-480360/>`_ under `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
