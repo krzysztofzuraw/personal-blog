@@ -15,6 +15,7 @@ PATH = 'content'
 DELETE_OUTPUT_DIRECTORY = True
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
+TAG_FEED_ATOM = 'feeds/%s.atom.xml'
 SOCIAL = (('twitter', 'https://twitter.com/krzysztof_zuraw'),
           ('github', 'https://github.com/krzysztofzuraw'),
           ('envelope','mailto:krzysztof.zuraw@gmail.com'),
