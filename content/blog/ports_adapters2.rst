@@ -1,0 +1,114 @@
+Ports and Adapters in python - part two
+##########################################
+
+:date: 2016-06-05 10:20
+:tags: django
+:category: blog
+:slug: ports-and-adapters-in-python-part-two
+:summary: Second part of series about Django application made using Ports and Adapters design pattern.
+:header_cover: /images/covers/hexagon.jpg
+
+**Last time I wrote about how to do simple port & adapter in python. In this post, I will
+show to actually use them.**
+
+I briefly remind you what is purpose of application build in this series: user will log in,
+then search with keyword so he can save any search result to database for read it later.
+
+I decided to first implement search mechanism for Reddit. This is what I will write today.
+Search request will be sent via GET. First, I need some form to handle this:
+
+.. code-block:: python
+   :linenos: inline
+
+
+    from django import forms
+    from django.conf import settings
+
+    from external_api.external_api_port import ExternalAPIPort
+    from external_api.reddit_adapter import RedditAdapter
+
+
+    class RedditSearchForm(forms.Form):
+        query = forms.CharField(label='search query', max_length=100)
+
+        def perform_search(self):
+            adapter = RedditAdapter(
+                settings.REDDIT_CLIENT_ID,
+                settings.REDDIT_CLIENT_SECRET,
+                settings.REDDIT_USERNAME,
+                settings.REDDIT_PASSWORD
+            )
+            port = ExternalAPIPort(adapter)
+            search_result = port.search(self.cleaned_data['query'])
+            return search_result
+
+I defined simple form that has only one field: ``query`` which is ``CharField`` field with label.
+My form has one method ``perform_search``. In this method, I instantiate Reddit adapter instance with
+settings from django settings module. Then I make a port with ``RedditAdapter`` as an argument.
+Lastly, I perform the search using the port and ``cleaned_data['query']``. I have access to ``cleaned_data``
+attribute after form validation which will be shown in the view. At the end of ``perform_search``
+I return search results. These results are processed further in view:
+
+.. code-block:: python
+   :linenos: inline
+
+   from django.views.generic.edit import FormView
+   from django.http import HttpResponse
+   from django.shortcuts import render
+   from .forms import RedditSearchForm
+
+   class RedditSearchView(FormView):
+       template_name = 'search/index.html'
+       form_class = RedditSearchForm
+       success_url = 'add-to-favourites'
+       search_result = None
+
+       def get(self, request, *args, **kwargs):
+           form = self.form_class(self.request.GET or None)
+           if form.is_valid():
+               self.search_result = form.perform_search()
+           return self.render_to_response(self.get_context_data(form=form))
+
+       def get_context_data(self, **kwargs):
+           context = super(RedditSearchView, self).get_context_data(**kwargs)
+           if self.search_result:
+               context.update({
+                   'search_result': self.search_result,
+                   'sucess': True
+                   }
+               )
+           return context
+
+Let begin from ``get`` method: this method is called every time get request is
+performed by the user. How to ensure that? I used ``method`` parameter in html:
+
+.. code-block:: html
+
+    <form method="get" class="form" role="form">
+        {{ form }}
+        <input type="submit" class="btn btn-primary" value="Search">
+    </form>
+
+In ``get`` method I get the form for given ``request.GET``. On this form I call ``form.is_valid()`` to
+get access to ``cleaned_data``. After that I have search results so I can insert them to html.
+It is done via ``get_context_data`` method when I get my basic context calling
+``super``. And if there was search performed I update context with search results and I tell my html
+to render them in one template.
+
+Such updated context is taken by django and rendered to full html.
+Key ``success`` is present because I got if statement in html template which allows me to render results
+on the same page that search was performed:
+
+.. code-block:: html
+
+    {% if sucess %}
+        {% for item in search_result %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    {% else %}
+    <!--- form here ---!>
+
+And that basically all for search view. In next post I will take care of saving results
+to database. Code for this you can find under this `repo <https://github.com/krzysztofzuraw/reddit-stars>`_.
+
+Cover image by `Creative Magic <https://pixabay.com/pl/users/CreativeMagic-480360/>`_ under `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
