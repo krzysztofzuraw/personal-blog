@@ -24,27 +24,44 @@ Search request will be sent via GET. First, I need some form to handle this:
     from django import forms
     from django.conf import settings
 
-    from external_api.external_api_port import ExternalAPIPort
-    from external_api.reddit_adapter import RedditAdapter
-
+    from external_api.external_api_port import instantiated_port
 
     class RedditSearchForm(forms.Form):
         query = forms.CharField(label='search query', max_length=100)
 
         def perform_search(self):
-            adapter = RedditAdapter(
-                settings.REDDIT_CLIENT_ID,
-                settings.REDDIT_CLIENT_SECRET,
-                settings.REDDIT_USERNAME,
-                settings.REDDIT_PASSWORD
-            )
-            port = ExternalAPIPort(adapter)
-            search_result = port.search(self.cleaned_data['query'])
+            search_result = instantiated_port.search(self.cleaned_data['query'])
             return search_result
 
 I defined simple form that has only one field: ``query`` which is ``CharField`` field with label.
-My form has one method ``perform_search``. In this method, I instantiate Reddit adapter instance with
-settings from django settings module. Then I make a port with ``RedditAdapter`` as an argument.
+My form has one method ``perform_search``. In this method, I import instantiated reddit port that takes
+instance of reddit adapter with settings from django settings module. Idealy this adapter should be singleton
+class. This is how it looks in ``reddit_adapter``:
+
+.. code-block:: python
+
+    from django.conf import settings
+
+    # reddit adapter class here ...
+
+    instantiated_adapter = RedditAdapter(
+        settings.REDDIT_CLIENT_ID,
+        settings.REDDIT_CLIENT_SECRET,
+        settings.REDDIT_USERNAME,
+        settings.REDDIT_PASSWORD
+    )
+
+and in ``external_api_port``:
+
+.. code-block:: python
+
+    from .reddit_adapter import instantiated_adapter
+
+    # port class here ...
+
+    instantiated_port = ExternalAPIPort(instantiated_adapter)
+
+
 Lastly, I perform the search using the port and ``cleaned_data['query']``. I have access to ``cleaned_data``
 attribute after form validation which will be shown in the view. At the end of ``perform_search``
 I return search results. These results are processed further in view:
@@ -110,5 +127,12 @@ on the same page that search was performed:
 
 And that basically all for search view. In next post I will take care of saving results
 to database. Code for this you can find under this `repo <https://github.com/krzysztofzuraw/reddit-stars>`_.
+
+Changes from 07.06.16:
+----------------------
+* Moving port & adapter to it's own module
+* Having only one instance of port & adapter
+
+(Special thanks for pointing this to Mariusz)
 
 Cover image by `Creative Magic <https://pixabay.com/pl/users/CreativeMagic-480360/>`_ under `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
