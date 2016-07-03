@@ -199,10 +199,10 @@ Our voivodeships/models.py will look like this:
         geom = models.MultiPolygonField(srid=2180)
 
         def __str__(self):
-            return '{}'.format(jpt_nazwa_field)
+            return '{}'.format(self.jpt_nazwa_field)
 
         def __unicode__(self):
-            return '{}'.format(jpt_nazwa_field)
+            return '{}'.format(self.jpt_nazwa_field)
 
     # Auto-generated `LayerMapping` dictionary for Voivodeship model
     voivodeship_mapping = {
@@ -298,7 +298,7 @@ To do this let's create load.py with following contents:
     voivodeship_shp = os.path.abspath(os.path.join('data', 'PRG_jednostki_administracyjne_v10', 'województwa.shp'))
 
     def run(verbose=True):
-        lm = LayerMapping(voivodeship, voivodeship_shp, voivodeship_mapping,
+        lm = LayerMapping(Voivodeship, voivodeship_shp, voivodeship_mapping,
                           transform=False, encoding='iso-8859-1')
 
         lm.save(strict=True, verbose=verbose)
