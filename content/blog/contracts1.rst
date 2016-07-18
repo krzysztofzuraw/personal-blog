@@ -15,12 +15,12 @@ these answers in this blog series about contracts.**
 Recently I read a `Pragmatic Programmer <https://pragprog.com/book/tpp/the-pragmatic-programmer>`_.
 In this book there is a chapter 21: `Design by Contract` that stays:
 
-  It is a simple yet powerful technique that focuses on odcumenting (and agreeing to) the rights
+  It is a simple yet powerful technique that focuses on documenting (and agreeing to) the rights
   and responibilites of software mdoules to ensure program correctness.
 
 How to achieve this? There are 3 basic expectations of any given function/class:
 
-1. **Preconditions**: What is function requirements in order to be called
+1. **Preconditions**: What are function requirements in order to be called
 2. **Postconditions**: What is class guaranteed to do
 3. **Class invariants**: Conditions that are true after execution of function/class
 
@@ -101,7 +101,7 @@ This code will work for python 2. If you want to use ``ContractsMeta`` with pyth
 What I like in this library is a possibility to disable contracts by calling
 ``contracts.disable_all()`` or using ``DISABLE_CONTRACTS`` environmental variable.
 
-Unfourtunately py.contracts doesn't provide way to use invariants but you always
+Unfortunately, py.contracts doesn't provide way to use invariants but you always
 can use ``assert``.
 
 That's all for this blog post! Feel free to comment and in next week I will look
