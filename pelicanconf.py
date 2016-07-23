@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Krzysztof Żuraw'
 SITENAME = u'Krzysztof Żuraw'
-SITEURL = 'krzysztofzuraw.com'
+SITEURL = 'http://krzysztofzuraw.com'
 SITESUBTITLE = 'Personal site'
 
 TIMEZONE = 'Europe/Warsaw'
