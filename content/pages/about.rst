@@ -30,4 +30,6 @@ My talks:
 
 This blog is using `Clean blog theme <http://startbootstrap.com/template-overviews/clean-blog/>`_.
 
+This page header cover by `Stanislaw Svitsa <https://about.me/stan.svitsa>`_
+
 Main page header cover by `Lmonk <https://pixabay.com/pt/users/lmonk72-731125/>`_ under `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
