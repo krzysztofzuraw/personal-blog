@@ -14,8 +14,9 @@ THEME = 'pelican-clean-blog'
 PATH = 'content'
 DELETE_OUTPUT_DIRECTORY = True
 
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
-TAG_FEED_ATOM = 'feeds/%s.atom.xml'
+FEED_RSS = 'feeds/all.rss.xml'
+TAG_FEED_RSS = 'feeds/%s.rss.xml'
+
 SOCIAL = (('twitter', 'https://twitter.com/krzysztof_zuraw'),
           ('github', 'https://github.com/krzysztofzuraw'),
           ('envelope','mailto:krzysztof.zuraw@gmail.com'),
@@ -24,7 +25,7 @@ SOCIAL = (('twitter', 'https://twitter.com/krzysztof_zuraw'),
 DEFAULT_PAGINATION = 5
 MENUITEMS = (('Archive', '/archives.html'),
              ('Tags', '/tags.html'),
-             ('Feeds', '/feeds/all.atom.xml'))
+             ('Feeds', '/feeds/all.rss.xml'))
 
 RELATIVE_URLS = False
 DISQUS_SITENAME = 'krzysztofzuraw'
