@@ -85,7 +85,8 @@ The same can be accomplished with metaclasses:
       return self.adapter.search(query, *args, **kwargs)
 
 This code will work for python 2. If you want to use ``ContractsMeta`` with python
-3 you have to use function ``with_metaclass`` like this:
+3 you have to use function ``with_metaclass`` or simply write
+``BasePort(object, metaclass=ContractsMeta)``:
 
 .. code-block:: python
 
@@ -106,5 +107,17 @@ can use ``assert``.
 
 That's all for this blog post! Feel free to comment and in next week I will look
 into another contract library in python.
+
+Other blog posts in this series:
+--------------------------------
+
+- `Design by contract in python- part two <{filename}/blog/contracts2.rst>`_
+- `Design by contract in python- part three <{filename}/blog/contracts3.rst>`_
+
+
+Edits (01.08.2016):
+
+* Add additional method for invoking metaclass in py.contracts (thanks to `mm_ma_ma <https://www.reddit.com/user/mm_ma_ma>`_)
+* Add link to other posts with same series (thanks to `alb1 <https://www.reddit.com/user/alb1>`_)
 
 Cover image under `CC0 <https://creativecommons.org/publicdomain/zero/1.0/deed.en>`_.

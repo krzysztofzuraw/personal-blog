@@ -150,4 +150,14 @@ That's all for today! I hope you find this blog post interesting- feel free to
 comment. In the next blog post, I'll write about another library in python for
 contracts and some tools from the standard library.
 
+Other blog posts in this series:
+--------------------------------
+
+- `Design by contract in python- part one <{filename}/blog/contracts1.rst>`_
+- `Design by contract in python- part three <{filename}/blog/contracts3.rst>`_
+
+Edits (01.08.2016):
+
+* Add link to other posts with same series (thanks to `alb1 <https://www.reddit.com/user/alb1>`_)
+
 Cover image under `CC0 <https://creativecommons.org/publicdomain/zero/1.0/deed.en>`_.

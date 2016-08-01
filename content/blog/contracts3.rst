@@ -66,4 +66,15 @@ the same way to make agrements on ports methods in
 
 Thank you for reading! Feel free to comment!
 
+Other blog posts in this series:
+--------------------------------
+
+- `Design by contract in python- part one <{filename}/blog/contracts1.rst>`_
+- `Design by contract in python- part two <{filename}/blog/contracts2.rst>`_
+
+Edits (01.08.2016):
+
+* Add link to other posts with same series (thanks to `alb1 <https://www.reddit.com/user/alb1>`_)
+
+
 Cover image under `CC0 <https://creativecommons.org/publicdomain/zero/1.0/deed.en>`_.
