@@ -102,31 +102,19 @@ want to use. Below in ``__init__`` I setup all necessary attributes with extensi
 to use in ``choose_archive_engine``. Here is the place where factory pattern starts
 to work: I iterate through all engines to ``check_extenstion`` and if there is a match
 I simply return the correct engine to ``self.archive_engine``. To use that I need to write
-some more code in ``ZIPArchive`` and ``TARArchive``:
+some more code in ``BaseArchive``:
 
 .. code-block:: python
 
-    class ZIPArchive(BaseArchive):
-        EXTENSION = '.zip'
+    class BaseArchive(object):
 
-        @classmethod
-        def check_extenstion(cls,extension):
-            if extension == cls.EXTENSION:
-                return True
-            else:
-                return False
+      # rest of the code
 
-    class TARArchive(BaseArchive):
-        EXTENSION = '.tar'
+      @classmethod
+      def check_extenstion(cls,extension):
+          return extension == cls.EXTENSION:
 
-        @classmethod
-        def check_extenstion(cls,extension):
-            if extension == cls.EXTENSION:
-                return True
-            else:
-                return False
-
-These ``check_extenstion`` that are classmethods helps me in figuring out which
+This ``check_extenstion`` that is classmethod helps me in figuring out which
 underlying archive class should I use. Thanks to that in ``ArchiveManager.create_archive``
 I only need to provide ``self.archive_engine.generate()``. This method doesnt't know
 if there is ``ZIPArchive`` or ``TARArchive`` class being used.
@@ -134,5 +122,9 @@ if there is ``ZIPArchive`` or ``TARArchive`` class being used.
 This was quick introduction how to use factory pattern in python. The code for this
 is available in this `repo <https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/factory_pattern>`_. Do you know more
 usages? Or maybe you don't agree with what I write- feel free to comment.
+
+Edits (12.08.2016):
+
+* Refactor of check_extenstion method
 
 Cover image by `Tpsdave <https://pixabay.com/pl/users/tpsdave-12019/>`_  released into public domain.
