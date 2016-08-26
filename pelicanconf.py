@@ -25,11 +25,13 @@ SOCIAL = (('twitter', 'https://twitter.com/krzysztof_zuraw'),
 DEFAULT_PAGINATION = 5
 MENUITEMS = (('Archive', '/archives.html'),
              ('Tags', '/tags.html'),
-             ('Feeds', '/feeds/all.rss.xml'))
+             ('RSS Feed', 'http://feeds.feedburner.com/krzysztofzuraw'),
+             ('Email Updates', 'https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US'))
 
 RELATIVE_URLS = False
 DISQUS_SITENAME = 'krzysztofzuraw'
 GOOGLE_ANALYTICS = 'UA-72188452-2'
+ADDTHIS_PUBID = 'ra-57a7802d9a259bbe'
 HEADER_COVER = 'theme/images/codes.jpg'
 ARTICLE_PATHS = ['blog']
 ARTICLE_SAVE_AS = 'blog/{date:%Y}/{slug}.html'
@@ -38,3 +40,5 @@ COLOR_SCHEME_CSS = 'monokai.css'
 DIRECT_TEMPLATES = ['index', 'tags', 'archives']
 STATIC_PATHS = ['images', 'videos', 'extra/CNAME']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+SHOW_FULL_ARTICLE = True
+TWITTER_HANDLE = 'krzysztof_zuraw'
