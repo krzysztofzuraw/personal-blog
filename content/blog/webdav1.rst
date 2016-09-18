@@ -5,7 +5,7 @@ Python & WebDAV- part one
 :tags: owncloud
 :category: blog
 :slug: python-webdav-part-one
-:headline: What is WebDAV and setting up one
+:headline: What is WebDAV and setting up such sever
 :header_cover: /images/covers/filesystem.jpg
 
 **I must confess I was ignorant. Recently I saw an application done by my
@@ -128,6 +128,11 @@ To get properties about root folder:
 That's all for this post! Next week as I got my server running I will be looking
 into python library for WebDAV. Feel free to comment- I really appreciate your
 feedback.
+
+
+Other blog posts in this series:
+
+- `Python & WebDAV- part two <{filename}/blog/webdav2.rst>`_
 
 Special thanks to Kasia for being editor for this post. Thank you.
 
