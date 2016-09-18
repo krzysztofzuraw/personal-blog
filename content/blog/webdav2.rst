@@ -166,4 +166,6 @@ Other blog posts in this series:
 
 Github repo for this blog post: `link <https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/webdav_editor>`_.
 
+Special thanks to Kasia for being editor for this post. Thank you.
+
 Cover image by `kleuske <https://www.flickr.com/photos/kleuske/>`_ under `CC BY-SA 2.0 <https://creativecommons.org/licenses/by-sa/2.0/>`_.
