@@ -147,7 +147,7 @@ To make it work I need to change one thing in ``Makefile``:
 
    github: publish
            ghp-import -m "Generate Pelican site" -b $(GITHUB_PAGES_BRANCH) $(OUTPUTDIR)
-           git push -fq https://${GH_TOKEN}@github.com/$(TRAVIS_REPO_SLUG).git $(GITHUB_PAGES_BRANCH)
+           @git push -fq https://${GH_TOKEN}@github.com/$(TRAVIS_REPO_SLUG).git $(GITHUB_PAGES_BRANCH)
 
 The change is that I push to repo using ``GH_TOKEN`` not username so Travis is able to do it.
 
