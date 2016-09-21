@@ -19,7 +19,7 @@ When I first started writing blog using pelican my workflow look as follows:
 3. After this I open my browser window and go to ``127.0.0.1:8000`` to see my changes
 4. To publish content I push it to responsible branch
 
-After some time, I know that there must be the way to automate such boring stuff. So I started looking around my pelican folder and 
+After some time, I know that there must be the way to automate such boring stuff. So I started looking around my pelican folder and
 I found `Makefile <https://github.com/krzysztofzuraw/personal-blog/blob/master/Makefile>`_.
 
 This makefile is used to manage all these things that I am doing manually into bash script so it is perfect!
@@ -41,7 +41,7 @@ So whenever you specify ``$(PORT)`` or not the same command will be used: ``deve
 
     elif [[ $1 == "restart" ]]; then
      shut_down
-     start_up $port 
+     start_up $port
 
 and ``start_up``:
 
@@ -72,7 +72,7 @@ and ``start_up``:
      echo 'Pelican and HTTP server processes now running in background.'
    }
 
-In line 6 is normal pelican command like: 
+In line 6 is normal pelican command like:
 
 .. code-block:: terminal
 
@@ -118,7 +118,7 @@ And on the next screen enable repository for what you want to trigger Travis. Af
 .. image:: /images/travis2.png
 
 
-``GH_TOKEN`` is your token generated from this `page <https://github.com/settings/tokens>`_. Click there on ``Generate new token`` and 
+``GH_TOKEN`` is your token generated from this `page <https://github.com/settings/tokens>`_. Click there on ``Generate new token`` and
 in next screen make sure you add token description and scope for public_repo:
 
 .. image:: /images/travis3.png
@@ -147,7 +147,7 @@ To make it work I need to change one thing in ``Makefile``:
 
    github: publish
            ghp-import -m "Generate Pelican site" -b $(GITHUB_PAGES_BRANCH) $(OUTPUTDIR)
-           git push -fq https://${GH_TOKEN}@github.com/$(TRAVIS_REPO_SLUG).git $(GITHUB_PAGES_BRANCH)
+           @git push -fq https://${GH_TOKEN}@github.com/$(TRAVIS_REPO_SLUG).git $(GITHUB_PAGES_BRANCH)
 
 The change is that I push to repo using ``GH_TOKEN`` not username so Travis is able to do it.
 
@@ -159,4 +159,3 @@ References:
 1. `Publish your Pelican blog on Github pages via Travis-CI <http://blog.mathieu-leplatre.info/publish-your-pelican-blog-on-github-pages-via-travis-ci.html>`_.
 
 Cover image by `Manjith Kainickara <https://www.flickr.com/photos/manjithkaini/>`_ under `CC BY-SA 2.0 <https://creativecommons.org/licenses/by-sa/2.0/>`_.
-
