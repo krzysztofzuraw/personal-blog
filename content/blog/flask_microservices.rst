@@ -41,7 +41,7 @@ imports from every part of application:
     from app.saml.utils import site_specific_config_loader
     from app.saml.views import _get_subject_id
 
-Snippet from above presents examplary imports of random python module in my project.
+Snippet from above presents exemplary imports of random python module in my project.
 
 So where are these microservices? In my team, we decided to have **new** parts of the application made
 as a microservices. So right now from the architectural point of view I have a big monolithic application
@@ -263,6 +263,8 @@ run jenkins job to create new deb.
 
 That's all for today! The slides from this presentation can be found here: `presentation <http://www.slideshare.net/Krzysztofuraw/wrocpy-32-microservices-in-flask>`_.
 Do you also use flask to build microservices? Please give your comments about that.
+
+Special thanks to Kasia for being editor for this post. Thank you.
 
 
 Cover image  by `NASA JPL - Nasa JPL <https://commons.wikimedia.org/w/index.php?curid=48413935>`_ under `CC0 Public Domain <https://creativecommons.org/publicdomain/zero/1.0/deed.en>`_.
