@@ -52,4 +52,6 @@ code that is not testable. To be honest I really don't know what this talk was a
 
 This was my short relation from this year PyConPl 2016. What are your feelings? Please tell me in comments.
 
+Special thanks to Kasia for being editor for this post. Thank you.
+
 Cover picture taken from `Hotel Ossa <http://www.hotelossa.pl/dla-biznesu/hotel>`_.
