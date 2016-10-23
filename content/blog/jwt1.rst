@@ -85,6 +85,11 @@ Resources:
 
 1.  https://jwt.io/
 
+Other blog posts in this series:
+--------------------------------
+
+- `JSON Web Tokens in django application- part two <{filename}/blog/jwt2.rst>`_
+
 Special thanks to Kasia for being editor for this post. Thank you.
 
 
