@@ -189,6 +189,8 @@ Other blog posts in this series
 
 - `JSON Web Tokens in django application- part one <{filename}/blog/jwt1.rst>`_
 - `JSON Web Tokens in django application- part two <{filename}/blog/jwt2.rst>`_
+- `JSON Web Tokens in django application- part four <{filename}/blog/jwt4.rst>`_
+
 
 Special thanks to Kasia for being editor for this post. Thank you.
 
