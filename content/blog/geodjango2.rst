@@ -85,8 +85,8 @@ Let's add main page view to GeoDjango application in views.py:
 
     from django.views.generic import TemplateView
 
-    class MainPageView(TemplateView): template\_name =
-    'voivodeships/index.html'
+    class MainPageView(TemplateView):
+        template_name = 'voivodeships/index.html'
 
 And to urls.py:
 
@@ -95,7 +95,7 @@ And to urls.py:
     from voivodeships.views import MainPageView
 
     urlpatterns = [# rest of urls
-                   url(r'^$', MainPageView.as\_view()),]
+                   url(r'^$', MainPageView.as_view()),]
 
 
 After this add new ``index.html`` under
