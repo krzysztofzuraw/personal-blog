@@ -30,8 +30,8 @@ MENUITEMS = (('Archive', '/archives.html'),
 
 RELATIVE_URLS = False
 DISQUS_SITENAME = 'krzysztofzuraw'
-GOOGLE_ANALYTICS = 'UA-72188452-2'
-ADDTHIS_PUBID = 'ra-57a7802d9a259bbe'
+# GOOGLE_ANALYTICS = 'UA-72188452-2'
+# ADDTHIS_PUBID = 'ra-57a7802d9a259bbe'
 HEADER_COVER = 'theme/images/codes.jpg'
 ARTICLE_PATHS = ['blog']
 ARTICLE_SAVE_AS = 'blog/{date:%Y}/{slug}.html'
