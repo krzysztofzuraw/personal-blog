@@ -182,6 +182,11 @@ Now when I upload my mp3 file it's sent directly to S3 bucket under media locati
 
 That's all for today! In the next blog post, I will write about how to set up AWS transcoder.
 
+Other blog posts in this series:
+--------------------------------
+
+- `Transcoding with AWS- part two <{filename}/blog/aws_transcoder2.rst>`_
+
 The code that I have made so far is available on
 `github <https://github.com/krzysztofzuraw/blog_transcoder_aws>`__. Stay
 tuned for next blog post from this series.
