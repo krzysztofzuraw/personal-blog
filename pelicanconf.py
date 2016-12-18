@@ -19,7 +19,7 @@ TAG_FEED_RSS = 'feeds/%s.rss.xml'
 
 SOCIAL = (('twitter', 'https://twitter.com/krzysztof_zuraw'),
           ('github', 'https://github.com/krzysztofzuraw'),
-          ('envelope','mailto:krzysztof.zuraw@gmail.com'),
+          ('envelope', 'mailto:krzysztof.zuraw@gmail.com'),
           ('linkedin', 'https://pl.linkedin.com/in/krzysztofzuraw'))
 
 DEFAULT_PAGINATION = 5
@@ -30,7 +30,7 @@ MENUITEMS = (('Archive', '/archives.html'),
 
 RELATIVE_URLS = False
 DISQUS_SITENAME = 'krzysztofzuraw'
-# GOOGLE_ANALYTICS = 'UA-72188452-2'
+GOOGLE_ANALYTICS = 'UA-72188452-2'
 # ADDTHIS_PUBID = 'ra-57a7802d9a259bbe'
 HEADER_COVER = 'theme/images/codes.jpg'
 ARTICLE_PATHS = ['blog']
@@ -39,6 +39,6 @@ ARTICLE_URL = 'blog/{date:%Y}/{slug}.html'
 COLOR_SCHEME_CSS = 'monokai.css'
 DIRECT_TEMPLATES = ['index', 'tags', 'archives']
 STATIC_PATHS = ['images', 'videos', 'extra/CNAME', 'keybase.txt']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, }
 SHOW_FULL_ARTICLE = True
 TWITTER_HANDLE = 'krzysztof_zuraw'
