@@ -3,7 +3,7 @@ branches:
   only:
   - master
 install:
-- pip install pelican
-- pip install ghp-import
+- pip install pelican==3.6.3
+- pip install ghp-import==0.4.1
 script:
 - make publish github
