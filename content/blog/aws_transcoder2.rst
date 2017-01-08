@@ -172,3 +172,5 @@ Special thanks to Kasia for being an editor for this post. Thank you.
 
 While creating this blog post I used an code from offcial
 `boto github account <https://github.com/boto/boto3-sample/blob/master/transcoder.py>`_.
+
+Cover image by `Harald Hoyer <http://www.flickr.com/people/25691430@N04>`_ under `CC BY-SA 2.0 <http://creativecommons.org/licenses/by-sa/2.0>`_, via Wikimedia Commons
