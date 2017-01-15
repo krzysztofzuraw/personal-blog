@@ -187,6 +187,7 @@ Other blog posts in this series:
 
 - `Transcoding with AWS- part two <{filename}/blog/aws_transcoder2.rst>`_
 - `Transcoding with AWS- part three <{filename}/blog/aws_transcoder3.rst>`_
+- `Transcoding with AWS- part four <{filename}/blog/aws_transcoder4.rst>`_
 
 The code that I have made so far is available on
 `github <https://github.com/krzysztofzuraw/blog_transcoder_aws>`__. Stay
