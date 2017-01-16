@@ -142,6 +142,4 @@ The code that I have made so far is available on
 `github <https://github.com/krzysztofzuraw/blog_transcoder_aws>`_. Stay
 tuned for next blog post from this series.
 
-Special thanks to Kasia for being an editor for this post. Thank you.
-
 Cover image by `Harald Hoyer <http://www.flickr.com/people/25691430@N04>`_ under `CC BY-SA 2.0 <http://creativecommons.org/licenses/by-sa/2.0>`_, via Wikimedia Commons
