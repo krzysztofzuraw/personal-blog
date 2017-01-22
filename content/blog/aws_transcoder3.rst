@@ -165,5 +165,6 @@ Other blog posts in this series
 - `Transcoding with AWS- part one <{filename}/blog/aws_transcoder1.rst>`_
 - `Transcoding with AWS- part two <{filename}/blog/aws_transcoder2.rst>`_
 - `Transcoding with AWS- part four <{filename}/blog/aws_transcoder4.rst>`_
+- `Transcoding with AWS- part five <{filename}/blog/aws_transcoder5.rst>`_
 
 Cover image by `Harald Hoyer <http://www.flickr.com/people/25691430@N04>`_ under `CC BY-SA 2.0 <http://creativecommons.org/licenses/by-sa/2.0>`_, via Wikimedia Commons
