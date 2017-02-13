@@ -126,4 +126,11 @@ The code that I have made so far is available on
 `github <https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/lru_cache>`_. Stay
 tuned for next blog post from this series.
 
+Update 13-02-16:
+
+Side note from my friend from work: Cache per worker is good for data that doesn't changex
+like archival exchange rate. But this type of cache is not good for data that can change.
+
+Thank you Paweł for this note.
+
 Cover image by `Tim Green <https://www.flickr.com/photos/atoach/>`_ under `CC BY-SA 2.0 <http://creativecommons.org/licenses/by-sa/2.0>`_.
