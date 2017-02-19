@@ -12,7 +12,7 @@ Pomodoro timer - beginning
 projects like this, I had every time a fixed number of blog posts I wanted to write about a specific
 project - from 2 to 4. Right now, I want to try writing as many blog posts as it will be necessary
 to end a project - without any specific number in mind. Let's get started!**
-               
+
 .. contents:: Table of Contents:
 
 What pomodoro-timer project will be about

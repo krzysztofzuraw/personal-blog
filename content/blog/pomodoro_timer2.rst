@@ -18,7 +18,7 @@ Core functionality of pomodoro timer
 
 As the name suggests the core functionality of a timer is to count down time. In the case of this timer,
 I will be using 25 minutes as a timer that needs to be counted down. I decided that for the time
-being, I will have only two control buttons for the timer: start & restart. 
+being, I will have only two control buttons for the timer: start & restart.
 
 Implementing timer in JavaScript
 --------------------------------
@@ -30,7 +30,7 @@ doing that I realized that I can spend a whole week only on this task. Instead, 
 me to use Google Material Design. To get started all I need to do is include some code from google CDN:
 
 .. code-block:: html
-                
+
    <head>
      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
@@ -96,7 +96,7 @@ will be playing at the end of each pomodoro.
 How is the counting implemented? For this you need to look into script.js:
 
 .. code-block:: javascript
-                
+
    let countdown;
    const timerDisplay = document.querySelector('.display__time-left');
    const startTimeBtn = document.querySelector('[data-action="start"]');
