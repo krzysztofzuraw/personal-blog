@@ -208,5 +208,7 @@ Other blog posts in this series:
 
 - `Pomodoro timer - beginning <{filename}/blog/pomodoro_timer1.rst>`_
 
+Special thanks to Kasia for being an editor for this post. Thank you.
+
 Cover image from `Unsplash <https://unsplash.com/search/timer?photo=QqE158hev1I>`_ under
 `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
