@@ -78,5 +78,11 @@ Repo with this code is available on `github <https://github.com/krzysztofzuraw/p
 
 Special thanks to Kasia for being an editor for this post. Thank you.
 
+
+Other blog posts in this series:
+--------------------------------
+
+- `Pomodoro timer - counting <{filename}/blog/pomodoro_timer2.rst>`_
+
 Cover image from `Unsplash <https://unsplash.com/search/timer?photo=QqE158hev1I>`_ under
 `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
