@@ -207,6 +207,7 @@ Other blog posts in this series:
 --------------------------------
 
 - `Pomodoro timer - beginning <{filename}/blog/pomodoro_timer1.rst>`_
+- `Pomodoro timer - notifications <{filename}/blog/pomodoro_timer3.rst>`_
 
 Special thanks to Kasia for being an editor for this post. Thank you.
 

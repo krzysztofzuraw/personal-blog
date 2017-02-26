@@ -83,6 +83,7 @@ Other blog posts in this series:
 --------------------------------
 
 - `Pomodoro timer - counting <{filename}/blog/pomodoro_timer2.rst>`_
+- `Pomodoro timer - notifications <{filename}/blog/pomodoro_timer3.rst>`_
 
 Cover image from `Unsplash <https://unsplash.com/search/timer?photo=QqE158hev1I>`_ under
 `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
