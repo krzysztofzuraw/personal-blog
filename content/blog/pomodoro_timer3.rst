@@ -97,6 +97,7 @@ Other blog posts in this series
 
 - `Pomodoro timer - beginning <{filename}/blog/pomodoro_timer1.rst>`_
 - `Pomodoro timer - counting <{filename}/blog/pomodoro_timer2.rst>`_
+- `Pomodoro timer - breaks & localStorage <{filename}/blog/pomodoro_timer3.rst>`_
 
 References
 ----------
