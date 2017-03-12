@@ -85,6 +85,8 @@ Other blog posts in this series:
 - `Pomodoro timer - counting <{filename}/blog/pomodoro_timer2.rst>`_
 - `Pomodoro timer - notifications <{filename}/blog/pomodoro_timer3.rst>`_
 - `Pomodoro timer - breaks & localStorage <{filename}/blog/pomodoro_timer3.rst>`_
+- `Pomodoro timer - how good was your pomodoro? <{filename}/blog/pomodoro_timer5.rst>`_
+
 
 
 Cover image from `Unsplash <https://unsplash.com/search/timer?photo=QqE158hev1I>`_ under
