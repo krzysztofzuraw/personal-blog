@@ -107,9 +107,12 @@ In next blog posts, I want to use Google Maps API to help me search for points a
 
 Take care and see you next week - don't forget to comment.
 
+Other blog posts in this series:
+--------------------------------
+
+- `On building application using Google Maps API <{filename}/blog/roads2.rst>`_
+
 Repo with this code is available on `github <https://github.com/krzysztofzuraw/all-roads-lead-to>`_.
-
-
 
 Cover image from `Unsplash <https://unsplash.com/search/roads?photo=3FELuJtiCPk>`_ under
 `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.

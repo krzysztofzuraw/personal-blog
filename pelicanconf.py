@@ -29,8 +29,6 @@ MENUITEMS = (('Archive', '/archives.html'),
              ('Email Updates', 'https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US'))
 
 RELATIVE_URLS = False
-DISQUS_SITENAME = 'krzysztofzuraw'
-GOOGLE_ANALYTICS = 'UA-72188452-2'
 HEADER_COVER = 'theme/images/codes.jpg'
 ARTICLE_PATHS = ['blog']
 ARTICLE_SAVE_AS = 'blog/{date:%Y}/{slug}.html'

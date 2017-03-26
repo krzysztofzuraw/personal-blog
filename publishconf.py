@@ -16,6 +16,5 @@ RELATIVE_URLS = False
 DELETE_OUTPUT_DIRECTORY = True
 
 # Following items are often useful when publishing
-
-#DISQUS_SITENAME = ""
-#GOOGLE_ANALYTICS = ""
+DISQUS_SITENAME = "krzysztofzuraw"
+GOOGLE_ANALYTICS = "UA-72188452-2"
