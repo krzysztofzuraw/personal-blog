@@ -38,3 +38,4 @@ DIRECT_TEMPLATES = ['index', 'tags', 'archives']
 STATIC_PATHS = ['images', 'videos', 'extra/CNAME', 'keybase.txt', 'googlefda1a995d1b8808a.html']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, }
 TWITTER_HANDLE = 'krzysztof_zuraw'
+INDEX_TAGS = ['python', 'django', 'javscript']
