@@ -2,3 +2,5 @@
 /output/
 /env/
 .env
+pelican.pid
+srv.pid

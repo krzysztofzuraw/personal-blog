@@ -1,11 +1,11 @@
-Testing django templatetags
+Testing django template tags
 ###############################
 
 :date: 2017-04-23 10:00
 :tags: testing, django, python, templatetags
 :category: blog
-:slug: how-to-test-django-templatetags
-:headline: How to test django templatetags
+:slug: how-to-test-django-template-tags
+:headline: How to test django template tags
 :header_cover: /images/covers/frame.jpg
 
 **In this blog post I will give you simple example how to test your template tags
