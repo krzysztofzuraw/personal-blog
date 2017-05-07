@@ -3,6 +3,7 @@ About
 
 :slug: about
 :category: page
+:date: 2017-05-07
 :header_cover: /images/covers/author.jpg
 
 
