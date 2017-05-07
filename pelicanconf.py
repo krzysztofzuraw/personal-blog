@@ -35,7 +35,34 @@ ARTICLE_SAVE_AS = 'blog/{date:%Y}/{slug}.html'
 ARTICLE_URL = 'blog/{date:%Y}/{slug}.html'
 COLOR_SCHEME_CSS = 'monokai.css'
 DIRECT_TEMPLATES = ['index', 'tags', 'archives']
-STATIC_PATHS = ['images', 'videos', 'extra/CNAME', 'keybase.txt', 'googlefda1a995d1b8808a.html']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, }
+STATIC_PATHS = [
+    'images', 'videos', 'extra/CNAME', 'extra/keybase.txt', 'extra/googlefda1a995d1b8808a.html',
+    'extra/favicon.ico'
+]
+EXTRA_PATH_METADATA = {
+    'extra/CNAME': {'path': 'CNAME'},
+    'extra/keybase.txt': {'path': 'keybase.txt'},
+    'extra/googlefda1a995d1b8808a.html': {'path': 'googlefda1a995d1b8808a.html'},
+    'extra/favicon.ico': {'path': 'favicon.ico'}
+}
 TWITTER_HANDLE = 'krzysztof_zuraw'
 INDEX_TAGS = ['python', 'django', 'javscript']
+
+PLUGINS = [
+    'extended_sitemap'
+]
+
+EXTENDED_SITEMAP_PLUGIN = {
+    'priorities': {
+        'index': 1.0,
+        'articles': 0.8,
+        'pages': 0.5,
+        'others': 0.4
+    },
+    'changefrequencies': {
+        'index': 'weekly',
+        'articles': 'weekly',
+        'pages': 'monthly',
+        'others': 'monthly',
+    }
+}
