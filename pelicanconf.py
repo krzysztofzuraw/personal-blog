@@ -23,7 +23,8 @@ SOCIAL = (('twitter', 'https://twitter.com/krzysztof_zuraw'),
           ('linkedin', 'https://pl.linkedin.com/in/krzysztofzuraw'))
 
 DEFAULT_PAGINATION = 5
-MENUITEMS = (('Archive', '/archives.html'),
+MENUITEMS = (('About', '/pages/about.html'),
+             ('Archive', '/archives.html'),
              ('Tags', '/tags.html'),
              ('RSS Feed', 'http://feeds.feedburner.com/krzysztofzuraw'),
              ('Email Updates', 'https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US'))
