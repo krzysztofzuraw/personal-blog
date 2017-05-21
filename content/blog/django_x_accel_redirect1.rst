@@ -147,5 +147,10 @@ That's all for today! Stay tuned for next blog post and feel free to comment.
 
 Source code is available in this `repo <https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/django_nginx_proxy>`_.
 
+Other blog posts in this series:
+--------------------------------
+
+- `Django and nginx file proxy - part two <{filename}/blog/django_x_accel_redirect2.rst>`_
+
 Cover image from `Unsplash <https://unsplash.com/search/server?photo=Re6__yidc48>`_ under
 `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
