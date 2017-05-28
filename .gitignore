@@ -4,3 +4,4 @@
 .env
 pelican.pid
 srv.pid
+.vscode
