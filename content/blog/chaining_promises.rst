@@ -10,8 +10,8 @@ Chaining promises in JavaScript
 
 **In this blog post, I will present to you how you can chain promises JavaScript. Let's go!**
 
-Recently I end my small `side project <https://krzysztofzuraw.github.io/all-roads-lead-to/>`_ . 
-I use there google maps api to perform various tasks. All the responses from Google
+Recently I ended my small `side project <https://krzysztofzuraw.github.io/all-roads-lead-to/>`_ . 
+I used there google maps api to perform various tasks. All the responses from Google
 API were asynchronous so I thought: let's wrap them in promises! I did it and everything works
 as expected.
 
