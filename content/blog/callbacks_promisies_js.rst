@@ -160,5 +160,64 @@ That's all for today! Feel free to comment - all are realy valuable for me. I ju
 one more time `adavidmiller <https://www.reddit.com/user/adavidmiller>`_ for taking his time
 to show me how to write code using callbacks.
 
+Update 10.07.2017
+-----------------
+
+As `Daniel Levy <https://github.com/justsml>`_ pointed out in comment you can refactor my code, so
+``geocodeAddressPromise`` will look like this:
+
+.. code-block:: javascript
+
+  // Updated code for https://krzysztofzuraw.com/blog/2017/callbacks-promises-in-js-for-newbies.html
+  const Promise = require('bluebird');
+  const geocoder = new google.maps.Geocoder();
+  // Most JS API's let you use Bluebird.promisify[All] 
+  // Unfortunately Google's APIs are a little dumb when it comes to promises and Node callbacks.
+  const geocodeAddressPromise = (address) => new Promise((resolve, reject) => geocoder
+    .geocode({ address }, (results, status) => status === 'OK'
+      ? resolve({
+        lat: results[0].geometry.location.lat(),
+        lng: results[0].geometry.location.lng(),
+      }) : reject(new Error('Cannot find address'))
+  }));
+
+New thing here is a better promise API - `bluebird <http://bluebirdjs.com/docs/getting-started.html>`_ as well as
+more javascripty syntax.
+
+``onGeocodeComplete`` returns both ``map`` and ``marker``:
+
+.. code-block:: javascript
+
+  function onGeocodeComplete(coords) {
+    const map = new google.maps.Map(
+      mapElem, {
+        zoom: 4,
+        center: coords
+      });
+    const marker = new google.maps.Marker({
+      position: coords,
+      map,
+    });
+    return {map, marker}
+  }
+
+The last thing is ``initMap``:
+
+.. code-block:: javascript
+
+  function initMap() {
+    searchForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      questionForm.classList.add('is-hidden');
+      const place = searchForm.querySelector('[name=place]').value;
+      geocodeAddressPromise(place)
+        .then(onGeocodeComplete)
+        .catch(alert);
+    });
+  }
+
+Which will catch errors along the way. All credits for this update goes to Daniel. Thanks man! 
+
+
 Cover image from `Unsplash <https://unsplash.com/search/map?photo=yg8Cz-i5U30>`_ under
 `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
