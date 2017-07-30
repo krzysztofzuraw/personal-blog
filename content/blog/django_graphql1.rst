@@ -35,5 +35,10 @@ This week I created Django application which can be found in this github `repo <
 That's all for today! It was a quick intro to what I will be doing in following weeks so stay tuned
 for GraphQL posts!
 
+Other blog posts in this series:
+--------------------------------
+
+- `Django, GraphQL & React - part two <{filename}/blog/django_graphql2.rst>`_
+
 Cover image from `Unsplash <https://unsplash.com/search/server?photo=Re6__yidc48>`_ under
 `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
