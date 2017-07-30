@@ -50,17 +50,19 @@ method. Let's look how these children look like:
 
 
     class ZIPArchive(BaseArchive):
+        EXTENSION = 'zip'
 
         def generate(self):
-            with ZipFile(self.location_path, 'w') as zip_file:
+            with ZipFile('{}.{}'.format(self.location_path, self.EXTENSION), 'w') as zip_file:
                 for file_ in self.files_to_pack:
                     zip_file.write(file_)
 
 
     class TARArchive(BaseArchive):
+        EXTENSION = 'tar'
 
         def generate(self):
-            with tarfile.open(self.location_path, 'w') as tar_file:
+            with tarfile.open('{}.{}'.format(self.location_path, self.EXTENSION), 'w') as tar_file:
                 for file_ in self.files_to_pack:
                     tar_file.add(file_)
 
@@ -70,9 +72,9 @@ follows:
 
 .. code-block:: python
 
-    zip_archive = ZIPArchive(os.path.join(os.getcwd(), 'zip.zip'), ['for_zip'])
+    zip_archive = ZIPArchive(os.path.join(os.getcwd(), 'zip'), ['for_zip'])
     zip_archive.generate()
-    tar_archive = TARArchive(os.path.join(os.getcwd(), 'tar.tar'), ['for_tar.txt'])
+    tar_archive = TARArchive(os.path.join(os.getcwd(), 'tar'), ['for_tar.txt'])
     tar_archive.generate()
 
 Then the real fun begins. Say I want to generate archive just only by providing path
@@ -126,5 +128,9 @@ usages? Or maybe you don't agree with what I write- feel free to comment.
 Edits (12.08.2016):
 
 * Refactor of check_extenstion method
+
+Edits (30.07.2017):
+
+* Add missing EXTENSION parameter (by Jayesh Pawar)
 
 Cover image by `Tpsdave <https://pixabay.com/pl/users/tpsdave-12019/>`_  released into public domain.
