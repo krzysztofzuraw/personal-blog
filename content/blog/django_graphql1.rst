@@ -39,6 +39,7 @@ Other blog posts in this series:
 --------------------------------
 
 - `Django, GraphQL & React - part two <{filename}/blog/django_graphql2.rst>`_
+- `Monorepo structure for Django & React Applications <{filename}/blog/django_graphql3.rst>`_
 
 Cover image from `Unsplash <https://unsplash.com/search/server?photo=Re6__yidc48>`_ under
 `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_.
