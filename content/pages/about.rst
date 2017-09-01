@@ -28,7 +28,7 @@ My projects:
 
 4. `Poznaj <https://poznaj-wroclaw.herokuapp.com/>`_. Discover history of Wroclaw using your smartphone. `Code <https://github.com/KlubJagiellonski/poznaj-app-backend>`_.
 
-5. `Podcast-app <https://lit-basin-91592.herokuapp.com/>`_. Simple podcast searcher made in ReactJS. `Code on github <https://github.com/krzysztofzuraw/podcast-app`_.
+5. `Podcast-app <https://lit-basin-91592.herokuapp.com/>`_. Simple podcast searcher made in ReactJS. `Code on github <https://github.com/krzysztofzuraw/podcast-app>`_.
 
 My talks:
 =========
