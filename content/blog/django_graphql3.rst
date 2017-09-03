@@ -78,6 +78,7 @@ Other blog posts in this series:
 
 - `Django, GraphQL & React - part one <{filename}/blog/django_graphql1.rst>`_
 - `Django, GraphQL & React - part two <{filename}/blog/django_graphql2.rst>`_
+- `Moving to Relay in Django backend <{filename}/blog/django_graphql4.rst>`_
 
 Repo with code can be found on `github <https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_django_graphql_react_relay>`_.
 
