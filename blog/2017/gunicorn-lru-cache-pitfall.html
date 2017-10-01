@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Gunicorn &amp; LRU cache pitfall</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="What can happen if you using LRU cache and gunicorn">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="python">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2017/gunicorn-lru-cache-pitfall.html">
+	<meta property="og:title" content="Gunicorn &amp; LRU cache pitfall">
+	<meta property="article:published_time" content="2017-02-05 10:00:00+01:00">
+            <meta property="og:description" content="What can happen if you using LRU cache and gunicorn">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/pitfall.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/pitfall.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Gunicorn &amp; LRU cache pitfall" />
+            <meta name="twitter:description" content="What can happen if you using LRU cache and gunicorn" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/pitfall.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/pitfall.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1  style="color: black" >Gunicorn &amp; LRU cache pitfall</h1>
+                            <h3 class="subheading" style="color: black" >What can happen if you using LRU cache and gunicorn</h3>
+                        <span class="meta">Posted on Sun 05 February 2017
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Today I want to write about some interesting situation connected with using
+python LRU cache in an application that uses gunicorn.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-lru-cache" id="id1">What is LRU cache?</a></li>
+<li><a class="reference internal" href="#gunicorn-lru-pitfall" id="id2">Gunicorn &amp; LRU pitfall</a></li>
+</ul>
+</div>
+<div class="section" id="what-is-lru-cache">
+<h2><a class="toc-backref" href="#id1">What is LRU cache?</a></h2>
+<p>When you cache is starting to grow more and more you have to remove something so
+new values can be stored in a cache. One of the algorithms that are used to accomplish
+this task is called Least Recently Used (LRU). When you performing LRU caching
+you always throw out the data that was least recently used.</p>
+<p>Imagine you have in cache five elements: <tt class="docutils literal">A,B,C,D,E</tt>. You access element A which
+is in cache - nothing changes. Right after that, you want to add a new element to cache - <tt class="docutils literal">F</tt>.
+At this moment the least recently used item is <tt class="docutils literal">B</tt> so you throw it and replace
+with <tt class="docutils literal">F</tt>. The same mechanism goes for other items. That's how LRU cache works.</p>
+</div>
+<div class="section" id="gunicorn-lru-pitfall">
+<h2><a class="toc-backref" href="#id2">Gunicorn &amp; LRU pitfall</a></h2>
+<p>In python 3 you can use decorator <tt class="docutils literal">&#64;lru_cache</tt> from <tt class="docutils literal">functools</tt> module. It
+stores a result of decorated function inside the cache. Imagine that you have simple
+flask application:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">jsonify</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+  <span class="n">store_to_cache</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;Stored&#39;</span><span class="p">})</span>
+
+
+<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">store_to_cache</span><span class="p">():</span>
+  <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;this_goes_to_cache&#39;</span><span class="p">:</span> <span class="s1">&#39;and_this_too&#39;</span><span class="p">}</span>
+</pre></div>
+<p>You enter the root URL and you store dictionary to cache. Cache is setup to have
+only 2 elements inside. Then you have a helper function for getting info about an object
+that is inside that cache:</p>
+<div class="highlight"><pre><span></span><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/get_cache_info&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_cache_info</span><span class="p">():</span>
+  <span class="n">cache_info</span> <span class="o">=</span> <span class="n">store_to_cache</span><span class="o">.</span><span class="n">cache_info</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
+      <span class="s1">&#39;Hits&#39;</span><span class="p">:</span> <span class="n">cache_info</span><span class="o">.</span><span class="n">hits</span><span class="p">,</span>
+      <span class="s1">&#39;Misses&#39;</span><span class="p">:</span> <span class="n">cache_info</span><span class="o">.</span><span class="n">misses</span><span class="p">,</span>
+      <span class="s1">&#39;Maxsize&#39;</span><span class="p">:</span> <span class="n">cache_info</span><span class="o">.</span><span class="n">maxsize</span><span class="p">,</span>
+      <span class="s1">&#39;Currsize&#39;</span><span class="p">:</span> <span class="n">cache_info</span><span class="o">.</span><span class="n">currsize</span>
+  <span class="p">})</span>
+</pre></div>
+<p>When you run this application in development mode - without gunicorn everything
+works as expected - you store to cache and receive proper information:</p>
+<div class="highlight"><pre><span></span>$ curl -X GET http://127.0.0.1:8000
+<span class="o">{</span>
+<span class="s2">&quot;message&quot;</span>: <span class="s2">&quot;Stored&quot;</span>
+<span class="o">}</span>
+$ curl -X GET http://127.0.0.1:8000/get_cache_info
+<span class="o">{</span>
+  <span class="s2">&quot;Currsize&quot;</span>: <span class="m">1</span>,
+  <span class="s2">&quot;Hits&quot;</span>: <span class="m">0</span>,
+  <span class="s2">&quot;Maxsize&quot;</span>: <span class="m">2</span>,
+  <span class="s2">&quot;Misses&quot;</span>: <span class="m">1</span>
+<span class="o">}</span>
+</pre></div>
+<p>Let's run the same code but with using gunicorn with two workers:</p>
+<div class="highlight"><pre><span></span>$ gunicorn --workers<span class="o">=</span><span class="m">2</span> application:app
+$ curl -X GET http://127.0.0.1:8000
+$ curl -X GET http://127.0.0.1:8000/get_cache_info
+<span class="o">{</span>
+  <span class="s2">&quot;Currsize&quot;</span>: <span class="m">1</span>,
+  <span class="s2">&quot;Hits&quot;</span>: <span class="m">0</span>,
+  <span class="s2">&quot;Maxsize&quot;</span>: <span class="m">2</span>,
+  <span class="s2">&quot;Misses&quot;</span>: <span class="m">1</span>
+<span class="o">}</span>
+curl -X GET http://127.0.0.1:8000/get_cache_info
+<span class="o">{</span>
+  <span class="s2">&quot;Currsize&quot;</span>: <span class="m">0</span>,
+  <span class="s2">&quot;Hits&quot;</span>: <span class="m">0</span>,
+  <span class="s2">&quot;Maxsize&quot;</span>: <span class="m">2</span>,
+  <span class="s2">&quot;Misses&quot;</span>: <span class="m">0</span>
+<span class="o">}</span>
+</pre></div>
+<p>Sometimes request returns that there is one item inside cache and other times
+that there are no items in the cache. Why is that? <strong>Because LRU cache is using cache
+per worker</strong>. It means that when user enters your site cache is stored but it is
+stored only on this worker! The same user enters another time and his request is
+handled by the second worker which doesn't have anything stored in the cache!</p>
+<p>For this reason, it's not a good idea to use cache per worker in your web application.
+What can you use instead? Use centrally stored cache like Memcached.
+You will thank yourself in the future.</p>
+<p>That's all for today! Feel free to comment - maybe you have a better idea which
+cache use to avoid pitfalls?</p>
+<p>Example of how LRU cache works is based upon this <a class="reference external" href="http://mcicpc.cs.atu.edu/archives/2012/mcpc2012/lru/lru.html">article</a>.</p>
+<p>The code that I have made so far is available on
+<a class="reference external" href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/lru_cache">github</a>. Stay
+tuned for next blog post from this series.</p>
+<p>Update 13-02-16:</p>
+<p>Side note from my friend from work: Cache per worker is good for data that doesn't changex
+like archival exchange rate. But this type of cache is not good for data that can change.</p>
+<p>Thank you Paweł for this note.</p>
+<p>Cover image by <a class="reference external" href="https://www.flickr.com/photos/atoach/">Tim Green</a> under <a class="reference external" href="http://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/python.html">python</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - relay</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 03 Sep 2017 10:00:00 +0200</lastBuildDate><item><title>Moving to Relay in Django backend</title><link>https://krzysztofzuraw.com/blog/2017/moving-to-relay-in-django-backend.html</link><description>&lt;p&gt;&lt;strong&gt;Today I want to talk a little bit more about my next step in developing
+a GraphQL application. This step is connected with moving backend so it understands
+Relay.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="section" id="what-exactly-is-realy"&gt;
+&lt;h2&gt;What exactly is Realy?&lt;/h2&gt;
+&lt;p&gt;As documentation of &lt;a class="reference external" href="https://facebook.github.io/relay/"&gt;Relay&lt;/a&gt; suggests - it's framework
+for working with external data in React. What does it …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 03 Sep 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-09-03:/blog/2017/moving-to-relay-in-django-backend.html</guid><category>django</category><category>python</category><category>relay</category></item></channel></rss>

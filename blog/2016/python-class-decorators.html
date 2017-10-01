@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Python class &#64;decorators</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Post about syntax sugar in python.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="python">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/python-class-decorators.html">
+	<meta property="og:title" content="Python class &#64;decorators">
+	<meta property="article:published_time" content="2016-01-29 10:20:00+01:00">
+            <meta property="og:description" content="Post about syntax sugar in python.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/decorator.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/decorator.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Python class &#64;decorators" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/decorator.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/decorator.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Python class &#64;decorators</h1>
+                        <span class="meta">Posted on Fri 29 January 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Today post will be about syntactic sugar of python language-
+decorators.I will concentrate on class decorators.</strong></p>
+<p>Let's start with basic example of decorator defined by class in
+example_1:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">decorator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Called {func} with args: {args}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">func_name</span><span class="p">,</span>
+                                                       <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+<span class="nd">@decorator</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">func</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+<p>So running it results in:</p>
+<div class="highlight"><pre><span></span>$ python example_1.py
+Called func with args: (1, 2)
+</pre></div>
+<p>But there is another special method that can be used in such cases:
+<tt class="docutils literal">__get__</tt>. This is used for example in implementation of
+<a class="reference external" href="https://github.com/django/django/blob/master/django/utils/functional.py#L19">cached_property</a>
+decorator in django.</p>
+<p>Let's look onto example_2:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">property_</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="k">def</span> <span class="fm">__get__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span>
+            <span class="s1">&#39;Called property from {instance} &#39;</span><span class="p">,</span>
+            <span class="s1">&#39;of {klass}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="n">instance</span><span class="p">,</span> <span class="n">klass</span><span class="o">=</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span>
+            <span class="s1">&#39;Setting up {value} &#39;</span>
+            <span class="s1">&#39;for {obj}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="p">[</span><span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+
+
+<span class="k">class</span> <span class="nc">Apple</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="nd">@property_</span>
+    <span class="k">def</span> <span class="nf">get_color</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Accessing get_color property&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;red&#39;</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">apple</span> <span class="o">=</span> <span class="n">Apple</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">apple</span><span class="o">.</span><span class="n">get_color</span><span class="p">)</span>
+    <span class="n">apple</span><span class="o">.</span><span class="n">get_color</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;shape&#39;</span><span class="p">:</span><span class="s1">&#39;triangle&#39;</span><span class="p">}</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">apple</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+<p>What is happening here? Instead of implementing <tt class="docutils literal">__call__</tt> we got
+access to get the certain attribute. It's useful when we want to
+implement logic to e.g properties. Here I implemented full descriptor.
+Running this example results is this output:</p>
+<div class="highlight"><pre><span></span>$ python example_2.py
+Called property from &lt;__main__.Apple object at 0x7ff05de056d0&gt; of &lt;class &#39;__main__.Apple&#39;&gt;
+Accessing get_color property
+red
+Setting up {&#39;shape&#39;: &#39;triangle&#39;} for &lt;__main__.Apple object at 0x7ff05de056d0&gt;
+triangle
+Deleting &lt;__main__.Apple object at 0x7ff05de056d0&gt;
+</pre></div>
+<p>You can also decorate classes and functions at the same time. Consider
+example_3.py:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">F</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Called {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@decorator</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@decorator</span>
+    <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">C</span><span class="p">()</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">method</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">func</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+<p>Running this:</p>
+<div class="highlight"><pre><span></span>$ python example_3.py
+Called (&lt;__main__.C object at 0x7f28ce438590&gt;, 1, 2)
+Called (3, 4)
+</pre></div>
+<p>Here the decorator wraps either class or function. In the first case
+tuple with args contains only variables passed to the unction. In the
+class call in args, there is also an instance of C class.</p>
+<p>It's also possible to decorate whole classes, like in example_4:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Wrapper</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wrapped</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Getting the {} of {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wrapped</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wrapped</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Wrapper</span>
+
+<span class="nd">@decorator</span>
+<span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">C</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+<p>Output of example_4:</p>
+<div class="highlight"><pre><span></span>$ python example_4.py
+Getting the x of &lt;__main__.C object at 0x7fed2468f750&gt;
+1
+</pre></div>
+<p>In this example, the class Wrapper on <tt class="docutils literal">__init__</tt> calls the class with args and store it
+under <tt class="docutils literal">self.wrapped</tt>. So <tt class="docutils literal"><span class="pre">cls(*args)</span></tt> is the same as <tt class="docutils literal">C(1,2)</tt>.</p>
+<p>Most of this examples are taken from book <a class="reference external" href="http://www.amazon.com/gp/product/1449355730?keywords=learning%20python%205th%20edition&amp;qid=1454103755&amp;ref_=sr_1_1&amp;sr=8-1">Learning Python 5th
+Edition</a>
+by Mark Lutz.</p>
+<p>Cover image by <a class="reference external" href="https://pixabay.com/pl/users/Unsplash-242387/">Unsplash</a> under <a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/python.html">python</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

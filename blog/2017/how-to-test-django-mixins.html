@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Testing django mixins</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="How to test django mixins">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="testing">
+        <meta name="tags" content="django">
+        <meta name="tags" content="mixins">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2017/how-to-test-django-mixins.html">
+	<meta property="og:title" content="Testing django mixins">
+	<meta property="article:published_time" content="2017-04-09 10:00:00+02:00">
+            <meta property="og:description" content="How to test django mixins">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/frame.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/frame.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Testing django mixins" />
+            <meta name="twitter:description" content="How to test django mixins" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/frame.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/frame.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Testing django mixins</h1>
+                            <h3 class="subheading" >How to test django mixins</h3>
+                        <span class="meta">Posted on Sun 09 April 2017
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>You may read all these books and tutorials that tell you - test your code!
+This blog post is to help you test your django mixins.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#why-is-it-worth-to-test-mixins" id="id1">Why is it worth to test mixins?</a></li>
+<li><a class="reference internal" href="#how-to-test-mixins" id="id2">How to test mixins?</a></li>
+</ul>
+</div>
+<div class="section" id="why-is-it-worth-to-test-mixins">
+<h2><a class="toc-backref" href="#id1">Why is it worth to test mixins?</a></h2>
+<p>You come to django world and you discover mixins - at the beginning, you think
+it awesome! Let write more of those!</p>
+<p>So you write this self-contained mixin - right now there is a time
+to test it. It can assure that your piece of code works as expected and can save
+you a lot of trouble.</p>
+<p>Ok, you are ready to write some test. How to do it?</p>
+</div>
+<div class="section" id="how-to-test-mixins">
+<h2><a class="toc-backref" href="#id2">How to test mixins?</a></h2>
+<p>Imagine that you have this simple <tt class="docutils literal">TemplateView</tt> with mixin:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">TemplateView</span>
+
+<span class="k">class</span> <span class="nc">SomethingMixin</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">get_context_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">SomethingMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">context</span><span class="p">[</span><span class="s1">&#39;has_something&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="n">context</span>
+
+<span class="k">class</span> <span class="nc">ExampleTemplateView</span><span class="p">(</span><span class="n">SomethingMixin</span><span class="p">,</span> <span class="n">TemplateView</span><span class="p">):</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;example.html&#39;</span>
+</pre></div>
+<p><tt class="docutils literal">SomethingMixin</tt> is adding a new key to the context. Let's write some
+tests:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">SimpleTestCase</span>
+<span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">TemplateView</span>
+<span class="kn">from</span> <span class="nn">.views</span> <span class="kn">import</span> <span class="n">SomethingMixin</span>
+
+
+<span class="k">class</span> <span class="nc">SomethingMixinTest</span><span class="p">(</span><span class="n">SimpleTestCase</span><span class="p">):</span>
+
+    <span class="k">class</span> <span class="nc">DummyView</span><span class="p">(</span><span class="n">SomethingMixin</span><span class="p">,</span> <span class="n">TemplateView</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">test_something_mixin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dummy_view</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DummyView</span><span class="p">()</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">dummy_view</span><span class="o">.</span><span class="n">get_context_data</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;has_something&#39;</span><span class="p">])</span>
+</pre></div>
+<p>I created a simple empty <tt class="docutils literal">DummyView</tt> to use <tt class="docutils literal">SomethingMixin</tt>.
+I'm using only <tt class="docutils literal">TemplateView</tt> because I don't need more advanced
+views to test if a key is in context. In <tt class="docutils literal">test_something_mixin</tt> I
+instantiate <tt class="docutils literal">dummy_view</tt>. Then take context test if it has a key that I'm
+interested in.</p>
+<p>And that's all! I have my mixin tested. Of course, if mixin become
+more and more complex you may need more tests.</p>
+<p>Feel free to comment! Examples based on this <a class="reference external" href="https://gist.github.com/dnmellen/6507189">gist</a>.</p>
+<p>Cover image from <a class="reference external" href="https://unsplash.com/search/framework?photo=CpHNKNRwXps">Unsplash</a> under
+<a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/testing.html">testing</a>, <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/mixins.html">mixins</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

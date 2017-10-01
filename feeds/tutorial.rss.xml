@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - tutorial</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 13 Nov 2016 09:00:00 +0100</lastBuildDate><item><title>JSON Web Tokens in django application- part four</title><link>https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-four.html</link><description>&lt;p&gt;&lt;strong&gt;When I started this series I have got one comment from my co-worker that
+instead of authentication JWT can be used to sign one time links. After
+reading through the documentation I found that can be a great idea so I
+decided to write a blog post about it.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 13 Nov 2016 09:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-11-13:/blog/2016/jwt-in-django-application-part-four.html</guid><category>django</category><category>tutorial</category></item><item><title>JSON Web Tokens in django application- part three</title><link>https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-three.html</link><description>&lt;p&gt;&lt;strong&gt;As we have working application now it's high time to make it more secure by
+authenticating users. To do this I will use JSON Web Tokens.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#jwt-in-django-rest-framework" id="id1"&gt;JWT in Django Rest Framework&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#implementing-jwt-in-drf-application" id="id2"&gt;Implementing JWT in DRF application&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id3"&gt;Other blog posts in this series&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="jwt-in-django-rest-framework"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;JWT in Django Rest Framework …&lt;/a&gt;&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 30 Oct 2016 09:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-10-30:/blog/2016/jwt-in-django-application-part-three.html</guid><category>django</category><category>tutorial</category></item><item><title>JSON Web Tokens in django application- part two</title><link>https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-two.html</link><description>&lt;p&gt;&lt;strong&gt;In this blog post, I will deal with creating simple Django application for
+creating tasks using django rest framework.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;From this blog post, you can learn how to setup basic DRF application.&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#overview-of-application" id="id1"&gt;Overview of application&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#application-code" id="id2"&gt;Application code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id3"&gt;Other blog posts in this series&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="overview-of-application"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Overview of application&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 23 Oct 2016 09:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-10-23:/blog/2016/jwt-in-django-application-part-two.html</guid><category>django</category><category>tutorial</category></item></channel></rss>

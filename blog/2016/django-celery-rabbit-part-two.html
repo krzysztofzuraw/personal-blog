@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Django + Celery &amp; Rabbit - part two</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Second part of series about Django application with Celery and RabbitMQ.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="celery">
+        <meta name="tags" content="rabbit">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-two.html">
+	<meta property="og:title" content="Django + Celery &amp; Rabbit - part two">
+	<meta property="article:published_time" content="2016-03-05 10:20:00+01:00">
+            <meta property="og:description" content="Second part of series about Django application with Celery and RabbitMQ.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/celery.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/celery.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Django + Celery &amp; Rabbit - part two" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/celery.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/celery.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Django + Celery &amp; Rabbit - part two</h1>
+                        <span class="meta">Posted on Sat 05 March 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Hello, today post is the second one in series about Celery in Django.
+Today I write about</strong> <a class="reference external" href="https://www.ffmpeg.org/">ffmpeg</a>.</p>
+<p>In my application transcoding will be performed by ffmpeg. Why is that?</p>
+<p>First of all, it's free &amp; open source. So I don't have to pay to use it
+and I like using the open source tools. Second thing is that ffmpeg is
+more than enough for my task. It has a lot of features including
+recording, streaming and transcoding both video and audio.</p>
+<p>So how to use it? For this project, the ffmpeg needs to be compiled with
+libmp3lame for mp3 files encoding, libvorbis for ogg format and enabled
+non-free for ac3. There is
+<a class="reference external" href="https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#ffmpeg">guide</a>
+on ffmpeg site how to compile ffmpeg build. Also, make sure that you
+have cookies and tea with you while installation can take even 30
+minutes.</p>
+<p>After everything is setup all you need to do is:</p>
+<div class="highlight"><pre><span></span>$ ffmpeg -i mp3_file.mp3 wav_file.wav
+$ ffmpeg -i mp3_file.mp3 ogg_file.ogg
+$ ffmpeg -i mp3_file.mp3 ac3_file.ac3
+</pre></div>
+<p>The code above will transcode mp3 files into provided format. In my
+application one celery task will be called with subprocess, then another
+celery task will save the output of the first task to django model. This
+is all for today post but next week I will be building the celery tasks
+and integrating them with django.</p>
+<p>Cover image that presents queue by <a class="reference external" href="https://pixabay.com/pl/users/aykapog-185475/">Aykapog</a> under <a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/celery.html">celery</a>, <a href="https://krzysztofzuraw.com/tag/rabbit.html">rabbit</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

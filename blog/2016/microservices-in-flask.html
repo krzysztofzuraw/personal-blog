@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Microservices in Flask</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="English version of my talk about microservices">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="flask">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/microservices-in-flask.html">
+	<meta property="og:title" content="Microservices in Flask">
+	<meta property="article:published_time" content="2016-10-09 09:00:00+02:00">
+            <meta property="og:description" content="English version of my talk about microservices">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/system.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/system.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Microservices in Flask" />
+            <meta name="twitter:description" content="English version of my talk about microservices" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/system.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/system.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Microservices in Flask</h1>
+                            <h3 class="subheading" >English version of my talk about microservices</h3>
+                        <span class="meta">Posted on Sun 09 October 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>I recently gave a talk about microservices in Flask on</strong> <a class="reference external" href="http://www.meetup.com/wrocpy/">Wrocpy</a>.
+<strong>This blog post is a translation of that talk into English.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#monolithic-application" id="id6">Monolithic application</a></li>
+<li><a class="reference internal" href="#flask-microservices" id="id7">Flask microservices</a><ul>
+<li><a class="reference internal" href="#flask-script" id="id8">Flask-Script</a></li>
+<li><a class="reference internal" href="#flask-restful" id="id9">Flask-RESTful</a></li>
+<li><a class="reference internal" href="#marshallow-flask-marshallow" id="id10">Marshallow &amp; flask-marshallow</a></li>
+<li><a class="reference internal" href="#flask-sqlalchemy" id="id11">Flask-SQLAlchemy</a></li>
+<li><a class="reference internal" href="#flask-migrate" id="id12">Flask-Migrate</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing" id="id13">Testing</a></li>
+<li><a class="reference internal" href="#deployment" id="id14">Deployment</a><ul>
+<li><a class="reference internal" href="#puppet" id="id15">Puppet</a></li>
+<li><a class="reference internal" href="#cookiecutter" id="id16">Cookiecutter</a></li>
+<li><a class="reference internal" href="#dh-virtualenv" id="id17">Dh-virtualenv</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="monolithic-application">
+<h2><a class="toc-backref" href="#id6">Monolithic application</a></h2>
+<p>Microservices talk usually starts with a monolithic application. In my case, it is the same. I work
+on a project where I have a big monolithic application. If I wanted to take some part of it and make
+some microservice from for instance django app it would be impossible. There are too many internal
+imports from every part of application:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">app.users.models</span> <span class="kn">import</span> <span class="n">UserSiteProfile</span>
+<span class="kn">from</span> <span class="nn">app.utils.cache</span> <span class="kn">import</span> <span class="n">cache_key_user</span>
+<span class="kn">from</span> <span class="nn">app.sites.models</span> <span class="kn">import</span> <span class="n">SiteProfile</span>
+<span class="kn">from</span> <span class="nn">app.sites.utils</span> <span class="kn">import</span> <span class="n">site_terms</span>
+<span class="kn">from</span> <span class="nn">app.utils.users</span> <span class="kn">import</span> <span class="n">get_homepage_url</span>
+<span class="kn">from</span> <span class="nn">app.utils.views</span> <span class="kn">import</span> <span class="n">ThemedFormView</span><span class="p">,</span> <span class="n">ThemedTemplateView</span>
+<span class="kn">from</span> <span class="nn">app.authentication</span> <span class="kn">import</span> <span class="n">signals</span>
+<span class="kn">from</span> <span class="nn">app.authentication.forms</span> <span class="kn">import</span> <span class="n">AuthForm</span><span class="p">,</span> <span class="n">EmailForm</span>
+<span class="kn">from</span> <span class="nn">app.authentication.idp</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">is_valid_idp</span><span class="p">,</span> <span class="n">MultipleIDPError</span><span class="p">,</span> <span class="n">saml_available</span><span class="p">,</span>
+    <span class="n">site_idp</span><span class="p">,</span> <span class="n">user_idp_lookup</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">app.authentication.loginchecks</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">check_account_expiration</span><span class="p">,</span> <span class="n">get_site_login_errors</span><span class="p">,</span>
+    <span class="n">pre_login_checks</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">app.saml.utils</span> <span class="kn">import</span> <span class="n">site_specific_config_loader</span>
+<span class="kn">from</span> <span class="nn">app.saml.views</span> <span class="kn">import</span> <span class="n">_get_subject_id</span>
+</pre></div>
+<p>Snippet from above presents exemplary imports of random python module in my project.</p>
+<p>So where are these microservices? In my team, we decided to have <strong>new</strong> parts of the application made
+as a microservices. So right now from the architectural point of view I have a big monolithic application
+and small microservices that are around this big thing, like in this picture:</p>
+<img alt="Microservices in my project" src="/images/planets.jpg" />
+<p>Picture from <a class="reference external" href="http://pics-about-space.com/solar-system-gif-animation?p=1#">link</a>.</p>
+</div>
+<div class="section" id="flask-microservices">
+<h2><a class="toc-backref" href="#id7">Flask microservices</a></h2>
+<p>We choose the <a class="reference external" href="http://flask.pocoo.org/">flask</a> as a tool that will be used in our microservices.
+It doesn't set any boundaries and it's flexible but don't have <em>batteries included</em>. Let's start with the
+first flask extension that helps us building microservices:</p>
+<div class="section" id="flask-script">
+<h3><a class="toc-backref" href="#id8">Flask-Script</a></h3>
+<p>Django has a set of powerful commands available. To enable such a feature in flask you need
+<a class="reference external" href="flask-script.readthedocs.io/en/latest/">Flask-Script</a>. It allows you to create commands
+such as <tt class="docutils literal">runserver</tt> or <tt class="docutils literal">shell</tt>. In listing below I created a runserver command:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask.ext.script</span> <span class="kn">import</span> <span class="n">Manager</span><span class="p">,</span> <span class="n">Shell</span><span class="p">,</span> <span class="n">Server</span>
+<span class="kn">from</span> <span class="nn">my_app.application</span> <span class="kn">import</span> <span class="n">app</span>
+
+<span class="n">manager</span> <span class="o">=</span> <span class="n">Manager</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+<span class="n">manager</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span>
+    <span class="s1">&#39;runserver&#39;</span><span class="p">,</span>
+    <span class="n">Server</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">7000</span><span class="p">,</span> <span class="n">use_debugger</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="flask-restful">
+<h3><a class="toc-backref" href="#id9">Flask-RESTful</a></h3>
+<p>To communicate between microservices I use REST. To ease yourself when creating resources
+and endpoints you can use <a class="reference external" href="flask-restful.readthedocs.io/en/0.3.5/">Flask-RESTful</a>. It is
+superuseful when you need to create REST API. It is easy- you specify endpoint with
+resource and rest is done by Flask-RESTful. It also has request parsing and it is very easy
+to create other representations like xml. The snippet below shows it:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask_restful</span> <span class="kn">import</span> <span class="n">Resource</span>
+
+<span class="k">class</span> <span class="nc">MyResource</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;OK&#39;</span><span class="p">}</span>
+<span class="nd">@api.representation</span><span class="p">(</span><span class="s1">&#39;application/xml&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">output_xml</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">make_response</span><span class="p">(</span><span class="n">dicttoxml</span><span class="o">.</span><span class="n">dicttoxml</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">code</span><span class="p">)</span>
+    <span class="n">inject_headers</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span>
+</pre></div>
+</div>
+<div class="section" id="marshallow-flask-marshallow">
+<h3><a class="toc-backref" href="#id10">Marshallow &amp; flask-marshallow</a></h3>
+<p>To serialize or deserialize objects you can use <a class="reference external" href="https://flask-marshmallow.readthedocs.io/en/latest/">flask-marshallow</a>.
+In code below, I created a simple <tt class="docutils literal">Schema</tt> with id, name and url. Then when the user enters <tt class="docutils literal">/api/custom/1</tt> I can
+easily serialize objects from a database and return JSON.</p>
+<div class="highlight"><pre><span></span><span class="n">ma</span> <span class="o">=</span> <span class="n">Marshmallow</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CustomSchema</span><span class="p">(</span><span class="n">ma</span><span class="o">.</span><span class="n">Schema</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="n">dump_only</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">Str</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">ma</span><span class="o">.</span><span class="n">Url</span><span class="p">(</span><span class="n">relative</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+
+    <span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/api/custom/&lt;id&gt;&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">users</span><span class="p">():</span>
+        <span class="n">all_obj</span> <span class="o">=</span> <span class="n">Object</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">object_schema</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">all_obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="flask-sqlalchemy">
+<h3><a class="toc-backref" href="#id11">Flask-SQLAlchemy</a></h3>
+<p>Most of the modern frameworks have support for ORM- the same is with Flask. There is an extension called <a class="reference external" href="http://flask-sqlalchemy.pocoo.org/2.1/">Flask-SQLAchemy</a>
+that adds support for <a class="reference external" href="http://www.sqlalchemy.org/">SQLAlchemy</a>. Take this snippet for instance:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask.ext.sqlalchemy</span> <span class="kn">import</span> <span class="n">SQLAlchemy</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">SQLAlchemy</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">GROUP</span> <span class="o">=</span> <span class="s1">&#39;group&#39;</span>
+    <span class="n">USER</span> <span class="o">=</span> <span class="s1">&#39;user&#39;</span>
+    <span class="n">TYPES</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">GROUP</span><span class="p">,</span> <span class="n">GROUP</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">USER</span><span class="p">,</span> <span class="n">USER</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;my_model&#39;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">model_type</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">ChoiceType</span><span class="p">(</span><span class="n">TYPES</span><span class="p">))</span>
+    <span class="n">model_value_id</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Integer</span><span class="p">,</span> <span class="n">db</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;model_value.id&#39;</span><span class="p">))</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="mi">1024</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_type</span><span class="p">,</span> <span class="n">model_value_id</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">share_type</span> <span class="o">=</span> <span class="n">share_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rule_value_id</span> <span class="o">=</span> <span class="n">rule_value_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+<p>I created <tt class="docutils literal">MyModel</tt> class that will be translated to the table in a database. I also add columns to that table like
+<tt class="docutils literal">model_type</tt>, <tt class="docutils literal">model_value_id</tt> or <tt class="docutils literal">value</tt>.</p>
+<p>Flask SQLAlchemy is layer sitting on top of SQLAlchemy so you can
+use all advantages of ORM like having queries written in python.</p>
+</div>
+<div class="section" id="flask-migrate">
+<h3><a class="toc-backref" href="#id12">Flask-Migrate</a></h3>
+<p>When your database keeps getting larger there is a need for database migrations to make sure that everyone has the
+same database structure. To accomplish that we use <a class="reference external" href="flask-migrate.readthedocs.io/en/latest/">Flask-Migrate</a>.
+It is using <a class="reference external" href="http://alembic.zzzcomputing.com/en/latest/">Alembic</a> under the hood so you have to make sure that
+adjust your migration files after generation. Example migration file can look as follows:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">upgrade</span><span class="p">():</span>
+    <span class="n">op</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span>
+        <span class="s1">&#39;my_model&#39;</span><span class="p">,</span>
+        <span class="n">sa</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">sa</span><span class="o">.</span><span class="n">Integer</span><span class="p">(),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">sa</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span>
+            <span class="s1">&#39;model_type&#39;</span><span class="p">,</span>
+            <span class="n">sqlalchemy_utils</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">ChoiceType</span><span class="p">(</span><span class="n">TYPES</span><span class="p">),</span>
+            <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span>
+        <span class="p">),</span>
+        <span class="n">sa</span><span class="o">.</span><span class="n">PrimaryKeyConstraint</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">),</span>
+        <span class="n">sa</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">sa</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">op</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span>
+        <span class="s1">&#39;my_model_values&#39;</span><span class="p">,</span>
+        <span class="n">sa</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">sa</span><span class="o">.</span><span class="n">Integer</span><span class="p">(),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+        <span class="n">sa</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s1">&#39;model_value_id&#39;</span><span class="p">,</span> <span class="n">sa</span><span class="o">.</span><span class="n">Integer</span><span class="p">(),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+        <span class="n">sa</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="n">sa</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+        <span class="n">sa</span><span class="o">.</span><span class="n">ForeignKeyConstraint</span><span class="p">([</span><span class="s1">&#39;model_value_id&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;my_model.id&#39;</span><span class="p">]),</span>
+        <span class="n">sa</span><span class="o">.</span><span class="n">PrimaryKeyConstraint</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+<p>In snipped above I created two tables: <tt class="docutils literal">my_model</tt> and <tt class="docutils literal">my_model_values</tt> with respective columns. Also
+<tt class="docutils literal">my_model_values</tt> has <tt class="docutils literal">ForeignKey</tt> relation to <tt class="docutils literal">my_model</tt> by their ids.</p>
+</div>
+</div>
+<div class="section" id="testing">
+<h2><a class="toc-backref" href="#id13">Testing</a></h2>
+<p>During the development of microservices, we write unit tests as well as integration ones. Testing how well
+microservices behave with each other can be tricky: we mock whole external services. Because of that,
+we need to keep them up to date with real microservices. Nature of this system causes some difficulties
+while an error occurs: I got an error from external microservice in most cases with a form of HTTP status code and
+a small message in JSON or XML. Then I need to debug not only my microservice but also external one.</p>
+</div>
+<div class="section" id="deployment">
+<h2><a class="toc-backref" href="#id14">Deployment</a></h2>
+<p>After testing is done we deploy microservice using few tools:</p>
+<div class="section" id="puppet">
+<h3><a class="toc-backref" href="#id15">Puppet</a></h3>
+<p>We use puppet for managing and provisioning our microservices. Especially we use an R10k module for puppet:
+<a class="reference external" href="https://github.com/puppetlabs/r10k">gtihub link</a>.</p>
+</div>
+<div class="section" id="cookiecutter">
+<h3><a class="toc-backref" href="#id16">Cookiecutter</a></h3>
+<p>To make sure that every microservice has the same structure we also use <a class="reference external" href="https://github.com/audreyr/cookiecutter">cookiecutter</a>.
+Thanks to that puppet knows that config file is always in this location or there will be logs stored there. Example
+microservice structure will look as follows:</p>
+<div class="highlight"><pre><span></span>└── flask_microservice
+    ├── AUTHORS.rst
+    ├── debian
+    ├── docs
+    │   ├── make.bat
+    │   ├── Makefile
+    │   └── <span class="nb">source</span>
+    │       ├── authors.rst
+    │       ├── conf.py
+    │       ├── contributing.rst
+    │       ├── history.rst
+    │       ├── index.rst
+    │       ├── readme.rst
+    │       ├── technical_details.rst
+    │       └── usage.rst
+    <span class="p">|</span>── HISTORY.rst
+    ├── MANIFEST.in
+    ├── README.rst
+        ├── requirements.txt
+        ├── setup.cfg
+        ├── setup.py
+        ├── src
+        │   ├── flask_microservice
+        │   │   ├── application.py
+        │   │   ├── default_config.ini
+        │   │   ├── __init__.py
+        │   │   └── manage.py
+        │   └── tests
+        │       ├── conftest.py
+        │       └── test_flask_microservice.py
+        └── tox.ini
+</pre></div>
+</div>
+<div class="section" id="dh-virtualenv">
+<h3><a class="toc-backref" href="#id17">Dh-virtualenv</a></h3>
+<p>To distribute packages we use <a class="reference external" href="dh-virtualenv.readthedocs.io/en/latest/">dh-virtualenv</a>. This basically
+is taking python virtual enviroments and packing it to deb packages. So to have new code released we just
+run jenkins job to create new deb.</p>
+<p>That's all for today! The slides from this presentation can be found here: <a class="reference external" href="http://www.slideshare.net/Krzysztofuraw/wrocpy-32-microservices-in-flask">presentation</a>.
+Do you also use flask to build microservices? Please give your comments about that.</p>
+<p>Special thanks to Kasia for being editor for this post. Thank you.</p>
+<p>Cover image  by <a class="reference external" href="https://commons.wikimedia.org/w/index.php?curid=48413935">NASA JPL - Nasa JPL</a> under <a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0 Public Domain</a>.</p>
+</div>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/flask.html">flask</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

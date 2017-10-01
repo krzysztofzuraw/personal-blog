@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Python &amp; WebDAV- part one</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="What is WebDAV and setting up such sever">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="owncloud">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/python-webdav-part-one.html">
+	<meta property="og:title" content="Python &amp; WebDAV- part one">
+	<meta property="article:published_time" content="2016-09-11 10:00:00+02:00">
+            <meta property="og:description" content="What is WebDAV and setting up such sever">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/filesystem.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/filesystem.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Python &amp; WebDAV- part one" />
+            <meta name="twitter:description" content="What is WebDAV and setting up such sever" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/filesystem.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/filesystem.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Python &amp; WebDAV- part one</h1>
+                            <h3 class="subheading" >What is WebDAV and setting up such sever</h3>
+                        <span class="meta">Posted on Sun 11 September 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>I must confess I was ignorant. Recently I saw an application done by my
+colleague at work and it was using python WebDAV client. I was intrigued
+because for me WebDAV was connected with calendars (CalDAV) and contacts (CardDAV).
+And there I have WebDAV which is filesystem.</strong></p>
+<p><strong>I decided to write this blog post about it
+for better understanding what it is. This is the first part of blog series about this
+extension to HTTP.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-webdav-and-what-is-it-useful-for" id="id1">What is WebDAV and what is it useful for?</a></li>
+<li><a class="reference internal" href="#setting-up-your-own-webdav-server" id="id2">Setting up your own WebDAV server</a></li>
+</ul>
+</div>
+<div class="section" id="what-is-webdav-and-what-is-it-useful-for">
+<h2><a class="toc-backref" href="#id1">What is WebDAV and what is it useful for?</a></h2>
+<p>From <a class="reference external" href="https://en.wikipedia.org/wiki/WebDAV">wikipedia</a>:</p>
+<blockquote>
+<p>Web Distributed Authoring and Versioning (WebDAV) is an extension of the Hypertext Transfer Protocol (HTTP)
+that allows clients to perform remote Web content authoring operations. (...)</p>
+<p>The WebDAV protocol provides a framework for users to create, change and move documents on a server, typically a web server or web share.</p>
+</blockquote>
+<p>In other words users that work with the server that implements WebDAV can share, move and edit files
+through a web server. There is also a way to lock
+file or get a specific revision of it. WebDAV is supported by many client applications like Windows
+Explorer or Nautilus. It is similar to another protocol- FTP. FTP is faster, but it doesn't run on top of
+HTTP. WebDAV also support SSL and authentication.</p>
+<p>CardDAV and CalDAV are extensions to WebDAV that enable client/server address book and to accessing the calendar
+on the remote server.</p>
+</div>
+<div class="section" id="setting-up-your-own-webdav-server">
+<h2><a class="toc-backref" href="#id2">Setting up your own WebDAV server</a></h2>
+<p>I will set up basic WebDAV server using <a class="reference external" href="https://owncloud.com/">owncloud</a>. Owncloud is a self-hosted solution for the cloud.
+In addition to this owncloud provides WebDAV server that I will use in the next blog post.</p>
+<p>On owncloud download <a class="reference external" href="https://owncloud.org/install/#instructions-server">page</a>, there is a lot of options to choose from
+but I choose appliances tab with
+OVA (open virtual application) <a class="reference external" href="http://download.owncloud.org/community/production/vm/Ubuntu_14.04-owncloud-9.1.0-1.1-201609011525.ova.zip">image</a> for
+<a class="reference external" href="https://www.virtualbox.org/">VirtualBox</a>.
+Installation is really simple just follow this <a class="reference external" href="https://doc.owncloud.org/server/8.0/admin_manual/installation/appliance_installation.html">manual</a>.</p>
+<p>After a while, you will have working owncloud served from VirtualBox. Now it's time to play with WebDAV server.
+To check if this is working I will use CURL:</p>
+<div class="highlight"><pre><span></span>$ curl --user user:password <span class="s1">&#39;http://localhost:8888/owncloud/remote.php/webdav/&#39;</span>
+This is the WebDAV interface. It can only be accessed by WebDAV clients such as the ownCloud desktop sync client.⏎
+</pre></div>
+<p>To get properties about root folder:</p>
+<div class="highlight"><pre><span></span>$ curl --user user:password --include --request PROPFIND --header <span class="s2">&quot;Depth: 1&quot;</span> <span class="s1">&#39;http://localhost:8888/owncloud/remote.php/webdav&#39;</span>
+&lt;?xml <span class="nv">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span>?&gt;
+&lt;d:multistatus xmlns:d<span class="o">=</span><span class="s2">&quot;DAV:&quot;</span> xmlns:s<span class="o">=</span><span class="s2">&quot;http://sabredav.org/ns&quot;</span> xmlns:oc<span class="o">=</span><span class="s2">&quot;http://owncloud.org/ns&quot;</span>&gt;
+ &lt;d:response&gt;
+  &lt;d:href&gt;/owncloud/remote.php/webdav/&lt;/d:href&gt;
+  &lt;d:propstat&gt;
+   &lt;d:prop&gt;
+    &lt;d:getlastmodified&gt;Thu, <span class="m">08</span> Sep <span class="m">2016</span> <span class="m">04</span>:22:23 GMT&lt;/d:getlastmodified&gt;
+    &lt;d:resourcetype&gt;
+     &lt;d:collection/&gt;
+    &lt;/d:resourcetype&gt;
+    &lt;d:quota-used-bytes&gt;4756701&lt;/d:quota-used-bytes&gt;
+    &lt;d:quota-available-bytes&gt;-3&lt;/d:quota-available-bytes&gt;
+    &lt;d:getetag&gt;<span class="p">&amp;</span>quot<span class="p">;</span>57d0e77f723e4<span class="p">&amp;</span>quot<span class="p">;</span>&lt;/d:getetag&gt;
+   &lt;/d:prop&gt;
+   &lt;d:status&gt;HTTP/1.1 <span class="m">200</span> OK&lt;/d:status&gt;
+  &lt;/d:propstat&gt;
+ &lt;/d:response&gt;
+ &lt;d:response&gt;
+  &lt;d:href&gt;/owncloud/remote.php/webdav/Documents/&lt;/d:href&gt;
+  &lt;d:propstat&gt;
+   &lt;d:prop&gt;
+    &lt;d:getlastmodified&gt;Thu, <span class="m">08</span> Sep <span class="m">2016</span> <span class="m">04</span>:22:23 GMT&lt;/d:getlastmodified&gt;
+    &lt;d:resourcetype&gt;
+     &lt;d:collection/&gt;
+    &lt;/d:resourcetype&gt;
+    &lt;d:quota-used-bytes&gt;36227&lt;/d:quota-used-bytes&gt;
+    &lt;d:quota-available-bytes&gt;-3&lt;/d:quota-available-bytes&gt;
+    &lt;d:getetag&gt;<span class="p">&amp;</span>quot<span class="p">;</span>57d0e77f4b534<span class="p">&amp;</span>quot<span class="p">;</span>&lt;/d:getetag&gt;
+   &lt;/d:prop&gt;
+   &lt;d:status&gt;HTTP/1.1 <span class="m">200</span> OK&lt;/d:status&gt;
+  &lt;/d:propstat&gt;
+ &lt;/d:response&gt;
+ &lt;d:response&gt;
+  &lt;d:href&gt;/owncloud/remote.php/webdav/Photos/&lt;/d:href&gt;
+  &lt;d:propstat&gt;
+   &lt;d:prop&gt;
+    &lt;d:getlastmodified&gt;Thu, <span class="m">08</span> Sep <span class="m">2016</span> <span class="m">04</span>:22:23 GMT&lt;/d:getlastmodified&gt;
+    &lt;d:resourcetype&gt;
+     &lt;d:collection/&gt;
+    &lt;/d:resourcetype&gt;
+    &lt;d:quota-used-bytes&gt;678556&lt;/d:quota-used-bytes&gt;
+    &lt;d:quota-available-bytes&gt;-3&lt;/d:quota-available-bytes&gt;
+    &lt;d:getetag&gt;<span class="p">&amp;</span>quot<span class="p">;</span>57d0e77f69116<span class="p">&amp;</span>quot<span class="p">;</span>&lt;/d:getetag&gt;
+   &lt;/d:prop&gt;
+   &lt;d:status&gt;HTTP/1.1 <span class="m">200</span> OK&lt;/d:status&gt;
+  &lt;/d:propstat&gt;
+ &lt;/d:response&gt;
+ &lt;d:response&gt;
+  &lt;d:href&gt;/owncloud/remote.php/webdav/ownCloud%20Manual.pdf&lt;/d:href&gt;
+  &lt;d:propstat&gt;
+   &lt;d:prop&gt;
+    &lt;d:getlastmodified&gt;Thu, <span class="m">08</span> Sep <span class="m">2016</span> <span class="m">04</span>:22:23 GMT&lt;/d:getlastmodified&gt;
+    &lt;d:getcontentlength&gt;4041918&lt;/d:getcontentlength&gt;
+    &lt;d:resourcetype/&gt;
+    &lt;d:getetag&gt;<span class="p">&amp;</span>quot<span class="p">;</span>1951114eecb977f35fb154c06dcfc4e0<span class="p">&amp;</span>quot<span class="p">;</span>&lt;/d:getetag&gt;
+    &lt;d:getcontenttype&gt;application/pdf&lt;/d:getcontenttype&gt;
+   &lt;/d:prop&gt;
+   &lt;d:status&gt;HTTP/1.1 <span class="m">200</span> OK&lt;/d:status&gt;
+  &lt;/d:propstat&gt;
+ &lt;/d:response&gt;
+&lt;/d:multistatus&gt;
+</pre></div>
+<p>That's all for this post! Next week as I got my server running I will be looking
+into python library for WebDAV. Feel free to comment- I really appreciate your
+feedback.</p>
+<p>Other blog posts in this series:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/python-webdav-part-two.html">Python &amp; WebDAV- part two</a></li>
+</ul>
+<p>Special thanks to Kasia for being editor for this post. Thank you.</p>
+<p>Cover image by <a class="reference external" href="https://www.flickr.com/photos/kleuske/">kleuske</a> under <a class="reference external" href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/owncloud.html">owncloud</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

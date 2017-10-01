@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Testing React form components</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Notes to myself about testing react form components">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="react">
+        <meta name="tags" content="javascript">
+        <meta name="tags" content="testing">
+        <meta name="tags" content="components">
+        <meta name="tags" content="form">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2017/testing-react-form-components.html">
+	<meta property="og:title" content="Testing React form components">
+	<meta property="article:published_time" content="2017-06-11 10:00:00+02:00">
+            <meta property="og:description" content="Notes to myself about testing react form components">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/react.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/react.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Testing React form components" />
+            <meta name="twitter:description" content="Notes to myself about testing react form components" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/react.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/react.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Testing React form components</h1>
+                            <h3 class="subheading" >Notes to myself about testing react form components</h3>
+                        <span class="meta">Posted on Sun 11 June 2017
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>In this blog post, I will present quick code snippets on how to
+test your React component. Especially the one that renders the form.</strong></p>
+<p>My history with writing React application starts from an excellent course by
+<a class="reference external" href="https://reactforbeginners.com/">Wes Bos</a>. So I completed this course and
+with bright future ahead of me I start to create my first own React based
+project.</p>
+<p>I decided that I will create simple podcast search and player. So I created this
+two components:</p>
+<p><tt class="docutils literal">App</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">App</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+
+<span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kr">super</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">addPodcast</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">addPodcast</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">state</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">podcasts</span><span class="o">:</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="nx">addPodcast</span> <span class="p">(</span><span class="nx">podcast</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">podcasts</span> <span class="o">=</span> <span class="p">{</span> <span class="p">...</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">podcasts</span> <span class="p">};</span>
+    <span class="kr">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
+    <span class="nx">podcasts</span><span class="p">[</span><span class="sb">`podcast-</span><span class="si">${</span><span class="nx">timestamp</span><span class="si">}</span><span class="sb">`</span><span class="p">]</span> <span class="o">=</span> <span class="nx">podcast</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span> <span class="nx">podcasts</span> <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">render</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;App&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">SearchPodcastForm</span> <span class="nx">addPodcast</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">addPodcast</span><span class="p">}</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p><tt class="docutils literal">SearchPodcastForm</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">SearchPodcastForm</span> <span class="kr">extends</span> <span class="nx">Component</span> <span class="p">{</span>
+
+<span class="nx">searchForPodcast</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="kr">const</span> <span class="nx">podcastTitle</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">refs</span><span class="p">.</span><span class="nx">title</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+    <span class="nx">axios</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="sb">`https://gpodder.net/search.json?q=</span><span class="si">${</span><span class="nb">encodeURIComponent</span><span class="p">(</span><span class="nx">podcastTitle</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">podcast</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">addPodcast</span><span class="p">(</span><span class="nx">podcast</span><span class="p">));</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">render</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">form</span> <span class="nx">className</span><span class="o">=</span><span class="s1">&#39;podcast-search&#39;</span> <span class="nx">onSubmit</span><span class="o">=</span><span class="p">{(</span><span class="nx">e</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">searchForPodcast</span><span class="p">(</span><span class="nx">e</span><span class="p">)}</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">ref</span><span class="o">=</span><span class="s1">&#39;title&#39;</span> <span class="nx">type</span><span class="o">=</span><span class="s1">&#39;text&#39;</span> <span class="nx">placeholder</span><span class="o">=</span><span class="s1">&#39;Type name of podcast&#39;</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">type</span><span class="o">=</span><span class="s1">&#39;submit&#39;</span><span class="o">&gt;</span><span class="nx">Search</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+    <span class="o">&lt;</span><span class="err">/form&gt;</span>
+    <span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>And here comes the question: how do I test these two components? I'm using
+<a class="reference external" href="https://github.com/facebookincubator/create-react-app">create-app-react</a> so I already have
+<a class="reference external" href="https://facebook.github.io/jest/">jest</a>.</p>
+<p>Ok, I can start from this. So I create my <tt class="docutils literal">SearchPodcastForm.test.jsx</tt>. But that is not everything!
+To ease a little a bit testing I used two libraries more: <a class="reference external" href="https://github.com/airbnb/enzyme">enzyme</a>
+and <a class="reference external" href="http://sinonjs.org/">sinon</a>. Why? as jest tests are executed inside node environment so I need
+a way to create React components - for that I used <tt class="docutils literal">enzyme</tt>. It can be done this way:</p>
+<div class="highlight"><pre><span></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">mount</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;enzyme&#39;</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">addPodcastMock</span> <span class="o">=</span> <span class="nx">jest</span><span class="p">.</span><span class="nx">fn</span><span class="p">();</span>
+<span class="kr">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nx">mount</span><span class="p">(</span>
+    <span class="o">&lt;</span><span class="nx">SearchPodcastForm</span> <span class="nx">addPodcast</span><span class="o">=</span><span class="p">{</span><span class="nx">addPodcastMock</span><span class="p">}</span> <span class="o">/&gt;</span>
+<span class="p">);</span>
+</pre></div>
+<p>Why <tt class="docutils literal">mount</tt>? To submit a form I need first to mount my component. As it is mounted I can submit it via:</p>
+<div class="highlight"><pre><span></span><span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">).</span><span class="nx">simulate</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">preventDefault</span><span class="o">:</span> <span class="nx">jest</span><span class="p">.</span><span class="nx">fn</span><span class="p">()</span> <span class="p">});</span>
+</pre></div>
+<p>The code above should be self-explanatory but interesting is that I passed <tt class="docutils literal">{ preventDefault: jest.fn() }</tt>.
+It is jest mock object which is then passed to my <tt class="docutils literal">searchForPodcast</tt> as an event argument.</p>
+<p>This works fine but next line in <tt class="docutils literal">searchForPodcast</tt> require that <tt class="docutils literal">this.refs</tt> will be present so I had to
+set them up in a test:</p>
+<div class="highlight"><pre><span></span><span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">node</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s1">&#39;This American Life&#39;</span><span class="p">;</span>
+</pre></div>
+<p>The last thing to mock within this method is a call to external service. How to do that? By using <tt class="docutils literal">sinon</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kr">import</span> <span class="nx">sinon</span> <span class="nx">from</span> <span class="s1">&#39;sinon&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">resolved</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">r</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">({</span> <span class="nx">data</span><span class="o">:</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">from</span><span class="p">([{</span> <span class="mi">0</span><span class="o">:</span> <span class="p">{</span> <span class="nx">description</span><span class="o">:</span> <span class="s1">&#39;desc&#39;</span> <span class="p">}</span> <span class="p">}])</span> <span class="p">}));</span>
+<span class="nx">sinon</span><span class="p">.</span><span class="nx">stub</span><span class="p">(</span><span class="nx">axios</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">).</span><span class="nx">returns</span><span class="p">(</span><span class="nx">resolved</span><span class="p">);</span>
+</pre></div>
+<p>Everything works fine until I try to check if my <tt class="docutils literal">addPodcastMock</tt> from mounting snippet has been called. I
+add these lines:</p>
+<div class="highlight"><pre><span></span><span class="nx">expect</span><span class="p">(</span><span class="nx">addPodcastMock</span><span class="p">.</span><span class="nx">mock</span><span class="p">.</span><span class="nx">calls</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="nx">expect</span><span class="p">(</span><span class="nx">addPodcastMock</span><span class="p">.</span><span class="nx">mock</span><span class="p">.</span><span class="nx">calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toEqual</span><span class="p">([{</span> <span class="mi">0</span><span class="o">:</span> <span class="p">{</span> <span class="nx">description</span><span class="o">:</span> <span class="s1">&#39;desc&#39;</span> <span class="p">}</span> <span class="p">}]);</span>
+</pre></div>
+<p>And I got a failure. I try to debug it a little bit more and what I found out that these lines are called before
+even enzyme mounts a component. To allow my test to pass I had to execute mounting and mocking before all tests:</p>
+<div class="highlight"><pre><span></span><span class="nx">beforeAll</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">resolved</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">r</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">r</span><span class="p">({</span> <span class="nx">data</span><span class="o">:</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">from</span><span class="p">([{</span> <span class="mi">0</span><span class="o">:</span> <span class="p">{</span> <span class="nx">description</span><span class="o">:</span> <span class="s1">&#39;desc&#39;</span> <span class="p">}</span> <span class="p">}])</span> <span class="p">}));</span>
+    <span class="nx">sinon</span><span class="p">.</span><span class="nx">stub</span><span class="p">(</span><span class="nx">axios</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">).</span><span class="nx">returns</span><span class="p">(</span><span class="nx">resolved</span><span class="p">);</span>
+    <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">).</span><span class="nx">node</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s1">&#39;This American Life&#39;</span><span class="p">;</span>
+    <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;form&#39;</span><span class="p">).</span><span class="nx">simulate</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">preventDefault</span><span class="o">:</span> <span class="nx">jest</span><span class="p">.</span><span class="nx">fn</span><span class="p">()</span> <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+<p>Maybe you dear reader will know why and how to avoid executing <tt class="docutils literal">beforeAll</tt>?</p>
+<p>Going back to tests I wrote this small test by using <tt class="docutils literal">test</tt> word, you can use <tt class="docutils literal">describe</tt> as an indication of
+large test suite too:</p>
+<div class="highlight"><pre><span></span><span class="nx">test</span><span class="p">(</span><span class="s1">&#39;submitting form calls addPodcast&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">addPodcastMock</span><span class="p">.</span><span class="nx">mock</span><span class="p">.</span><span class="nx">calls</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">addPodcastMock</span><span class="p">.</span><span class="nx">mock</span><span class="p">.</span><span class="nx">calls</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="nx">toEqual</span><span class="p">([{</span> <span class="mi">0</span><span class="o">:</span> <span class="p">{</span> <span class="nx">description</span><span class="o">:</span> <span class="s1">&#39;desc&#39;</span> <span class="p">}</span> <span class="p">}]);</span>
+<span class="p">});</span>
+</pre></div>
+<p>The last test I got (right now) is for my <tt class="docutils literal">addPodcast</tt> method inside <tt class="docutils literal">App</tt> component:</p>
+<div class="highlight"><pre><span></span><span class="kr">import</span> <span class="nx">React</span> <span class="nx">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">mount</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;enzyme&#39;</span><span class="p">;</span>
+
+<span class="kr">import</span> <span class="nx">App</span> <span class="nx">from</span> <span class="s1">&#39;../components/App&#39;</span><span class="p">;</span>
+
+
+<span class="nx">test</span><span class="p">(</span><span class="s1">&#39;calling addPodcast should change the state&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nx">mount</span><span class="p">(</span>
+        <span class="o">&lt;</span><span class="nx">App</span> <span class="o">/&gt;</span>
+    <span class="p">);</span>
+    <span class="nx">component</span><span class="p">.</span><span class="nx">instance</span><span class="p">().</span><span class="nx">addPodcast</span><span class="p">({</span> <span class="mi">0</span><span class="o">:</span> <span class="p">{</span> <span class="nx">description</span><span class="o">:</span> <span class="s1">&#39;desc&#39;</span> <span class="p">}</span> <span class="p">});</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">component</span><span class="p">.</span><span class="nx">state</span><span class="p">(</span><span class="s1">&#39;podcasts&#39;</span><span class="p">)).</span><span class="nx">length</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+<p>That's all for today! Feel free to comment: if you have any better way of writing react form components
+test - please tell me or maybe I did something totally wrong here?</p>
+<p>Cover image from <a class="reference external" href="https://unsplash.com/search/javascript?photo=Ua1_M1683Ps">Unsplash</a> under
+<a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/react.html">react</a>, <a href="https://krzysztofzuraw.com/tag/javascript.html">javascript</a>, <a href="https://krzysztofzuraw.com/tag/testing.html">testing</a>, <a href="https://krzysztofzuraw.com/tag/components.html">components</a>, <a href="https://krzysztofzuraw.com/tag/form.html">form</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

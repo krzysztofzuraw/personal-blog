@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Django + Celery &amp; Rabbit - part three</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Third part of series about Django application with Celery and RabbitMQ.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="celery">
+        <meta name="tags" content="rabbit">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-three.html">
+	<meta property="og:title" content="Django + Celery &amp; Rabbit - part three">
+	<meta property="article:published_time" content="2016-03-12 10:20:00+01:00">
+            <meta property="og:description" content="Third part of series about Django application with Celery and RabbitMQ.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/celery.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/celery.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Django + Celery &amp; Rabbit - part three" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/celery.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/celery.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Django + Celery &amp; Rabbit - part three</h1>
+                        <span class="meta">Posted on Sat 12 March 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>This is a third part of Celery and RabbitMQ in Django series. Today I
+will be building the Celery and RabbitMQ stack.</strong></p>
+<p>In previous 2 posts: <a class="reference external" href="https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-one.html">Django + Celery &amp; RabbitMQ part
+one</a>
+and <a class="reference external" href="https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-two.html">Django + Celery &amp; RabbitMQ part
+two</a>
+I have made simple application and played with ffmpeg.</p>
+<p>First: why we need Celery? Imagine that user upload mp3 file to the
+application and then in form validation the file is transcoded to other
+formats. The problem is that user will have to wait for the end of a
+task. So user sends a request. Then he waits for ffmpeg to transcode
+uploaded file to different format and then sends the response back. At
+first glance, it may look correct. But imagine that there are big files
+to transcode or there is a lot of formats to transcode. The user will
+have to wait a lot of time. To avoid this I will use celery task with
+rabbitmq broker to provide transcoding in the background.</p>
+<p>So what is exactly celery? From the
+<a class="reference external" href="http://www.celeryproject.org/">docs</a>:</p>
+<blockquote>
+Celery is a simple, flexible and reliable distributed system to
+process vast amounts of messages, while providing operations with
+the tools required to maintain such a system.</blockquote>
+<p>What does it mean? It is task manager that handle messages (tasks) in
+whenever form you like. Task is a function that could calculate
+something or handle some logic or maybe transcode files. But celery
+without message broker is useless. Celery support a lot of message
+brokers, but RabbitMq is supported out of the box so I will use this
+service. You may ask what is RabbitMq? It is broker- translates a
+message from the sender (django application) to reciever (celery).</p>
+<p>So go to code:</p>
+<p>First install rabbitmq with plugin that displays its status:</p>
+<div class="highlight"><pre><span></span>$ sudo apt-get install rabbitmq-server
+$ sudo rabbitmq-plugins enable rabbitmq_management
+$ sudo rabbitmqctl stop
+$ sudo invoke-rc.d rabbitmq-server start
+</pre></div>
+<p>Add admin user to rabbitmq-server:</p>
+<div class="highlight"><pre><span></span>$ sudo rabbitmqctl add_user admin admin
+$ sudo rabbitmqctl set_user_tags admin administrator
+$ sudo rabbitmqctl set_permissions -p / admin &quot;.*&quot; &quot;.*&quot; &quot;.*&quot;
+</pre></div>
+<p>Right now you can go to <tt class="docutils literal">localhost:15672</tt> to see:</p>
+<div class="figure">
+<img alt="RabbitMQ Server" src="/images/rabbit.png" />
+</div>
+<p>Now it's time to get celery working. First I will create new folder
+called <tt class="docutils literal">taskapp</tt> where I will be putting my celery configuration:</p>
+<div class="highlight"><pre><span></span>├── audio_transcoder
+├── taskapp
+│   ├── celery.py
+│   ├── __init__.py
+│   └── tasks.py
+│ # some other files ...
+</pre></div>
+<p>In <tt class="docutils literal">celery.py</tt> are configs:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+
+<span class="kn">from</span> <span class="nn">celery</span> <span class="kn">import</span> <span class="n">Celery</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Celery</span><span class="p">(</span><span class="s1">&#39;transcoder&#39;</span><span class="p">,</span>
+             <span class="n">broker</span><span class="o">=</span><span class="s1">&#39;amqp://admin:admin@localhost//&#39;</span><span class="p">,</span>
+             <span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;taskapp.tasks&#39;</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+<p>The first line is for backward compatibility with python2. In <tt class="docutils literal">app</tt>
+configuration I specify: name of application- <tt class="docutils literal">transcoder</tt>, url where
+broker will be listening with credentials-
+<tt class="docutils literal"><span class="pre">broker='amqp://admin:admin&#64;localhost//'</span></tt> and files containing tasks-
+<tt class="docutils literal"><span class="pre">include=['taskapp.tasks']</span></tt>.</p>
+<p>Then in <tt class="docutils literal">tasks.py</tt> I added task itself:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="kn">from</span> <span class="nn">taskapp.celery</span> <span class="kn">import</span> <span class="n">app</span>
+<span class="kn">from</span> <span class="nn">audio_transcoder.models</span> <span class="kn">import</span> <span class="n">AudioFile</span>
+<span class="kn">import</span> <span class="nn">config.settings</span> <span class="kn">as</span> <span class="nn">settings</span>
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">transcode_mp3</span><span class="p">(</span><span class="n">mp3_id</span><span class="p">):</span>
+    <span class="n">audio_file</span> <span class="o">=</span> <span class="n">AudioFile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">mp3_id</span><span class="p">)</span>
+    <span class="n">input_file_path</span> <span class="o">=</span> <span class="n">audio_file</span><span class="o">.</span><span class="n">mp3_file</span><span class="o">.</span><span class="n">path</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">input_file_path</span><span class="p">)</span>
+
+    <span class="n">ogg_output_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;transcoded&#39;</span><span class="p">,</span> <span class="s1">&#39;{}.ogg&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="n">ogg_output_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">,</span> <span class="n">ogg_output_file_name</span><span class="p">)</span>
+
+    <span class="n">ac3_output_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;transcoded&#39;</span><span class="p">,</span> <span class="s1">&#39;{}.ac3&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="n">ac3_output_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">,</span> <span class="n">ac3_output_file_name</span><span class="p">)</span>
+
+    <span class="n">wav_output_file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;transcoded&#39;</span><span class="p">,</span> <span class="s1">&#39;{}.wav&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+    <span class="n">wav_output_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">,</span> <span class="n">wav_output_file_name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">ogg_output_file_path</span><span class="p">)):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">ogg_output_file_path</span><span class="p">))</span>
+
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span>
+            <span class="n">settings</span><span class="o">.</span><span class="n">FFMPEG_PATH</span><span class="p">,</span>
+            <span class="s1">&#39;-i&#39;</span><span class="p">,</span>
+            <span class="n">input_file_path</span><span class="p">,</span>
+            <span class="n">ogg_output_file_path</span><span class="p">,</span>
+            <span class="n">ac3_output_file_path</span><span class="p">,</span>
+            <span class="n">wav_output_file_path</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">audio_file</span><span class="o">.</span><span class="n">ogg_file</span> <span class="o">=</span> <span class="n">ogg_output_file_name</span>
+    <span class="n">audio_file</span><span class="o">.</span><span class="n">ac3_file</span> <span class="o">=</span> <span class="n">ac3_output_file_name</span>
+    <span class="n">audio_file</span><span class="o">.</span><span class="n">wav_file</span> <span class="o">=</span> <span class="n">wav_output_file_name</span>
+    <span class="n">audio_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+<p>What I got there? Let's start with <tt class="docutils literal">transcode_mp3</tt> function. It has
+<tt class="docutils literal">&#64;app.task</tt> decorator to indicate for celery that it is its task. The
+argument is <tt class="docutils literal">mp3_id</tt>. After getting the id of newly uploaded file this
+task gets <tt class="docutils literal">audio_file</tt> model from the database and retrieve path to
+the uploaded mp3 file. Then it generated file names and paths for every
+format: ogg, wav and ac3. Right after it checks whenever folder
+<tt class="docutils literal">transcoded</tt> under <tt class="docutils literal">media</tt> is present. Calling <tt class="docutils literal">subprocess</tt> is
+basically the same as calling
+<tt class="docutils literal">ffmpeg <span class="pre">-i</span> mp3_file.mp3 ogg_file.ogg ac3_file.ac3 wav_file.wav</tt>. At
+the end task saves the paths to outputs to database.</p>
+<p>The tasks itself is called in views:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">taskapp.tasks</span> <span class="kn">import</span> <span class="n">transcode_mp3</span>
+
+<span class="k">class</span> <span class="nc">UploadAudioFileView</span><span class="p">(</span><span class="n">FormView</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="n">audio_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">transcode_mp3</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="n">audio_file</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="c1"># ...</span>
+</pre></div>
+<p>Everything works as expected and I added redirection to detail view of
+audio file after successful upload. The problem is that transcode is not
+so fast as is redirection. Because of that similar error is shown:</p>
+<video src="/videos/upload.mp4" width="720" autoplay loop><p>This and other bugs and small improvements will be fixed and added in
+last post of this series in next week. Thanks for reading! I really
+appreciate your feedback so please comment or write email. The code is
+available on this github
+<a class="reference external" href="https://github.com/krzysztofzuraw/blog-celery-rabbit">repo</a>.</p>
+<p>Cover image that presents queue by <a class="reference external" href="https://pixabay.com/pl/users/aykapog-185475/">Aykapog</a> under <a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/celery.html">celery</a>, <a href="https://krzysztofzuraw.com/tag/rabbit.html">rabbit</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

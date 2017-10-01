@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Callbacks &amp; promises in JS for newbies</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="How to use callbacks or promises with Google Maps Javascript API">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="javascript">
+        <meta name="tags" content="callbacks">
+        <meta name="tags" content="promises">
+        <meta name="tags" content="newbies">
+        <meta name="tags" content="google_maps">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2017/callbacks-promises-in-js-for-newbies.html">
+	<meta property="og:title" content="Callbacks &amp; promises in JS for newbies">
+	<meta property="article:published_time" content="2017-04-02 10:00:00+02:00">
+            <meta property="og:description" content="How to use callbacks or promises with Google Maps Javascript API">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/map.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/map.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Callbacks &amp; promises in JS for newbies" />
+            <meta name="twitter:description" content="How to use callbacks or promises with Google Maps Javascript API" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/map.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/map.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Callbacks &amp; promises in JS for newbies</h1>
+                            <h3 class="subheading" >How to use callbacks or promises with Google Maps Javascript API</h3>
+                        <span class="meta">Posted on Sun 02 April 2017
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>You are a newbie in JavaScript? You want to know a little bit more about asynchronous
+nature of this language? Join me!</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#problem" id="id2">Problem</a></li>
+<li><a class="reference internal" href="#solution" id="id3">Solution</a></li>
+<li><a class="reference internal" href="#what-i-ve-learn" id="id4">What I've learn</a></li>
+<li><a class="reference internal" href="#update-10-07-2017" id="id5">Update 10.07.2017</a></li>
+</ul>
+</div>
+<div class="section" id="problem">
+<h2><a class="toc-backref" href="#id2">Problem</a></h2>
+<p>I was working on my project that is using Google Maps. I
+stumbled upon an issue - how I display a map after submitting a form
+with geocoded address in it?</p>
+<p>After some research, I found that I need first geocode and then
+if it passes to render the map with a custom marker.</p>
+<p>I did this and it doesn't work! I try one more time and one more.
+After one hour I decided to write a question on
+<a class="reference external" href="http://stackoverflow.com/questions/43029193/display-map-after-form-submission-with-geocoded-address">stackoverflow</a>.</p>
+<p>Guys there flagged it as a duplicate and told me you should look
+into how to handle an asynchronous call. It was confusing - how this
+is near rendering a map after submitting a form?</p>
+<p>I dig more and ask a question on <a class="reference external" href="https://www.reddit.com/r/learnjavascript/comments/61nq5t/display_map_after_form_submission_with_geocoded/">reddit</a>. Then I got my
+answer - use callback or promise!</p>
+</div>
+<div class="section" id="solution">
+<h2><a class="toc-backref" href="#id3">Solution</a></h2>
+<p>Based on an answer from <a class="reference external" href="https://www.reddit.com/user/adavidmiller">adavidmiller</a> from reddit
+I was able to write this code:</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">geocodeAddress</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">geocoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Geocoder</span><span class="p">();</span>
+  <span class="nx">geocoder</span><span class="p">.</span><span class="nx">geocode</span><span class="p">({</span>
+    <span class="nx">address</span><span class="p">,</span>
+  <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">results</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">===</span> <span class="s1">&#39;OK&#39;</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">callback</span><span class="p">({</span>
+        <span class="nx">lat</span><span class="o">:</span> <span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">lat</span><span class="p">(),</span>
+        <span class="nx">lng</span><span class="o">:</span> <span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">lng</span><span class="p">(),</span>
+      <span class="p">});</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;Cannot find address&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+<p>There is a extra argument to this function called <tt class="docutils literal">callback</tt>. It will be executed if
+everything goes properly. What can be this callback? Look at this:</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">onGeocodeComplete</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span>
+    <span class="nx">mapElem</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">zoom</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span>
+      <span class="nx">center</span><span class="o">:</span> <span class="nx">coords</span>
+    <span class="p">});</span>
+  <span class="kr">const</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Marker</span><span class="p">({</span>
+    <span class="nx">position</span><span class="o">:</span> <span class="nx">coords</span><span class="p">,</span>
+    <span class="nx">map</span><span class="p">,</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+<p>In this function, I create a new map that is centered in <tt class="docutils literal">coords</tt>. How will JavaScript know
+local variable <tt class="docutils literal">coords</tt>? Because it is callback passed to <tt class="docutils literal">geocodeAddress</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">initMap</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">searchForm</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="nx">questionForm</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;is-hidden&#39;</span><span class="p">);</span>
+    <span class="kr">const</span> <span class="nx">place</span> <span class="o">=</span> <span class="nx">searchForm</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[name=place]&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+    <span class="nx">geocodeAddress</span><span class="p">(</span><span class="nx">place</span><span class="p">,</span> <span class="nx">onGeocodeComplete</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+<p>Look at the last line in this function - this is a place where I pass <tt class="docutils literal">address</tt> which is
+value from submitted form and I pass <tt class="docutils literal">callback</tt> which is whole <tt class="docutils literal">onGeocodeComplete</tt> function.</p>
+<p>You may say 'It looks neat - let's use callbacks! but in many cases this can lead to so called
+<a class="reference external" href="http://callbackhell.com/">callback hell</a>. To avoid that in ES6 is new way to handle asynchronous
+JavaScript - <tt class="docutils literal">Promise</tt>.</p>
+<p>The same function - <tt class="docutils literal">geocodeAddress</tt> writen using promise:</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">geocodeAddressPromise</span><span class="p">(</span><span class="nx">address</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">geocoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Geocoder</span><span class="p">();</span>
+    <span class="nx">geocoder</span><span class="p">.</span><span class="nx">geocode</span><span class="p">({</span>
+      <span class="nx">address</span><span class="p">,</span>
+    <span class="p">},</span> <span class="p">(</span><span class="nx">results</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">===</span> <span class="s1">&#39;OK&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">resolve</span><span class="p">({</span>
+          <span class="nx">lat</span><span class="o">:</span> <span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">lat</span><span class="p">(),</span>
+          <span class="nx">lng</span><span class="o">:</span> <span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">lng</span><span class="p">(),</span>
+        <span class="p">});</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">reject</span><span class="p">(</span><span class="s1">&#39;Cannot find address&#39;</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+<p>The code looks almost the same as in callback but this function returns promise. If the promise
+was resolved - a.k.a everything goes smoothly it will return lat &amp; lng. In other case
+information about the error will be returned.</p>
+<p>How to handle such promise? You can use that:</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">initMap</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">searchForm</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="nx">questionForm</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;is-hidden&#39;</span><span class="p">);</span>
+    <span class="kr">const</span> <span class="nx">place</span> <span class="o">=</span> <span class="nx">searchForm</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[name=place]&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+    <span class="nx">geocodeAddressPromise</span><span class="p">(</span><span class="nx">place</span><span class="p">).</span><span class="nx">then</span><span class="p">((</span><span class="nx">response</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">onGeocodeComplete</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+    <span class="p">},</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+<p>I resolve a promise by calling <tt class="docutils literal">then</tt> on it. I pass here arrow function with a response if the promise was
+resolved. In another case, I just display an error to the user.</p>
+</div>
+<div class="section" id="what-i-ve-learn">
+<h2><a class="toc-backref" href="#id4">What I've learn</a></h2>
+<p>I learn quite a lot from having this kind of problem:</p>
+<ol class="arabic simple">
+<li>what does it mean to write and use asynchronous code in Javascript</li>
+<li>what is difference between callback &amp; promise</li>
+<li>how to write code using both callback &amp; promise</li>
+</ol>
+<p>That's all for today! Feel free to comment - all are realy valuable for me. I just want to thank
+one more time <a class="reference external" href="https://www.reddit.com/user/adavidmiller">adavidmiller</a> for taking his time
+to show me how to write code using callbacks.</p>
+</div>
+<div class="section" id="update-10-07-2017">
+<h2><a class="toc-backref" href="#id5">Update 10.07.2017</a></h2>
+<p>As <a class="reference external" href="https://github.com/justsml">Daniel Levy</a> pointed out in comment you can refactor my code, so
+<tt class="docutils literal">geocodeAddressPromise</tt> will look like this:</p>
+<div class="highlight"><pre><span></span><span class="c1">// Updated code for https://krzysztofzuraw.com/blog/2017/callbacks-promises-in-js-for-newbies.html</span>
+<span class="kr">const</span> <span class="nb">Promise</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;bluebird&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">geocoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Geocoder</span><span class="p">();</span>
+<span class="c1">// Most JS API&#39;s let you use Bluebird.promisify[All]</span>
+<span class="c1">// Unfortunately Google&#39;s APIs are a little dumb when it comes to promises and Node callbacks.</span>
+<span class="kr">const</span> <span class="nx">geocodeAddressPromise</span> <span class="o">=</span> <span class="p">(</span><span class="nx">address</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">geocoder</span>
+  <span class="p">.</span><span class="nx">geocode</span><span class="p">({</span> <span class="nx">address</span> <span class="p">},</span> <span class="p">(</span><span class="nx">results</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">status</span> <span class="o">===</span> <span class="s1">&#39;OK&#39;</span>
+    <span class="o">?</span> <span class="nx">resolve</span><span class="p">({</span>
+      <span class="nx">lat</span><span class="o">:</span> <span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">lat</span><span class="p">(),</span>
+      <span class="nx">lng</span><span class="o">:</span> <span class="nx">results</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">geometry</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">lng</span><span class="p">(),</span>
+    <span class="p">})</span> <span class="o">:</span> <span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s1">&#39;Cannot find address&#39;</span><span class="p">))</span>
+<span class="p">}));</span>
+</pre></div>
+<p>New thing here is a better promise API - <a class="reference external" href="http://bluebirdjs.com/docs/getting-started.html">bluebird</a> as well as
+more javascripty syntax.</p>
+<p><tt class="docutils literal">onGeocodeComplete</tt> returns both <tt class="docutils literal">map</tt> and <tt class="docutils literal">marker</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">onGeocodeComplete</span><span class="p">(</span><span class="nx">coords</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span>
+    <span class="nx">mapElem</span><span class="p">,</span> <span class="p">{</span>
+      <span class="nx">zoom</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span>
+      <span class="nx">center</span><span class="o">:</span> <span class="nx">coords</span>
+    <span class="p">});</span>
+  <span class="kr">const</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Marker</span><span class="p">({</span>
+    <span class="nx">position</span><span class="o">:</span> <span class="nx">coords</span><span class="p">,</span>
+    <span class="nx">map</span><span class="p">,</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="p">{</span><span class="nx">map</span><span class="p">,</span> <span class="nx">marker</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>The last thing is <tt class="docutils literal">initMap</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">initMap</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">searchForm</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+    <span class="nx">questionForm</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;is-hidden&#39;</span><span class="p">);</span>
+    <span class="kr">const</span> <span class="nx">place</span> <span class="o">=</span> <span class="nx">searchForm</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;[name=place]&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+    <span class="nx">geocodeAddressPromise</span><span class="p">(</span><span class="nx">place</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">onGeocodeComplete</span><span class="p">)</span>
+      <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">alert</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+<p>Which will catch errors along the way. All credits for this update goes to Daniel. Thanks man!</p>
+<p>Cover image from <a class="reference external" href="https://unsplash.com/search/map?photo=yg8Cz-i5U30">Unsplash</a> under
+<a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/javascript.html">javascript</a>, <a href="https://krzysztofzuraw.com/tag/callbacks.html">callbacks</a>, <a href="https://krzysztofzuraw.com/tag/promises.html">promises</a>, <a href="https://krzysztofzuraw.com/tag/newbies.html">newbies</a>, <a href="https://krzysztofzuraw.com/tag/google_maps.html">google_maps</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

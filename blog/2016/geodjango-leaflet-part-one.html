@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>GeoDjango and Leaflet.js- part one</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="How to setup basic GeoDjango application first part.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="leaflet.js">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/geodjango-leaflet-part-one.html">
+	<meta property="og:title" content="GeoDjango and Leaflet.js- part one">
+	<meta property="article:published_time" content="2016-01-01 10:20:00+01:00">
+            <meta property="og:description" content="How to setup basic GeoDjango application first part.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/geodjango.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/geodjango.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="GeoDjango and Leaflet.js- part one" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/geodjango.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/geodjango.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >GeoDjango and Leaflet.js- part one</h1>
+                        <span class="meta">Posted on Fri 01 January 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Today is the day, when I will start my blog. I would like to publish new posts once a week.</strong>
+<strong>The comments and feedback will be pretty much appreciated as I have just started blogging in English.</strong></p>
+<p>I assume that the Reader knows how to run basic Django application.
+However, if this is not the case, I encourage you to start <a class="reference external" href="https://docs.djangoproject.com/en/1.9/intro/tutorial01/">here</a>.</p>
+<p>So, let's start:</p>
+<p>First of all, what is GeoDjango?</p>
+<p>From official geodjango <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/contrib/gis/">documentation</a>:</p>
+<blockquote>
+GeoDjango intends to be a world-class geographic Web framework.
+Its goal is to make it as easy as possible to build GIS Web applications and harness the power of spatially enabled data.</blockquote>
+<p>To run GeoDjango you have to install some additional packages. In ubuntu you can easily do this way:</p>
+<div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install binutils libproj-dev gdal-bin
+</pre></div>
+<p>Gdal-bin package is not necessary but it's very helpful so I encourage to install it.</p>
+<p>Then you need to choose what database you will use with your GeoDjango project.
+I personally choosen PostgreSQL with PostGIS because it support all of the GeoDjango features according to
+this <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/contrib/gis/db-api/#spatial-lookup-compatibility">table</a>.</p>
+<p>After starting project, and making new application add few lines to your settings.py:</p>
+<div class="highlight"><pre><span></span><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+     <span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django.contrib.gis.db.backends.postgis&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;your_database_name&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;USER&#39;</span><span class="p">:</span> <span class="s1">&#39;your_user&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s1">&#39;your_password&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;HOST&#39;</span><span class="p">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+     <span class="s1">&#39;PORT&#39;</span><span class="p">:</span> <span class="s1">&#39;5432&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>and modify INSTALLED_APPS:</p>
+<div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;django.contrib.admin&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.auth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.contenttypes&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.sessions&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.messages&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.staticfiles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;django.contrib.gis&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;name_of_your_applications&#39;</span> <span class="c1"># in my case voivodeships</span>
+ <span class="p">)</span>
+</pre></div>
+<p>To actually show some data we need it first. In this project I'll use <a class="reference external" href="https://en.wikipedia.org/wiki/Shapefile">shp</a> files and points with coordinates.</p>
+<p>There is a lot of sites with free shp files available but I will choose one for Poland.
+The shapefiles are in zip file. So go and grab them:</p>
+<div class="highlight"><pre><span></span>$ wget ftp://91.223.135.109/prg/jednostki_administracyjne.zip
+$ mkdir data <span class="o">&amp;&amp;</span> unzip jednostki_administracyjne.zip -d data
+</pre></div>
+<p>I'm going to use only 1 shapefile from this zip called 'województwa.shp' (voivodeships).
+After unziping you want to examine contents of shapefiles. You can do it in tool like <a class="reference external" href="http://www.qgis.org/pl/site/">QuantumGIS</a>
+or use GDAL ogrinfo.</p>
+<p>In QGIS this shapefile presents as follows:</p>
+<blockquote>
+<img alt="Shapefiles in QGIS" src="/images/qgis_woj_shp.gif" />
+</blockquote>
+<p>Using ogrinfo:</p>
+<div class="highlight"><pre><span></span>$ ogrinfo -so data/PRG_jednostki_administracyjne_v10/województwa.shp województwa
+
+INFO: Open of `data/PRG_jednostki_administracyjne_v10/województwa.shp&#39;
+ using driver `ESRI Shapefile&#39; successful.
+
+Layer name: województwa
+Geometry: Polygon
+Feature Count: 16
+Extent: (171677.555190, 133223.725152) - (861895.746988, 774923.747473)
+Layer SRS WKT:
+PROJCS[&quot;ETRS89 / Poland CS92&quot;,
+   GEOGCS[&quot;ETRS89&quot;,
+       DATUM[&quot;European Terrestrial Reference System 1989&quot;,
+           SPHEROID[&quot;GRS 1980&quot;,6378137.0,298.257222101],
+           TOWGS84[0,0,0]],
+       PRIMEM[&quot;Greenwich&quot;,0.0],
+       UNIT[&quot;Decimal Degree&quot;,0.017453292519943295]],
+   PROJECTION[&quot;Transverse_Mercator&quot;],
+   PARAMETER[&quot;latitude_of_origin&quot;,0.0],
+   PARAMETER[&quot;central_meridian&quot;,18.999999999999982],
+   PARAMETER[&quot;scale_factor&quot;,0.9993],
+   PARAMETER[&quot;false_easting&quot;,500000.0],
+   PARAMETER[&quot;false_northing&quot;,-5300000.0],
+   UNIT[&quot;Meter&quot;,1.0],
+   AUTHORITY[&quot;EPSG&quot;,&quot;2180&quot;]]
+   iip_przest: String (255.0)
+   iip_identy: String (255.0)
+   iip_wersja: String (255.0)
+   jpt_sjr_ko: String (255.0)
+   jpt_kod_je: String (255.0)
+   jpt_nazwa_: String (255.0)
+   jpt_nazw01: String (255.0)
+   jpt_organ_: String (255.0)
+   jpt_orga01: String (255.0)
+   jpt_jor_id: Real (32.0)
+   wazny_od: Date (10.0)
+   wazny_do: Date (10.0)
+   jpt_wazna_: String (255.0)
+   wersja_od: Date (10.0)
+   wersja_do: Date (10.0)
+   jpt_powier: Real (33.16)
+   jpt_kj_iip: String (255.0)
+   jpt_kj_i01: String (255.0)
+   jpt_kj_i02: String (255.0)
+   jpt_kod_01: String (255.0)
+   id_bufora_: Real (32.0)
+   id_bufor01: Real (32.0)
+   id_technic: Real (32.0)
+   jpt_opis: String (255.0)
+   jpt_sps_ko: String (255.0)
+   gra_ids: String (255.0)
+   status_obi: String (255.0)
+   opis_bledu: String (255.0)
+   typ_bledu: String (255.0)
+</pre></div>
+<p>We can make model representing this data in our application by hand but it's django so you can type:</p>
+<div class="highlight"><pre><span></span><span class="gp">$</span> ./manage.py ogrinspect data/PRG_jednostki_administracyjne_v10/województwa.shp Voivodeship --mapping --srid <span class="m">2180</span> --multi &gt;&gt; voivodeships/models.py
+</pre></div>
+<p>Where <cite>--mapping</cite> tells you to generate mapping used to load data from shapefile, <cite>--srid</cite> sets the
+<a class="reference external" href="https://en.wikipedia.org/wiki/SRID">SRID</a> for
+the geographic field and <cite>--multi</cite> sets geographic field to MultiPolygonField</p>
+<p>Our voivodeships/models.py will look like this:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<span class="c1"># This is an auto-generated Django model module created by ogrinspect.</span>
+<span class="kn">from</span> <span class="nn">django.contrib.gis.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+<span class="k">class</span> <span class="nc">Voivodeship</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">iip_przest</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">iip_identy</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">iip_wersja</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_sjr_ko</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_kod_je</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_nazwa_field</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_nazw01</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_organ_field</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_orga01</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_jor_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">()</span>
+    <span class="n">wazny_od</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
+    <span class="n">wazny_do</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
+    <span class="n">jpt_wazna_field</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">wersja_od</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
+    <span class="n">wersja_do</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">()</span>
+    <span class="n">jpt_powier</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">()</span>
+    <span class="n">jpt_kj_iip</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_kj_i01</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_kj_i02</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_kod_01</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">id_bufora_field</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">()</span>
+    <span class="n">id_bufor01</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">()</span>
+    <span class="n">id_technic</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">()</span>
+    <span class="n">jpt_opis</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">jpt_sps_ko</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">gra_ids</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">status_obi</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">opis_bledu</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">typ_bledu</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+    <span class="n">geom</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">MultiPolygonField</span><span class="p">(</span><span class="n">srid</span><span class="o">=</span><span class="mi">2180</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jpt_nazwa_field</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jpt_nazwa_field</span><span class="p">)</span>
+
+<span class="c1"># Auto-generated `LayerMapping` dictionary for Voivodeship model</span>
+<span class="n">voivodeship_mapping</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;iip_przest&#39;</span> <span class="p">:</span> <span class="s1">&#39;iip_przest&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;iip_identy&#39;</span> <span class="p">:</span> <span class="s1">&#39;iip_identy&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;iip_wersja&#39;</span> <span class="p">:</span> <span class="s1">&#39;iip_wersja&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_sjr_ko&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_sjr_ko&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_kod_je&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_kod_je&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_nazwa_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_nazwa_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_nazw01&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_nazw01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_organ_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_organ_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_orga01&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_orga01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_jor_id&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_jor_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wazny_od&#39;</span> <span class="p">:</span> <span class="s1">&#39;wazny_od&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wazny_do&#39;</span> <span class="p">:</span> <span class="s1">&#39;wazny_do&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_wazna_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_wazna_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wersja_od&#39;</span> <span class="p">:</span> <span class="s1">&#39;wersja_od&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wersja_do&#39;</span> <span class="p">:</span> <span class="s1">&#39;wersja_do&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_powier&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_powier&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_kj_iip&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_kj_iip&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_kj_i01&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_kj_i01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_kj_i02&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_kj_i02&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_kod_01&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_kod_01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id_bufora_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;id_bufora_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id_bufor01&#39;</span> <span class="p">:</span> <span class="s1">&#39;id_bufor01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id_technic&#39;</span> <span class="p">:</span> <span class="s1">&#39;id_technic&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_opis&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_opis&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_sps_ko&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_sps_ko&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gra_ids&#39;</span> <span class="p">:</span> <span class="s1">&#39;gra_ids&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;status_obi&#39;</span> <span class="p">:</span> <span class="s1">&#39;status_obi&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;opis_bledu&#39;</span> <span class="p">:</span> <span class="s1">&#39;opis_bledu&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;typ_bledu&#39;</span> <span class="p">:</span> <span class="s1">&#39;typ_bledu&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;geom&#39;</span> <span class="p">:</span> <span class="s1">&#39;MULTIPOLYGON&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+<p>Where under Voivodeship model we have all fields from shp file and in voivodeship_mapping we
+got proper mapping for loading data. I added <cite>__str__</cite> and <cite>__unicode__</cite> just for convenience.</p>
+<p>Let's add an admin for our voivodeship application by editing admin.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.gis</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Voivodeship</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Voivodeship</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">OSMGeoAdmin</span><span class="p">)</span>
+</pre></div>
+<p>After making and executing migrations to your database we can load shapes with voivodeships.
+To do this let's create load.py with following contents:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">django.contrib.gis.utils</span> <span class="kn">import</span> <span class="n">LayerMapping</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Voivodeship</span>
+
+<span class="n">voivodeship_mapping</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;iip_przest&#39;</span> <span class="p">:</span> <span class="s1">&#39;iip_przest&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;iip_identy&#39;</span> <span class="p">:</span> <span class="s1">&#39;iip_identy&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;iip_wersja&#39;</span> <span class="p">:</span> <span class="s1">&#39;iip_wersja&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_sjr_ko&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_sjr_ko&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_kod_je&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_kod_je&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_nazwa_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_nazwa_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_nazw01&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_nazw01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_organ_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_organ_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_orga01&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_orga01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_jor_id&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_jor_id&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wazny_od&#39;</span> <span class="p">:</span> <span class="s1">&#39;wazny_od&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wazny_do&#39;</span> <span class="p">:</span> <span class="s1">&#39;wazny_do&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_wazna_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_wazna_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wersja_od&#39;</span> <span class="p">:</span> <span class="s1">&#39;wersja_od&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wersja_do&#39;</span> <span class="p">:</span> <span class="s1">&#39;wersja_do&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_powier&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_powier&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_kj_iip&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_kj_iip&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_kj_i01&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_kj_i01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_kj_i02&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_kj_i02&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_kod_01&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_kod_01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id_bufora_field&#39;</span> <span class="p">:</span> <span class="s1">&#39;id_bufora_&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id_bufor01&#39;</span> <span class="p">:</span> <span class="s1">&#39;id_bufor01&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;id_technic&#39;</span> <span class="p">:</span> <span class="s1">&#39;id_technic&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_opis&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_opis&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;jpt_sps_ko&#39;</span> <span class="p">:</span> <span class="s1">&#39;jpt_sps_ko&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;gra_ids&#39;</span> <span class="p">:</span> <span class="s1">&#39;gra_ids&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;status_obi&#39;</span> <span class="p">:</span> <span class="s1">&#39;status_obi&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;opis_bledu&#39;</span> <span class="p">:</span> <span class="s1">&#39;opis_bledu&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;typ_bledu&#39;</span> <span class="p">:</span> <span class="s1">&#39;typ_bledu&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;geom&#39;</span> <span class="p">:</span> <span class="s1">&#39;MULTIPOLYGON&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">voivodeship_shp</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;PRG_jednostki_administracyjne_v10&#39;</span><span class="p">,</span> <span class="s1">&#39;województwa.shp&#39;</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="n">lm</span> <span class="o">=</span> <span class="n">LayerMapping</span><span class="p">(</span><span class="n">Voivodeship</span><span class="p">,</span> <span class="n">voivodeship_shp</span><span class="p">,</span> <span class="n">voivodeship_mapping</span><span class="p">,</span>
+                      <span class="n">transform</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;iso-8859-1&#39;</span><span class="p">)</span>
+
+    <span class="n">lm</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">strict</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+</pre></div>
+<p>We don't need to provide any transform in LayerMapping call because a correct srid is already there.
+After saving the file run load.py from django shell:</p>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">voivodeships</span> <span class="kn">import</span> <span class="n">load</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">load</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="go"># a lot of output here...</span>
+<span class="go"># IntegrityError</span>
+</pre></div>
+<p>We got this IntegrityError because our models fields does not allow empty values in <cite>wazny_od</cite> field and
+this shp has some empty values. To avoid such errors we can edit Voivodeship model fields:</p>
+<div class="highlight"><pre><span></span><span class="c1"># rest of code here ...</span>
+
+<span class="k">class</span> <span class="nc">Voivodeship</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1">#...</span>
+    <span class="n">wazny_od</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">wazny_do</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="c1">#...</span>
+    <span class="n">wersja_od</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">wersja_do</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="c1">#...</span>
+
+<span class="c1"># rest of code here...</span>
+</pre></div>
+<p>Rerun <cite>./manage.py makemigrations</cite> and <cite>./manage.py migrate</cite> then try one more time to run load.py</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">voivodeships</span> <span class="kn">import</span> <span class="n">load</span>
+<span class="n">load</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="c1"># Saved: Voivodeship object</span>
+<span class="c1"># 15 times more</span>
+</pre></div>
+<p>When you run <cite>./manage.py runserver</cite> and go to the admin site you can see that geometric field is displayed in form of a map:</p>
+<img alt="Dolnoslaskie Voivodeship" src="/images/dolnoslaskie.gif" />
+<p>To make our map more robust let's add additional data (points).
+There are 16 points in capitals of polish voivodeships in CSV file.</p>
+<div class="highlight"><pre><span></span><span class="go">&quot;Rzeszów&quot;,&quot;50.04015435&quot;,&quot;22.006124806535&quot;</span>
+<span class="go">&quot;Kraków&quot;,&quot;50.0591381&quot;,&quot;19.9372696&quot;</span>
+<span class="go">&quot;Katowice&quot;,&quot;50.244967474000475&quot;,&quot;19.02679182200046&quot;</span>
+<span class="go">&quot;Opole&quot;,&quot;50.66800573900048&quot;,&quot;17.91971986900046&quot;</span>
+<span class="go">&quot;Wrocław&quot;,&quot;51.1071531&quot;,&quot;17.0230635&quot;</span>
+<span class="go">&quot;Zielona Góra&quot;,&quot;51.9391761&quot;,&quot;15.5120624461033&quot;</span>
+<span class="go">&quot;Poznań&quot;,&quot;52.4299047&quot;,&quot;16.9352252&quot;</span>
+<span class="go">&quot;Łódź&quot;,&quot;51.7471563&quot;,&quot;19.5665896&quot;</span>
+<span class="go">&quot;Kielce&quot;,&quot;50.8961522&quot;,&quot;20.5798348952528&quot;</span>
+<span class="go">&quot;Lublin&quot;,&quot;51.250969&quot;,&quot;22.5547430471451&quot;</span>
+<span class="go">&quot;Warszawa&quot;,&quot;52.2458285&quot;,&quot;21.2234804&quot;</span>
+<span class="go">&quot;Białystok&quot;,&quot;53.13074825&quot;,&quot;23.1708377413392&quot;</span>
+<span class="go">&quot;Olsztyn&quot;,&quot;53.783197&quot;,&quot;20.4918318&quot;</span>
+<span class="go">&quot;Toruń&quot;,&quot;53.0129269&quot;,&quot;18.6040463&quot;</span>
+<span class="go">&quot;Gdańsk&quot;,&quot;54.37834175&quot;,&quot;18.5866973556132&quot;</span>
+<span class="go">&quot;Szczecin&quot;,&quot;53.43813&quot;,&quot;14.5423387&quot;</span>
+</pre></div>
+<p>Let's make additional model for points:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Point</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">geom</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PointField</span><span class="p">(</span><span class="s1">&#39;longitude/latitude&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">GeoManager</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<span class="k">def</span> <span class="fm">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+<p>Then to admin.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Point</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">OSMGeoAdmin</span><span class="p">)</span>
+</pre></div>
+<p>And to add them to GeoDjango lets add few lines to load.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.gis</span> <span class="kn">import</span> <span class="n">geos</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Point</span>
+
+<span class="n">point_csv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;points.csv&#39;</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">point_load</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">point_csv</span><span class="p">)</span> <span class="k">as</span> <span class="n">point_file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">point_file</span><span class="p">:</span>
+            <span class="n">name</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="n">point</span> <span class="o">=</span> <span class="s2">&quot;POINT(</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">lat</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">lon</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="n">Point</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">geom</span><span class="o">=</span><span class="n">geos</span><span class="o">.</span><span class="n">fromstr</span><span class="p">(</span><span class="n">point</span><span class="p">))</span>
+</pre></div>
+<p>Then import load.py in django shell and run point_load().</p>
+<p>Ok, that's all for this post. Stay tuned for the next part where I show how display data on actual map.</p>
+<p>Cover image present <a class="reference external" href="https://en.wikipedia.org/wiki/File:OrteliusWorldMap1570.jpg">1570 Abraham Ortelius</a> map.</p>
+<div class="section" id="update-08-01-16">
+<h2>Update 08.01.16:</h2>
+<ul class="simple">
+<li>Fixing grammar errors. Thank you Adrianna!</li>
+</ul>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/leafletjs.html">leaflet.js</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

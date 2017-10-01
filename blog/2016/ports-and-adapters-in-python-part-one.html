@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Ports and Adapters in python - part one</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="First part of series about Django application made using Ports and Adapters design pattern.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="python">
+        <meta name="tags" content="design_patterns">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/ports-and-adapters-in-python-part-one.html">
+	<meta property="og:title" content="Ports and Adapters in python - part one">
+	<meta property="article:published_time" content="2016-05-22 10:20:00+02:00">
+            <meta property="og:description" content="First part of series about Django application made using Ports and Adapters design pattern.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/hexagon.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/hexagon.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Ports and Adapters in python - part one" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/hexagon.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/hexagon.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Ports and Adapters in python - part one</h1>
+                        <span class="meta">Posted on Sun 22 May 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Welcome! Today I'm going to start series about how to use port and adapter design pattern in simple
+django application.</strong></p>
+<p>Let me explain a little bit what exactly ports and adapters design pattern is. According to this
+<a class="reference external" href="http://a.cockburn.us/1807">article</a> (which by the way I strongly recommend to read) it is a
+way to separate business logic from user code.</p>
+<p>What I mean by that? Let pretend that you want to create simple django application which connects to reddit
+using its API. Then app retrieves the content of search query provided by the user. After that user can save for later
+founded link. In this blog post, I will focus only on reddit API part. Normally you will write some
+module using request for retrieving search results from reddit. But what when it comes to testing such code?
+You just mock requests calls or use responses library.</p>
+<p>How do you do it in ports and adapters way? You will have one thing called port for all external connections. Throught
+this all requests to external APIs will be done because who knows if the reddit will not change to duckduckgo? In such
+case you just add DuckDuckGo Adapter and you are all set. Because port don't care if there is Reddit adapter or DuckDuckGo
+adapter as long as it provides necessary methods. As I mentioned before, port is communicating only with adapters.
+And what is adapter? It is part of code designed only for calling in this case Reddit API and passing results.
+To test port you need fake adapter with all methods that original has.
+But how you test adapter? You will have to write integration tests.</p>
+<p>Such design pattern is also called hexagonal architecture.</p>
+<img alt="Hexagonal architecutre" src="/images/reddit_hexagonal.png" />
+<p><em>This is a picture presenting adapters and ports in my application.</em></p>
+<p>As you can see in above picture all connections to external APIs are made using ExternalAPIPort so this class in
+python knows only about the adapter and that it should have some <tt class="docutils literal">search</tt> method for searching. How is it translating
+to code?</p>
+<p>File <tt class="docutils literal">external_api_ports.py</tt>:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ExternalAPIPort</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">adapter</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span> <span class="o">=</span> <span class="n">adapter</span>
+
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">adapter</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+<p>As you can see port takes adapter in <tt class="docutils literal">__init__</tt>. Then in <tt class="docutils literal">search</tt> it uses adapter method for searching and passing results.
+I only needed the title of a post that comes from search so I generate them using generator expression. Moreover here we have
+<em>contract</em> that tell us that adapter has to have such method as <tt class="docutils literal">search</tt> that uses query arguments (at least).</p>
+<p>And how adapter look like?</p>
+<p><tt class="docutils literal">reddit_adapter.py</tt>:</p>
+<div class="highlight"><pre><span></span><span class="lineno"> 1 </span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="lineno"> 2 </span><span class="kn">import</span> <span class="nn">requests.auth</span>
+<span class="lineno"> 3 </span>
+<span class="lineno"> 4 </span>
+<span class="lineno"> 5 </span><span class="k">class</span> <span class="nc">RedditAdapter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="lineno"> 6 </span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="lineno"> 7 </span>        <span class="bp">self</span><span class="p">,</span> <span class="n">reddit_client_id</span><span class="p">,</span> <span class="n">reddit_client_secret</span><span class="p">,</span>
+<span class="lineno"> 8 </span>        <span class="n">reddit_username</span><span class="p">,</span> <span class="n">reddit_password</span>
+<span class="lineno"> 9 </span>    <span class="p">):</span>
+<span class="lineno">10 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">reddit_client_id</span> <span class="o">=</span> <span class="n">reddit_client_id</span>
+<span class="lineno">11 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">reddit_client_secret</span> <span class="o">=</span> <span class="n">reddit_client_secret</span>
+<span class="lineno">12 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">reddit_username</span> <span class="o">=</span> <span class="n">reddit_username</span>
+<span class="lineno">13 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">reddit_password</span> <span class="o">=</span> <span class="n">reddit_password</span>
+<span class="lineno">14 </span>        <span class="bp">self</span><span class="o">.</span><span class="n">reddit_token</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="lineno">15 </span>
+<span class="lineno">16 </span>    <span class="k">def</span> <span class="nf">authorize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="lineno">17 </span>        <span class="n">client_auth</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">HTTPBasicAuth</span><span class="p">(</span>
+<span class="lineno">18 </span>            <span class="bp">self</span><span class="o">.</span><span class="n">reddit_client_id</span><span class="p">,</span>
+<span class="lineno">19 </span>            <span class="bp">self</span><span class="o">.</span><span class="n">reddit_client_secret</span>
+<span class="lineno">20 </span>         <span class="p">)</span>
+<span class="lineno">21 </span>         <span class="n">post_data</span> <span class="o">=</span> <span class="p">{</span>
+<span class="lineno">22 </span>              <span class="s2">&quot;grant_type&quot;</span><span class="p">:</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span>
+<span class="lineno">23 </span>              <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">reddit_username</span><span class="p">,</span>
+<span class="lineno">24 </span>              <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">reddit_password</span>
+<span class="lineno">25 </span>         <span class="p">}</span>
+<span class="lineno">26 </span>         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;User-Agent&quot;</span><span class="p">:</span> <span class="s2">&quot;RedditAdapter/0.1 by Krzysztof Zuraw&quot;</span><span class="p">}</span>
+<span class="lineno">27 </span>         <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+<span class="lineno">28 </span>             <span class="s2">&quot;https://www.reddit.com/api/v1/access_token&quot;</span><span class="p">,</span>
+<span class="lineno">29 </span>             <span class="n">auth</span><span class="o">=</span><span class="n">client_auth</span><span class="p">,</span>
+<span class="lineno">30 </span>             <span class="n">data</span><span class="o">=</span><span class="n">post_data</span><span class="p">,</span>
+<span class="lineno">31 </span>             <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+<span class="lineno">32 </span>         <span class="p">)</span>
+<span class="lineno">33 </span>         <span class="bp">self</span><span class="o">.</span><span class="n">reddit_token</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;access_token&#39;</span><span class="p">]</span>
+<span class="lineno">34 </span>
+<span class="lineno">35 </span>     <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">subreddit</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="lineno">36 </span>         <span class="bp">self</span><span class="o">.</span><span class="n">authorize</span><span class="p">()</span>
+<span class="lineno">37 </span>         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+<span class="lineno">38 </span>             <span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="s2">&quot;bearer {token}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reddit_token</span><span class="p">),</span>
+<span class="lineno">39 </span>             <span class="s2">&quot;User-Agent&quot;</span><span class="p">:</span> <span class="s2">&quot;RedditAdapter/0.1 by Krzysztof Zuraw&quot;</span>
+<span class="lineno">40 </span>         <span class="p">}</span>
+<span class="lineno">41 </span>         <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+<span class="lineno">42 </span>             <span class="s2">&quot;https://oauth.reddit.com/r/{subreddit}/&quot;</span>
+<span class="lineno">43 </span>             <span class="s2">&quot;search.json?q={query}&amp;restrict_sr={restrict}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<span class="lineno">44 </span>                 <span class="n">subreddit</span><span class="o">=</span><span class="n">subreddit</span><span class="p">,</span>
+<span class="lineno">45 </span>                 <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+<span class="lineno">46 </span>                 <span class="n">restrict</span><span class="o">=</span><span class="s1">&#39;on&#39;</span> <span class="k">if</span> <span class="n">subreddit</span> <span class="k">else</span> <span class="s1">&#39;off&#39;</span>
+<span class="lineno">47 </span>              <span class="p">),</span>
+<span class="lineno">48 </span>              <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+<span class="lineno">49 </span>         <span class="p">)</span>
+<span class="lineno">50 </span>         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="lineno">51 </span>
+<span class="lineno">52 </span>         <span class="n">search_result</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="lineno">53 </span>         <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">raw_response</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;children&#39;</span><span class="p">]:</span>
+<span class="lineno">54 </span>             <span class="n">search_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+<span class="lineno">55 </span>
+<span class="lineno">56 </span>         <span class="k">return</span> <span class="n">search_result</span>
+</pre></div>
+<p>What is happening here? Start from <tt class="docutils literal">init</tt> (line 6) which takes <tt class="docutils literal">reddit_client_id</tt> and <tt class="docutils literal">reddit_client_secret</tt>
+arguments. There are created by going to apps tab under preferences:</p>
+<img alt="Reddit apps" src="/images/reddit_apps.png" />
+<p>After that click on create new application on the end of the page and you will see something like this:</p>
+<img alt="Reddit application creation" src="/images/reddit_app_creation.jpg" />
+<p>By clicking <tt class="docutils literal">create app</tt> you will see that <tt class="docutils literal">reddit_client_secret</tt> is <tt class="docutils literal">secret</tt> and <tt class="docutils literal">reddit_client_id</tt>
+is string under <tt class="docutils literal">personal use script</tt>.</p>
+<img alt="Reddit application secrets" src="/images/reddit_secrets.jpg" />
+<p>After initialization, there is method called <tt class="docutils literal">authorize</tt> (line 16) which takes care of proper authorization via
+<a class="reference external" href="http://oauth.net/2/">Oauth2</a>.</p>
+<p>Lastly, there is <tt class="docutils literal">search</tt> (line 35) which retrieves JSON response from reddit API from given subreddit or globally from
+all subreddits.</p>
+<p>So how to test it?</p>
+<p>First by creating <tt class="docutils literal">FakeRedditAdapter</tt>:</p>
+<div class="highlight"><pre><span></span><span class="n">REDDIT_RESPONSE</span> <span class="o">=</span> <span class="p">{</span>
+         <span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;Listing&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+             <span class="s2">&quot;facets&quot;</span><span class="p">:</span> <span class="p">{},</span>
+             <span class="s2">&quot;modhash&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+             <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+                 <span class="p">{</span>
+                     <span class="s2">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;t3&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+                         <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="s2">&quot;domain&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;banned_by&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;media_embed&quot;</span><span class="p">:</span> <span class="p">{},</span>
+                         <span class="s2">&quot;subreddit&quot;</span><span class="p">:</span> <span class="s2">&quot;django&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;selftext_html&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;selftext&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;likes&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;suggested_sort&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;user_reports&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                         <span class="s2">&quot;secure_media&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;link_flair_text&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;id123&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;from_kind&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;gilded&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="s2">&quot;archived&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;clicked&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;report_reasons&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="s2">&quot;author&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;media&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+                         <span class="s2">&quot;approved_by&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;over_18&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;hidden&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;num_comments&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                         <span class="s2">&quot;thumbnail&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;subreddit_id&quot;</span><span class="p">:</span> <span class="s2">&quot;id_sub&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;hide_score&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;edited&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;link_flair_css_class&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;author_flair_css_class&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;downs&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                         <span class="s2">&quot;secure_media_embed&quot;</span><span class="p">:</span> <span class="p">{},</span>
+                         <span class="s2">&quot;saved&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;removal_reason&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;stickied&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;is_self&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;from_id&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;permalink&quot;</span><span class="p">:</span> <span class="s2">&quot;/r/django/comments/link&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;locked&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;t3_4b7lzf&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;created&quot;</span><span class="p">:</span> <span class="mi">1458511233</span><span class="p">,</span>
+                         <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://url.com&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;author_flair_text&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;quarantine&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Post title&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;created_utc&quot;</span><span class="p">:</span> <span class="mi">1458482433</span><span class="p">,</span>
+                         <span class="s2">&quot;distinguished&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;mod_reports&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                         <span class="s2">&quot;visited&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                         <span class="s2">&quot;num_reports&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+                         <span class="s2">&quot;ups&quot;</span><span class="p">:</span> <span class="mi">20</span>
+                     <span class="p">}</span>
+                 <span class="p">}</span>
+             <span class="p">],</span>
+         <span class="s2">&quot;after&quot;</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+         <span class="s2">&quot;before&quot;</span><span class="p">:</span> <span class="bp">None</span>
+         <span class="p">}</span>
+     <span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">FakeRedditAdapter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">authorize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;oauth2-authorized-key&#39;</span>
+
+    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">subreddit</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">search_result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">REDDIT_RESPONSE</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;children&#39;</span><span class="p">]:</span>
+            <span class="n">search_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">search_result</span>
+</pre></div>
+<p>As you can see <tt class="docutils literal">FakeRedditAdapter</tt> returns hardcoded response from reddit API that can be used in test:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="kn">from</span> <span class="nn">tests.utils</span> <span class="kn">import</span> <span class="n">FakeRedditAdapter</span>
+
+<span class="kn">from</span> <span class="nn">reddit_stars.external_api_port</span> <span class="kn">import</span> <span class="n">ExternalAPIPort</span>
+
+
+<span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s1">&#39;function&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">reddit_port</span><span class="p">():</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="n">ExternalAPIPort</span><span class="p">(</span><span class="n">adapter</span><span class="o">=</span><span class="n">FakeRedditAdapter</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">port</span>
+
+
+<span class="k">def</span> <span class="nf">test_reddit_search</span><span class="p">(</span><span class="n">reddit_port</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">reddit_port</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;test_search&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;Post title&#39;</span><span class="p">]</span>
+</pre></div>
+<p>That's all for today. In the next post, I will show how to combine these ports and adapters
+with django application. Code for this you can find under this <a class="reference external" href="https://github.com/krzysztofzuraw/reddit-stars">repo</a>.</p>
+<div class="section" id="changes-from-23-05-16">
+<h2>Changes from 23.05.16:</h2>
+<ul class="simple">
+<li>Removing coupling from <tt class="docutils literal">ExternalAPIPort</tt></li>
+<li>Adding new test</li>
+<li>Adding word about contracts</li>
+</ul>
+<p>Cover image by <a class="reference external" href="https://pixabay.com/pl/users/CreativeMagic-480360/">Creative Magic</a> under <a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/python.html">python</a>, <a href="https://krzysztofzuraw.com/tag/design_patterns.html">design_patterns</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

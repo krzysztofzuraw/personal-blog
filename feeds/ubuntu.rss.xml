@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - ubuntu</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 04 Jun 2017 10:00:00 +0200</lastBuildDate><item><title>Building python packages for debian</title><link>https://krzysztofzuraw.com/blog/2017/building-python-packages-for-debian.html</link><description>&lt;p&gt;&lt;strong&gt;There are many ways how to build &amp;amp; distribute python packages: pypi, devpi.
+But if you happen to use debian based OSes you can build python packages as
+debian native ones. This blog post is all about it - let's go!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Let's say you have following structure of your project:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;├── Makefile
+├── MANIFEST …&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 04 Jun 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-06-04:/blog/2017/building-python-packages-for-debian.html</guid><category>python</category><category>debian</category><category>ubuntu</category><category>packages</category><category>building</category><category>docker</category></item></channel></rss>

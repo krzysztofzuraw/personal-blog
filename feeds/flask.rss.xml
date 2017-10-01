@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - flask</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 09 Oct 2016 09:00:00 +0200</lastBuildDate><item><title>Microservices in Flask</title><link>https://krzysztofzuraw.com/blog/2016/microservices-in-flask.html</link><description>&lt;p&gt;&lt;strong&gt;I recently gave a talk about microservices in Flask on&lt;/strong&gt; &lt;a class="reference external" href="http://www.meetup.com/wrocpy/"&gt;Wrocpy&lt;/a&gt;.
+&lt;strong&gt;This blog post is a translation of that talk into English.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#monolithic-application" id="id6"&gt;Monolithic application&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#flask-microservices" id="id7"&gt;Flask microservices&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#flask-script" id="id8"&gt;Flask-Script&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#flask-restful" id="id9"&gt;Flask-RESTful&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#marshallow-flask-marshallow" id="id10"&gt;Marshallow &amp;amp; flask-marshallow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#flask-sqlalchemy" id="id11"&gt;Flask-SQLAlchemy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#flask-migrate" id="id12"&gt;Flask-Migrate&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#testing" id="id13"&gt;Testing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#deployment" id="id14"&gt;Deployment&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#puppet" id="id15"&gt;Puppet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#cookiecutter" id="id16"&gt;Cookiecutter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#dh-virtualenv" id="id17"&gt;Dh-virtualenv&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="monolithic-application"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id6"&gt;Monolithic application&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Microservices talk usually starts with a monolithic application …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 09 Oct 2016 09:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-10-09:/blog/2016/microservices-in-flask.html</guid><category>flask</category></item></channel></rss>

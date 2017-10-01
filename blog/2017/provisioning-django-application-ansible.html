@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Provisioning django application using ansible</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="How to write provisioning scripts for django application using ansible">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="ansible">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2017/provisioning-django-application-ansible.html">
+	<meta property="og:title" content="Provisioning django application using ansible">
+	<meta property="article:published_time" content="2017-01-29 10:00:00+01:00">
+            <meta property="og:description" content="How to write provisioning scripts for django application using ansible">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/tools.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/tools.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Provisioning django application using ansible" />
+            <meta name="twitter:description" content="How to write provisioning scripts for django application using ansible" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/tools.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/tools.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Provisioning django application using ansible</h1>
+                            <h3 class="subheading" >How to write provisioning scripts for django application using ansible</h3>
+                        <span class="meta">Posted on Sun 29 January 2017
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>As I recently have opportunity of having a workshop about ansible in my work
+and I decided to write a blog post on how to provision django application using this
+tool. In this blog post I am using the same application as in</strong>
+<a class="reference external" href="https://krzysztofzuraw.com/blog/2016/django-application-puppet-part-one.html">puppet post</a>.</p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-ansible-and-how-s-is-different-from-puppet" id="id2">What is ansible and how's is different from puppet</a></li>
+<li><a class="reference internal" href="#id1" id="id3">Provisioning django application using ansible</a></li>
+<li><a class="reference internal" href="#my-thoughts-and-feelings-about-ansible" id="id4">My thoughts and feelings about ansible</a></li>
+</ul>
+</div>
+<div class="section" id="what-is-ansible-and-how-s-is-different-from-puppet">
+<h2><a class="toc-backref" href="#id2">What is ansible and how's is different from puppet</a></h2>
+<p>Ansible is a tool that helps automate boring tasks. These tasks are connected with
+setting up Linux machines, installing proper software on them and moving code from
+repositories to machines. Ansible has a different way of accomplishing these tasks
+than puppet. It is using push <em>system</em> - in short ansible connects to your machine
+via ssh and push changes. No need for masters and agents etc. Puppet, on the other
+hand, is using pull <em>system</em> which allows every machine to pull changes from master.
+Ansible is using the same principles as puppet so you declare how should host look
+like after running ansible.</p>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id3">Provisioning django application using ansible</a></h2>
+<p>I will be provisioning <a class="reference external" href="https://github.com/krzysztofzuraw/geodjango-leaflet">geodjango-leaflet</a>.
+I assume that you know basic concepts of ansible like play, playbook or role.
+This is how a structure of my ansible repo looks like:</p>
+<div class="highlight"><pre><span></span>.
+├── ansible.cfg
+├── inventory
+│   └── vagrant
+│       └── hosts.ini
+├── playbooks
+│   ├── roles -&gt; ../roles/
+│   └── vagrant.yaml
+├── roles
+│   ├── db
+│   │   └── tasks
+│   │       └── main.yml
+│   ├── geodjango
+│   │   ├── handlers
+│   │   │   └── main.yml
+│   │   ├── tasks
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── nginx.conf.j2
+│   │       └── supervisord.conf.j2
+│   ├── redis
+│   │   └── tasks
+│   │       └── main.yml
+│   └── roles -&gt; roles
+└── Vagrantfile
+</pre></div>
+<p>Let's start from the bottom - Vagrantfile. I will be using vagrant as a
+playground. Configuration file a.k.a vagrantfile looks as follows:</p>
+<div class="highlight"><pre><span></span><span class="no">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+
+<span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="no">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;trusty64&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_url</span> <span class="o">=</span> <span class="s2">&quot;https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">insert_key</span> <span class="o">=</span> <span class="kp">false</span>
+
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="s2">&quot;vagrant-ansible&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="ss">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.33.10&quot;</span>
+
+<span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;ansible&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">ansible</span><span class="o">|</span>
+ <span class="n">ansible</span><span class="o">.</span><span class="n">playbook</span> <span class="o">=</span> <span class="s2">&quot;playbooks/vagrant.yaml&quot;</span>
+ <span class="n">ansible</span><span class="o">.</span><span class="n">inventory_path</span> <span class="o">=</span> <span class="s2">&quot;inventory/vagrant/hosts.ini&quot;</span>
+ <span class="n">ansible</span><span class="o">.</span><span class="n">sudo</span> <span class="o">=</span> <span class="kp">true</span>
+ <span class="n">ansible</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="s2">&quot;v&quot;</span>
+ <span class="n">ansible</span><span class="o">.</span><span class="n">limit</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span>
+<span class="k">end</span>
+
+<span class="k">end</span>
+</pre></div>
+<p>I setup basic private_network with ip of a vagrant box. In <tt class="docutils literal">config.vm.provision</tt>
+I specified playbook which should be run in vagrant and inventory where
+the configuration of my hosts lay. This inventory presents itself below:</p>
+<div class="highlight"><pre><span></span><span class="na">vagrant-ansible ansible_ssh_host</span><span class="o">=</span><span class="s">192.168.33.10 ansible_ssh_port=22</span>
+</pre></div>
+<p>My ansible playbook don't have tasks inside it but I delegate it to roles:</p>
+<div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">hosts</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">vagrant-ansible</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+
+  <span class="l l-Scalar l-Scalar-Plain">roles</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">db</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">geodjango</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">redis</span>
+</pre></div>
+<p>Let's start with the first role: <tt class="docutils literal">db</tt>. In folder with this role, I have tasks
+folder with <tt class="docutils literal">main.yml</tt>:</p>
+<div class="highlight"><pre><span></span><span class="nn">---</span>
+
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure apt cache is up to date</span>
+  <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">update_cache=yes</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure packages are installed</span>
+  <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{item}}&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">postgresql</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">libpq-dev</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">python-psycopg2</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">postgresql-9.3-postgis-2.1</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">python3-dev</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">python-dev</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure database is created</span>
+  <span class="l l-Scalar l-Scalar-Plain">become_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
+  <span class="l l-Scalar l-Scalar-Plain">postgresql_db</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">geodjango</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure user has access to database</span>
+  <span class="l l-Scalar l-Scalar-Plain">become_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
+  <span class="l l-Scalar l-Scalar-Plain">postgresql_user</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">db</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">geodjango</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">geodjango</span>
+    <span class="l l-Scalar l-Scalar-Plain">password</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">geodjango</span>
+    <span class="l l-Scalar l-Scalar-Plain">priv</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ALL</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">enable postgis for database</span>
+  <span class="l l-Scalar l-Scalar-Plain">become_user</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">postgres</span>
+  <span class="l l-Scalar l-Scalar-Plain">postgresql_ext</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">postgis</span>
+    <span class="l l-Scalar l-Scalar-Plain">db</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">geodjango</span>
+</pre></div>
+<p>In this task, I run <tt class="docutils literal"><span class="pre">apt-get</span> update</tt> at the top then I install a couple of
+packages so I can setup Postgres. Right below that I create db, grant user access
+to that db and create PostGIS extension. As this role completes ansible will
+execute <tt class="docutils literal">geodjango</tt> role:</p>
+<div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure packages are installed</span>
+  <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{item}}&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">binutils</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">libproj-dev</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">gdal-bin</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">git</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">python-virtualenv</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">build-essential</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">postgresql-server-dev-all</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">supervisor</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure git repo is present</span>
+  <span class="l l-Scalar l-Scalar-Plain">git</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">repo</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/krzysztofzuraw/geodjango-leaflet.git</span>
+    <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/geodjango</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">create virtualenv</span>
+  <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">virtualenv /opt/venv -p python3.4 creates=&quot;/opt/venv&quot;</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">install requirements</span>
+  <span class="l l-Scalar l-Scalar-Plain">pip</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">requirements</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/geodjango/requirements.txt</span>
+    <span class="l l-Scalar l-Scalar-Plain">executable</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/venv/bin/pip</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">migrate django application</span>
+  <span class="l l-Scalar l-Scalar-Plain">django_manage</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">migrate</span>
+    <span class="l l-Scalar l-Scalar-Plain">virtualenv</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/venv</span>
+    <span class="l l-Scalar l-Scalar-Plain">app_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/geodjango</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">load django initial data</span>
+  <span class="l l-Scalar l-Scalar-Plain">django_manage</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">load_inital_voivodeships</span>
+    <span class="l l-Scalar l-Scalar-Plain">virtualenv</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/venv</span>
+    <span class="l l-Scalar l-Scalar-Plain">app_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/geodjango</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">collect static files</span>
+  <span class="l l-Scalar l-Scalar-Plain">django_manage</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">command</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">collectstatic</span>
+    <span class="l l-Scalar l-Scalar-Plain">virtualenv</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/venv</span>
+    <span class="l l-Scalar l-Scalar-Plain">app_path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/geodjango</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure config dir for supervisor extists</span>
+  <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">path</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/supervisor/conf.d</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">directory</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure supervisor config is present</span>
+  <span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">templates/supervisord.conf.j2</span>
+    <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/supervisor/conf.d/geodjango.conf</span>
+  <span class="l l-Scalar l-Scalar-Plain">notify</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">reread supervisor</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">remove default nginx configuration</span>
+  <span class="l l-Scalar l-Scalar-Plain">file</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/nginx/sites-enabled/default</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">absent</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure nginx config is present</span>
+  <span class="l l-Scalar l-Scalar-Plain">template</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">src</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">templates/nginx.conf.j2</span>
+    <span class="l l-Scalar l-Scalar-Plain">dest</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/etc/nginx/sites-enabled/geodjango.conf</span>
+  <span class="l l-Scalar l-Scalar-Plain">notify</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart nginx</span>
+</pre></div>
+<p>This code above is self-explanatory but I will write closely about task called
+<tt class="docutils literal">create virtualenv</tt>. Normally you can write this and next one task in one like:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">pip</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">requirements</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/geodjango/requirements.txt</span>
+  <span class="l l-Scalar l-Scalar-Plain">virtualenv</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/opt/venv</span>
+</pre></div>
+<p>And if this virtualenv is not present it will be created. But there is a bug in
+ansible that is causing these requirements to be installed in system wide python,
+not virtualenv one. Reference is <a class="reference external" href="https://github.com/ansible/ansible-modules-core/issues/5458">here</a>.
+I use fix provided by one of the guys in this issue discussion - I break this task
+into two separate: one for creating virtualenv and second one for installing
+requirements.</p>
+<p>What is different in this task is that I'm also using templates for supervisor
+and Nginx. They have <tt class="docutils literal">j2</tt> ending as ansible is using jinja2 template system.
+During the ansible run, they will be copied to given <tt class="docutils literal">dest</tt>. At the end of tasks
+with templates I have <tt class="docutils literal">notify</tt> keyword which tells ansible to look for handlers
+folder with tasks for restarting services. In my case they look as follows:</p>
+<div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">reread supervisor</span>
+  <span class="l l-Scalar l-Scalar-Plain">supervisorctl</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">geodjango_leaflet</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">present</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restart nginx</span>
+  <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">nginx</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restarted</span>
+</pre></div>
+<p>The last role is redis. This code installs redis-server and starts it:</p>
+<div class="highlight"><pre><span></span><span class="nn">---</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure redis packages are installed</span>
+  <span class="l l-Scalar l-Scalar-Plain">apt</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="s">&quot;{{item}}&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">with_items</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">redis-server</span>
+
+<span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ensure redis is started</span>
+  <span class="l l-Scalar l-Scalar-Plain">become</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="l l-Scalar l-Scalar-Plain">service</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">redis-server</span>
+    <span class="l l-Scalar l-Scalar-Plain">state</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">started</span>
+    <span class="l l-Scalar l-Scalar-Plain">enabled</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">yes</span>
+</pre></div>
+</div>
+<div class="section" id="my-thoughts-and-feelings-about-ansible">
+<h2><a class="toc-backref" href="#id4">My thoughts and feelings about ansible</a></h2>
+<p>I have to say I'm really impressed on how easy is to write ansible tasks. With
+puppet, I have this problem that I need to look for modules in puppet forge or
+write my own. Here everything is included. You want to use django commands -
+use <tt class="docutils literal">django_manage</tt>, need to reread supervisor config use <tt class="docutils literal">present</tt> in
+<tt class="docutils literal">supervisorctl</tt> task. Really easy and fun to work with. I can quickly get a job
+done and move to another stuff.</p>
+<p>Yet, I don't know how ansible will behave when it comes to provisioning a large
+amount of machines. Here I have only one host and it's going smoothly, but for
+sure when I will have a need for provisioning my private machines I will choose
+ansible.</p>
+<p>That's all for this week blog post! Feel free to comment - I really appreciate
+that.</p>
+<p>Repo with this code is available on <a class="reference external" href="https://github.com/krzysztofzuraw/vagrant-ansible">github</a>.</p>
+<p>Cover image <a class="reference external" href="https://pixabay.com/pl/users/Unsplash-242387/">Unsplash</a> under
+<a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a></p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/ansible.html">ansible</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

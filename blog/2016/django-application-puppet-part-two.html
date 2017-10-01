@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Django application with puppet- part two</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Second post in series how to provision vagrant box using puppet for geodjango application.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="puppet">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/django-application-puppet-part-two.html">
+	<meta property="og:title" content="Django application with puppet- part two">
+	<meta property="article:published_time" content="2016-07-09 08:00:00+02:00">
+            <meta property="og:description" content="Second post in series how to provision vagrant box using puppet for geodjango application.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/puppet.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/puppet.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Django application with puppet- part two" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/puppet.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/puppet.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Django application with puppet- part two</h1>
+                        <span class="meta">Posted on Sat 09 July 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>I end first post at the moment of pulling code from git. This text is how to setup
+additional stuff for geodjango application.</strong></p>
+<p>It's a good practice in python word to have isolated environments per application.
+In python 3 there is a tool for that in standard library called <a class="reference external" href="https://docs.python.org/3/library/venv.html">venv</a>.
+How to create such virutal enviroment? By invoking similar command in shell:</p>
+<div class="highlight"><pre><span></span>python3 -m venv /opt/geodjango/env
+</pre></div>
+<p>As it is the command that is run in the shell, puppet has the special resource to handling
+these cases: <tt class="docutils literal">exec</tt>. How to use it? It's simple:</p>
+<div class="highlight"><pre><span></span><span class="k">exec</span> <span class="p">{</span> <span class="s">&#39;create venv&#39;</span><span class="p">:</span>
+  <span class="na">command</span> <span class="o">=&gt;</span> <span class="s">&#39;python3 -m venv /opt/geodjango/env&#39;</span><span class="p">,</span>
+  <span class="na">path</span>    <span class="o">=&gt;</span> <span class="s">&#39;/usr/local/bin:/usr/bin:/bin&#39;</span><span class="p">,</span>
+  <span class="na">require</span> <span class="o">=&gt;</span> <span class="na">Vcsrepo</span><span class="p">[</span><span class="s">&#39;/opt/geodjango/geodjango&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+<p>I'm telling puppet to execute <tt class="docutils literal">command</tt> that is in <tt class="docutils literal">path</tt>. I decided that
+this command will be run only when there are changes in the repo. That's why <tt class="docutils literal">require</tt> argument.</p>
+<p>Right now I created virutal enviroment. It's time to install python packages that
+are needed for proper operation of the whole application. I've used so-called
+<a class="reference external" href="https://pip.readthedocs.io/en/1.1/requirements.html">requirements.txt</a>. To
+install packages from that file via puppet I need:</p>
+<div class="highlight"><pre><span></span><span class="k">exec</span> <span class="p">{</span> <span class="s">&#39;install requirements&#39;</span><span class="p">:</span>
+  <span class="na">command</span> <span class="o">=&gt;</span> <span class="s">&#39;/opt/geodjango/env/bin/pip install --requirement /opt/geodjango/geodjango/requirements.txt&#39;</span><span class="p">,</span>
+  <span class="na">path</span>    <span class="o">=&gt;</span> <span class="s">&#39;/usr/local/bin:/usr/bin:/bin&#39;</span><span class="p">,</span>
+  <span class="na">require</span> <span class="o">=&gt;</span> <span class="k">Exec</span><span class="p">[</span><span class="s">&#39;create venv&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+<p>I specify here full paths for <tt class="docutils literal">pip</tt> as well as for <tt class="docutils literal">requirements</tt> file.</p>
+<p>As everything is installed I need a tool for managing my geodjango application.
+I can do this by invoking django command <tt class="docutils literal">runserver</tt> as a deamon. But there is a tool
+designed especially for that- <a class="reference external" href="http://supervisord.org/">supervisor</a>. How does it works?
+You specify in ini file which commands needs to be run by supervisor. In addition to
+that, you can see if your command run was successful or not. To use supervisor you need:</p>
+<div class="highlight"><pre><span></span><span class="k">include</span> <span class="p">::</span><span class="na">supervisord</span>
+
+<span class="na">supervisord</span><span class="p">::</span><span class="na">program</span> <span class="p">{</span> <span class="s">&#39;django&#39;</span><span class="p">:</span>
+  <span class="na">command</span>     <span class="o">=&gt;</span> <span class="s">&#39;/opt/geodjango/env/bin/gunicorn geodjango_leaflet.wsgi -b 127.0.0.1:9000&#39;</span><span class="p">,</span>
+  <span class="k">user</span>        <span class="o">=&gt;</span> <span class="s">&#39;geodjango&#39;</span><span class="p">,</span>
+  <span class="k">directory</span>   <span class="o">=&gt;</span> <span class="s">&#39;/opt/geodjango/geodjango&#39;</span><span class="p">,</span>
+  <span class="k">subscribe</span>   <span class="o">=&gt;</span> <span class="na">Vcsrepo</span><span class="p">[</span><span class="s">&#39;/opt/geodjango/geodjango&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+</pre></div>
+<p>At the top, I included supervisord resource. <tt class="docutils literal">D</tt> at the end stands for the daemon. Right below that
+I setup program <tt class="docutils literal">django</tt> which is a simple gunicorn command run by user geodjango inside
+specified directory.</p>
+<p>I have my app running via gunicorn managed by supervisor but there is one more thing:
+web server. In my apps I use nginx so I'm gonna setup that:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="p">{</span><span class="s">&#39;nginx&#39;</span><span class="p">:</span>
+  <span class="na">confd_purge</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+  <span class="na">vhost_purge</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nv">$nginx_settings</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">&#39;upstream_name&#39;</span>    <span class="o">=&gt;</span> <span class="s">&#39;geodjango&#39;</span><span class="p">,</span>
+  <span class="s">&#39;upstream_address&#39;</span> <span class="o">=&gt;</span> <span class="s">&#39;127.0.0.1:9000&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">file</span> <span class="p">{</span> <span class="p">[</span><span class="s">&quot;/etc/nginx/sites-available/geodjango.conf&quot;</span><span class="p">,</span><span class="s">&quot;/etc/nginx/sites-enabled/geodjango.conf&quot;</span> <span class="p">]</span> <span class="p">:</span>
+  <span class="na">ensure</span>   <span class="o">=&gt;</span> <span class="k">file</span><span class="p">,</span>
+  <span class="na">content</span>  <span class="o">=&gt;</span> <span class="k">template</span><span class="p">(</span><span class="s">&#39;nginx.erb&#39;</span><span class="p">),</span>
+  <span class="k">notify</span>   <span class="o">=&gt;</span> <span class="k">Service</span><span class="p">[</span><span class="s">&#39;nginx&#39;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+<p>Starting from the top: I configured class nginx to do not setup conf.d files as well as
+vhost ones. Right after that, I defined puppet variable <tt class="docutils literal">$nginx_settings</tt> which is a hash. I will be using
+this variable in resource <tt class="docutils literal">file</tt> where I tell puppet to setup file in <tt class="docutils literal"><span class="pre">sites-available</span></tt> as well as in
+<tt class="docutils literal"><span class="pre">sites-enabled</span></tt>. Content of this file is present in template <tt class="docutils literal">nginx.erb</tt>:</p>
+<div class="highlight"><pre><span></span><span class="n">upstream</span> <span class="o">&lt;</span><span class="sx">%= @nginx_settings[&#39;upstream_name&#39;] %&gt; {</span>
+<span class="sx">  server &lt;%=</span> <span class="vi">@nginx_settings</span><span class="o">[</span><span class="s1">&#39;upstream_address&#39;</span><span class="o">]</span> <span class="sx">%&gt;;</span>
+<span class="sx">}</span>
+
+<span class="sx">server {</span>
+
+<span class="sx">    location /static {</span>
+<span class="sx">        alias /opt/geodjango/static;</span>
+<span class="sx">    }</span>
+
+<span class="sx">    location / {</span>
+<span class="sx">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span>
+<span class="sx">        proxy_set_header Host $http_host;</span>
+<span class="sx">        proxy_redirect off;</span>
+<span class="sx">        proxy_pass http://&lt;%= @nginx_settings[&#39;upstream_name&#39;] %&gt;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>As you can see I use <tt class="docutils literal">nginx_settings</tt> inside my template. It's because puppet takes variables
+for the local scope of given module- in this case <tt class="docutils literal">default.pp</tt>. It's good to know that they are two
+types of templates that puppet can use- one erb style (ruby) that I currently used in this example and
+puppet style (<a class="reference external" href="https://docs.puppet.com/puppet/latest/reference/lang_template_epp.html">epp</a>).</p>
+<p>There are three more things to do: first to run database migrations, load initial data to the database
+and the third one to collect static files. I want to do them manually but here is puppet code if you are interested:</p>
+<div class="highlight"><pre><span></span><span class="k">exec</span> <span class="p">{</span> <span class="s">&#39;run django migrations&#39;</span><span class="p">:</span>
+  <span class="na">command</span>     <span class="o">=&gt;</span> <span class="s">&#39;/opt/geodjango/env/bin/python /opt/geodjango/geodjango/manage.py migrate --no-input&#39;</span><span class="p">,</span>
+  <span class="na">path</span>        <span class="o">=&gt;</span> <span class="s">&#39;/usr/local/bin:/usr/bin:/bin&#39;</span><span class="p">,</span>
+  <span class="na">require</span>     <span class="o">=&gt;</span> <span class="k">Exec</span><span class="p">[</span><span class="s">&#39;install requirements&#39;</span><span class="p">],</span>
+  <span class="k">subscribe</span>   <span class="o">=&gt;</span> <span class="na">Postgresql_psql</span><span class="p">[</span><span class="s">&#39;Add password to role&#39;</span><span class="p">],</span>
+  <span class="na">refreshonly</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">exec</span> <span class="p">{</span> <span class="s">&#39;load initial data to db&#39;</span><span class="p">:</span>
+  <span class="na">command</span>     <span class="o">=&gt;</span> <span class="s">&#39;/opt/geodjango/env/bin/python /opt/geodjango/geodjango/manage.py loaddata&#39;</span><span class="p">,</span>
+  <span class="na">path</span>        <span class="o">=&gt;</span> <span class="s">&#39;/usr/local/bin:/usr/bin:/bin&#39;</span><span class="p">,</span>
+  <span class="na">require</span>     <span class="o">=&gt;</span> <span class="k">Exec</span><span class="p">[</span><span class="s">&#39;install requirements&#39;</span><span class="p">],</span>
+  <span class="k">subscribe</span>   <span class="o">=&gt;</span> <span class="na">Postgresql_psql</span><span class="p">[</span><span class="s">&#39;Add password to role&#39;</span><span class="p">],</span>
+  <span class="na">refreshonly</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">exec</span> <span class="p">{</span> <span class="s">&#39;collect static files&#39;</span><span class="p">:</span>
+  <span class="na">command</span>     <span class="o">=&gt;</span> <span class="s">&#39;/opt/geodjango/env/bin/python /opt/geodjango/geodjango/manage.py collectstatic --noinput&#39;</span><span class="p">,</span>
+  <span class="na">path</span>        <span class="o">=&gt;</span> <span class="s">&#39;/usr/local/bin:/usr/bin:/bin&#39;</span><span class="p">,</span>
+  <span class="na">require</span>     <span class="o">=&gt;</span> <span class="k">Exec</span><span class="p">[</span><span class="s">&#39;install requirements&#39;</span><span class="p">],</span>
+  <span class="k">subscribe</span>   <span class="o">=&gt;</span> <span class="na">Vcsrepo</span><span class="p">[</span><span class="s">&#39;/opt/geodjango/geodjango&#39;</span><span class="p">],</span>
+  <span class="na">refreshonly</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+<p>All these 3 commands are django one (loaddata is made by myself). To use them with puppet you need to
+specify them under <tt class="docutils literal">exec</tt> resource.</p>
+<p>That's all for this time. To sum these two articles up: I really enjoyed playing with puppet. Especially
+this clear syntax that puppet provides. I also like that you can even write a tests for puppet code!
+Having two machines (puppet master &amp; agent) for provisioning is good because you can have real time
+update of your agent machine but requiers resources.</p>
+<p>What is more I currently use vagrant with default
+config which is not good- not enough RAM on client machine forces puppet run to stop. I could set it up
+for higher value but my computer isnt' good enough. To bypass this I have plan to use docker with puppet
+master and agent. Lastly installing every time puppet modules in Vagrantfile isn't good idea- that's another
+thing to change and maybe use something like <a class="reference external" href="http://librarian-puppet.com/">puppet-librarian</a>?</p>
+<p>Source code for this is avaiable <a class="reference external" href="https://github.com/krzysztofzuraw/vagrant-puppet">here</a>. Please leave comment if you like it!</p>
+<p>Cover image by <a class="reference external" href="https://en.wikipedia.org/wiki/User:ALoan">ALoan</a>  released into public domain.</p>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/puppet.html">puppet</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Django + Celery &amp; Rabbit - part four</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Fourth part of series about Django application with Celery and RabbitMQ.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="celery">
+        <meta name="tags" content="rabbit">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-four.html">
+	<meta property="og:title" content="Django + Celery &amp; Rabbit - part four">
+	<meta property="article:published_time" content="2016-03-19 10:20:00+01:00">
+            <meta property="og:description" content="Fourth part of series about Django application with Celery and RabbitMQ.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/celery.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/celery.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Django + Celery &amp; Rabbit - part four" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/celery.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/celery.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Django + Celery &amp; Rabbit - part four</h1>
+                        <span class="meta">Posted on Sat 19 March 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>This is the fourth part of Celery and RabbitMQ in Django series. Today I
+will fix minor bugs and sum up this series.</strong></p>
+<div class="section" id="audio-file-detail-view">
+<h2>Audio File detail view</h2>
+<p>This is the first bug that I wanted to tackle. Did you remember my last
+<a class="reference external" href="https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-three.html">post</a> ? At the end there was a bug show below:</p>
+<video src="/videos/upload.mp4" width="720" autoplay loop><p>The problem was after successful upload django redirect to detail view
+of uploaded file. And in HTML template of this view, it expects that
+ac3_file will be there but FFmpeg still is transcoding it. So I came up
+with solution:</p>
+<p>1.First, I added new field to <tt class="docutils literal">AudioFile</tt> model called
+<tt class="docutils literal">was_processed</tt> to indicate whenever file has been processed:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AudioFile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1"># ....</span>
+    <span class="n">was_processed</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+<p>By default, this field has value <tt class="docutils literal">False</tt>.</p>
+<p>2.Then in my task I added
+<a class="reference external" href="http://docs.celeryproject.org/en/latest/userguide/signals.html">signal</a>
+handler that ran after every task:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">celery.signals</span> <span class="kn">import</span> <span class="n">task_postrun</span>
+
+<span class="nd">@task_postrun.connect</span>
+<span class="k">def</span> <span class="nf">task_executed_handler</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">audio_file</span> <span class="o">=</span> <span class="n">AudioFile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">audio_file</span><span class="o">.</span><span class="n">was_processed</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">audio_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+<p>In this handler id of <tt class="docutils literal">AudioFile</tt> object is taken from <tt class="docutils literal">kwargs</tt>.
+After retrieving certain file from the database, the flag
+<tt class="docutils literal">was_processed</tt> is set.</p>
+<p>3.Lastly, in my <tt class="docutils literal">audiofile_detail.html</tt> I added this code:</p>
+<div class="highlight"><pre><span></span>{% if object.was_processed %}
+    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ object.ac3_file.url}}&quot;</span><span class="p">&gt;</span>Ac3 File<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ object.ogg_file.url}}&quot;</span><span class="p">&gt;</span>Ogg File<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{ object.wav_file.url}}&quot;</span><span class="p">&gt;</span>Wav File<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+{% endif %}
+</pre></div>
+<p>So right now when I upload file I get:</p>
+<video src="/assets/videos/audio_detail.mp4" width="720" autoplay loop>
+Your browser does not support the video tag.
+</video></div>
+<div class="section" id="logging">
+<h2>Logging</h2>
+<p>Right now everything works great but what if something goes wrong? To
+make sure that I will be able to find the issue I need logging. This is
+especially valuable for celery because Django doesn't show output from
+Celery as it is a different application. So to setup basic logging I
+need to add only a few things in <tt class="docutils literal">tasks.py</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">celery.utils.log</span> <span class="kn">import</span> <span class="n">get_task_logger</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">get_task_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@app.task</span>
+<span class="k">def</span> <span class="nf">transcode_mp3</span><span class="p">(</span><span class="n">mp3_id</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s1">&#39;Created output files: </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">.&#39;</span><span class="p">,</span>
+        <span class="n">ogg_output_file_path</span><span class="p">,</span>
+        <span class="n">ac3_output_file_path</span><span class="p">,</span>
+        <span class="n">wav_output_file_path</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Started transcoding.&#39;</span><span class="p">)</span>
+    <span class="c1"># transcoding here</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;End of transcoding.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># rest of program ...</span>
+</pre></div>
+<p>Thanks to that I can see in my console:</p>
+<div class="highlight"><pre><span></span>[2016-03-19 09:55:07,184: INFO/Worker-4] taskapp.tasks.transcode_mp3[b6ca93d4-e58c-496f-b8e5-4ba493b8a92a]: Started transcoding.
+# transcoding ...
+[2016-03-19 09:55:11,837: INFO/Worker-4] taskapp.tasks.transcode_mp3[b6ca93d4-e58c-496f-b8e5-4ba493b8a92a]: End of transcoding.
+</pre></div>
+</div>
+<div class="section" id="summary">
+<h2>Summary</h2>
+<p>This was the last post of Django Celery Rabbit series. I made basic
+transcoder application that uses FFmpeg, Django, Celery and RabbitMQ. I
+learned quite a bit about how celery works with rabbitmq and django.
+Thanks to that I stumbled upon some useful blog
+<a class="reference external" href="https://denibertovic.com/posts/celery-best-practices/">posts</a>. I
+also see some issues with my solutions. For instance todays AudioFile
+detail view. I'm thinking about other ways to solve this problem because
+right now I need 2 operations on database for one file. Maybe you know
+solution to this? I'm really keen to hear about your view on this issue
+or other comments so feel free to write comments or send me an email!
+Thanks to all people who give me feedback- I really appreciate this!
+Code for this series can be found on
+<a class="reference external" href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_celery_rabbit">github</a>.</p>
+<p>Cover image that presents queue by <a class="reference external" href="https://pixabay.com/pl/users/aykapog-185475/">Aykapog</a> under <a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/celery.html">celery</a>, <a href="https://krzysztofzuraw.com/tag/rabbit.html">rabbit</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

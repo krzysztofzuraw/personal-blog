@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - web</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 02 Oct 2016 09:00:00 +0200</lastBuildDate><item><title>JSON Web Tokens in django application- part one</title><link>https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-one.html</link><description>&lt;p&gt;&lt;strong&gt;Recently I attended a workshop about web security. During these hours I
+learnt quite a lot but one thing got my attention- JWT. Based on that I decided
+to write a blog post series about how to use JSON Web Tokens in simple django
+application. Today it is the first …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 02 Oct 2016 09:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-10-02:/blog/2016/jwt-in-django-application-part-one.html</guid><category>web</category></item></channel></rss>

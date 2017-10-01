@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Python &amp; WebDAV- part two</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Using python WebDAV client">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="python">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/python-webdav-part-two.html">
+	<meta property="og:title" content="Python &amp; WebDAV- part two">
+	<meta property="article:published_time" content="2016-09-18 10:00:00+02:00">
+            <meta property="og:description" content="Using python WebDAV client">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/filesystem.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/filesystem.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Python &amp; WebDAV- part two" />
+            <meta name="twitter:description" content="Using python WebDAV client" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/filesystem.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/filesystem.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Python &amp; WebDAV- part two</h1>
+                            <h3 class="subheading" >Using python WebDAV client</h3>
+                        <span class="meta">Posted on Sun 18 September 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>In the last post, I set up owncloud with WebDAV server. Now it's time to use it.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#python-webdav-client-easywebdav" id="id1">Python WebDAV client - easywebdav</a></li>
+<li><a class="reference internal" href="#webdav-editor" id="id2">WebDAV editor</a></li>
+<li><a class="reference internal" href="#conclusion" id="id3">Conclusion</a></li>
+</ul>
+</div>
+<div class="section" id="python-webdav-client-easywebdav">
+<h2><a class="toc-backref" href="#id1">Python WebDAV client - easywebdav</a></h2>
+<p>I was searching for good python library to work with WebDAV for a long time.
+I finally found it- <a class="reference external" href="https://github.com/amnong/easywebdav">easywebdav</a>. It works
+nicely but the problem is that doesn't have support for python 3. Let's jump quickly
+to my simple project for cli tool- webdav editor.</p>
+</div>
+<div class="section" id="webdav-editor">
+<h2><a class="toc-backref" href="#id2">WebDAV editor</a></h2>
+<p>I decided to create cli tool to work with WebDAV server- webdav editor. Right now
+it supports only basic commands like login, listing the content of directories, uploading
+and downloading files.</p>
+<p>I started from creating file <cite>webdav_utility.py</cite>:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">urlparse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+<span class="kn">import</span> <span class="nn">easywebdav</span>
+
+
+<span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">argparse_namespace</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">url_components</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">argparse_namespace</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
+        <span class="n">host</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">url_components</span><span class="o">.</span><span class="n">netloc</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+        <span class="n">webdav_client</span> <span class="o">=</span> <span class="n">easywebdav</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span>
+            <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span>
+            <span class="n">path</span><span class="o">=</span><span class="n">url_components</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
+            <span class="n">username</span><span class="o">=</span><span class="n">argparse_namespace</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+            <span class="n">password</span><span class="o">=</span><span class="n">argparse_namespace</span><span class="o">.</span><span class="n">password</span>
+        <span class="p">)</span>
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">webdav_client</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;webdav_login&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">list_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">argparse_namespace</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">print</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">webdav_client</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="n">argparse_namespace</span><span class="o">.</span><span class="n">path</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">upload_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">argparse_namespace</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">webdav_client</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span>
+            <span class="n">argparse_namespace</span><span class="o">.</span><span class="n">from_path</span><span class="p">,</span> <span class="n">argparse_namespace</span><span class="o">.</span><span class="n">to_path</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">argparse_namespace</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">webdav_client</span><span class="o">.</span><span class="n">download</span><span class="p">(</span>
+            <span class="n">argparse_namespace</span><span class="o">.</span><span class="n">from_path</span><span class="p">,</span> <span class="n">argparse_namespace</span><span class="o">.</span><span class="n">to_path</span>
+        <span class="p">)</span>
+</pre></div>
+<p>In class <tt class="docutils literal">Client</tt>, I write simple functions that are wrappers around <tt class="docutils literal">easywebdav</tt>
+API. In <tt class="docutils literal">login</tt> I parse provided URL in form like <cite>localhost:8888/owncloud/remote.php/webdav</cite>
+to get <tt class="docutils literal">host</tt>, <tt class="docutils literal">port</tt> and <tt class="docutils literal">path</tt> for <tt class="docutils literal">easywebdav.connect</tt> to establish a proper connection.</p>
+<p>Another method that is worth mentioning is <tt class="docutils literal">list_content</tt> where I retrieve names of files under a
+directory on WebDAV server. In every method I provide <tt class="docutils literal">*args</tt> argument and <tt class="docutils literal">argparse_namespace</tt>
+which leads to another component of application- module <cite>cli.py</cite>:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="kn">from</span> <span class="nn">webdav_utility</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Simple command line utility for WebDAV&#39;</span><span class="p">)</span>
+<span class="n">subparsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="s1">&#39;Commands&#39;</span><span class="p">)</span>
+
+<span class="n">login_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;login&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Authenticate with WebDAV&#39;</span><span class="p">)</span>
+<span class="n">login_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-s&#39;</span><span class="p">,</span> <span class="s1">&#39;--server&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">login_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-u&#39;</span><span class="p">,</span> <span class="s1">&#39;--user&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">login_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="s1">&#39;--password&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">login_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">login</span><span class="p">)</span>
+
+<span class="n">ls_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;ls&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;List content of directory under WebDAV&#39;</span><span class="p">)</span>
+<span class="n">ls_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="s1">&#39;--path&#39;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ls_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">list_content</span><span class="p">)</span>
+
+<span class="n">upload_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;upload&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Upload files to WebDAV&#39;</span><span class="p">)</span>
+<span class="n">upload_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="s1">&#39;--from&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;PATH&#39;</span><span class="p">)</span>
+<span class="n">upload_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="s1">&#39;--to&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;PATH&#39;</span><span class="p">)</span>
+<span class="n">upload_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">upload_file</span><span class="p">)</span>
+
+<span class="n">download_parser</span> <span class="o">=</span> <span class="n">subparsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;download&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Download files from WebDAV&#39;</span><span class="p">)</span>
+<span class="n">download_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-f&#39;</span><span class="p">,</span> <span class="s1">&#39;--from&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;PATH&#39;</span><span class="p">)</span>
+<span class="n">download_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-t&#39;</span><span class="p">,</span> <span class="s1">&#39;--to&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;PATH&#39;</span><span class="p">)</span>
+<span class="n">download_parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">client</span><span class="o">.</span><span class="n">download_file</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+<p>There I use <a class="reference external" href="https://docs.python.org/2.7/library/argparse.html">argparse</a>. I create the main parser
+with four additionals subparsers for <tt class="docutils literal">login</tt>, <tt class="docutils literal">ls</tt>, <tt class="docutils literal">upload</tt> and <tt class="docutils literal">download</tt>. Thanks to that
+I have different namespace for every one of previously mentioned subparsers.</p>
+<p>Problem is that this
+solution is not generic enough because after running my command with <tt class="docutils literal">login</tt> parameter I can get:
+<tt class="docutils literal"><span class="pre">Namespace(server='localhost:8888',</span> <span class="pre">user='admin',</span> <span class="pre">password='admin')</span></tt> and running the same command but
+with <tt class="docutils literal">ls</tt> I will receive: <tt class="docutils literal"><span class="pre">Namespace(path='path_to_file')</span></tt>. To handle that I used <tt class="docutils literal">set_defaults</tt> for
+every subparser. I tell argparse to invoke function specified by <tt class="docutils literal">func</tt> keyword (which is different for every command).
+Thanks to that I only need to call this code once:</p>
+<div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">args</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+<p>That's the reason I introduce <tt class="docutils literal">argparse_namespaces</tt> in <tt class="docutils literal">Client</tt>.</p>
+<p>OK, tool right now works nicely, but there is no place to store information if I am logged or not. So
+calling <tt class="docutils literal">python cli.py login <span class="pre">-s</span> localhost <span class="pre">-u</span> admin <span class="pre">-p</span> admin</tt> works but <tt class="docutils literal">python cli.py ls <span class="pre">-p</span> /</tt> not.
+To overcome that I came up with an idea to pickle webdav_client like this:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="c1"># login user etc</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">webdav_client</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;webdav_login&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+
+  <span class="k">def</span> <span class="nf">list_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">webdav_client</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;webdav_login&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+    <span class="c1"># rest of the code</span>
+</pre></div>
+<p>Then I can easily run:</p>
+<div class="highlight"><pre><span></span>$ python cli.py login --server example.org/owncloud/remote.php/webdav --user admin --password admin
+$ python cli.py ls --path <span class="s1">&#39;/&#39;</span>
+<span class="o">[</span><span class="s1">&#39;/owncloud/remote.php/webdav/&#39;</span>, <span class="s1">&#39;/owncloud/remote.php/webdav/Documents/&#39;</span>, <span class="s1">&#39;/owncloud/remote.php/webdav/Photos/&#39;</span>, <span class="s1">&#39;/owncloud/remote.php/webdav/ownCloud%20Manual.pdf&#39;</span><span class="o">]</span>
+</pre></div>
+</div>
+<div class="section" id="conclusion">
+<h2><a class="toc-backref" href="#id3">Conclusion</a></h2>
+<p>In this series, I setup an owncloud server and write simple tool just to show capabilities of WebDAV. I believe
+that some work, especially for webdav editor cli can still be done: the better way to handle user auth than pickle,
+separate <tt class="docutils literal">Client</tt> class from argparse dependencies. If you have additional comments or thoughts please
+write a comment! Thank you for reading.</p>
+<p>Other blog posts in this series:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/python-webdav-part-one.html">Python &amp; WebDAV- part one</a></li>
+</ul>
+<p>Github repo for this blog post: <a class="reference external" href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/webdav_editor">link</a>.</p>
+<p>Special thanks to Kasia for being editor for this post. Thank you.</p>
+<p>Cover image by <a class="reference external" href="https://www.flickr.com/photos/kleuske/">kleuske</a> under <a class="reference external" href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/python.html">python</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

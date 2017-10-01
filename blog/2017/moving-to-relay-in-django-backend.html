@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Moving to Relay in Django backend</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="How to set up graphene-django to work with relay">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="python">
+        <meta name="tags" content="relay">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2017/moving-to-relay-in-django-backend.html">
+	<meta property="og:title" content="Moving to Relay in Django backend">
+	<meta property="article:published_time" content="2017-09-03 10:00:00+02:00">
+            <meta property="og:description" content="How to set up graphene-django to work with relay">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/server.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/server.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Moving to Relay in Django backend" />
+            <meta name="twitter:description" content="How to set up graphene-django to work with relay" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/server.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/server.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Moving to Relay in Django backend</h1>
+                            <h3 class="subheading" >How to set up graphene-django to work with relay</h3>
+                        <span class="meta">Posted on Sun 03 September 2017
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Today I want to talk a little bit more about my next step in developing
+a GraphQL application. This step is connected with moving backend so it understands
+Relay.</strong></p>
+<div class="section" id="what-exactly-is-realy">
+<h2>What exactly is Realy?</h2>
+<p>As documentation of <a class="reference external" href="https://facebook.github.io/relay/">Relay</a> suggests - it's framework
+for working with external data in React. What does it mean? It allows a developer to declare
+what data he or she needs on frontend and relay will take care how to fetch it and use it in
+React code.</p>
+</div>
+<div class="section" id="how-to-setup-realy-in-django">
+<h2>How to setup Realy in Django?</h2>
+<p>In 2 first blog post of this series, I created GraphQL from Django using <tt class="docutils literal">DjangoObjectType</tt>.
+See this blog <a class="reference external" href="https://krzysztofzuraw.com/blog/2017/django-graphql-react-part-two.html">post</a>. Right now if I want to use my application with Relay I have to move to
+the more generic solution and implements nodes that can be understood by Relay:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Film</span><span class="p">(</span><span class="n">graphene</span><span class="o">.</span><span class="n">ObjectType</span><span class="p">):</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">interfaces</span> <span class="o">=</span> <span class="p">(</span><span class="n">relay</span><span class="o">.</span><span class="n">Node</span><span class="p">,</span> <span class="p">)</span>
+
+    <span class="n">title</span> <span class="o">=</span> <span class="n">graphene</span><span class="o">.</span><span class="n">String</span><span class="p">()</span>
+    <span class="n">actors</span> <span class="o">=</span> <span class="n">graphene</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">Actor</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;List of actors that play in the film&#39;</span><span class="p">)</span>
+    <span class="n">air_date</span> <span class="o">=</span> <span class="n">graphene_datetime</span><span class="o">.</span><span class="n">DateTime</span><span class="p">()</span>
+    <span class="n">rating</span> <span class="o">=</span> <span class="n">graphene</span><span class="o">.</span><span class="n">Int</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create_from_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">id_</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">id_</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span>
+            <span class="n">air_date</span><span class="o">=</span><span class="n">arrow</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;air_date&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
+            <span class="n">rating</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_node</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">FILMS_ENDPOINT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Film</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">resolve_actors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">FILMS_ENDPOINT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">relay</span><span class="o">.</span><span class="n">Node</span><span class="o">.</span><span class="n">get_node_from_global_id</span><span class="p">(</span>
+            <span class="n">to_global_id</span><span class="p">(</span><span class="s1">&#39;Actor&#39;</span><span class="p">,</span> <span class="n">actor_id</span><span class="p">),</span>
+            <span class="n">context</span><span class="p">,</span>
+            <span class="n">info</span>
+        <span class="p">)</span> <span class="k">for</span> <span class="n">actor_id</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;actors&#39;</span><span class="p">]]</span>
+</pre></div>
+<p>As you can see I declare <tt class="docutils literal">realy.Node</tt> in <tt class="docutils literal">Meta</tt>. Then I specified which fields should <tt class="docutils literal">Film</tt> need. I also
+added <tt class="docutils literal">get_node</tt> method for getting data via one instance and <tt class="docutils literal">resolve_actors</tt> to get related data from actors schema.
+I added this to my <tt class="docutils literal">Query</tt>:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Query</span><span class="p">(</span><span class="n">graphene</span><span class="o">.</span><span class="n">AbstractType</span><span class="p">):</span>
+    <span class="n">film</span> <span class="o">=</span> <span class="n">graphene</span><span class="o">.</span><span class="n">relay</span><span class="o">.</span><span class="n">Node</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">Film</span><span class="p">)</span>
+    <span class="n">films</span> <span class="o">=</span> <span class="n">graphene</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">Film</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">resolve_films</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ALL_FILMS_ENDPOINT</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">Film</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span><span class="n">film</span><span class="p">,</span> <span class="n">film</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">film</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+</pre></div>
+<p>Now I can query for both all films:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nx">films</span> <span class="p">{</span>
+    <span class="nx">id</span>
+    <span class="nx">title</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>to get:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;films&quot;</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;RmlsbTox&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="s2">&quot;Pulp Fiction&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;RmlsbToy&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="s2">&quot;Django&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;RmlsbToz&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="s2">&quot;Inglourious Basterds&quot;</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;RmlsbTo0&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="s2">&quot;The Hateful Eight&quot;</span>
+        <span class="p">},</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>as you can see ids are encoded using base64 as relay is using such format in its queries.
+I wrote similar code for actor model. Thanks to that I can query for example first one:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nx">actor</span><span class="p">(</span><span class="nx">id</span><span class="o">:</span><span class="s2">&quot;QWN0b3I6MQ==&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">firstName</span>
+        <span class="nx">lastName</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>and get result:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;actor&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;firstName&quot;</span><span class="o">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lastName&quot;</span><span class="o">:</span> <span class="s2">&quot;Travolta&quot;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>The last thing I want to cover are mutations - they allow to create a new data using GraphQL. How to
+implement one:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CreateFilm</span><span class="p">(</span><span class="n">relay</span><span class="o">.</span><span class="n">ClientIDMutation</span><span class="p">):</span>
+
+    <span class="k">class</span> <span class="nc">Input</span><span class="p">:</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">graphene</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">actors</span> <span class="o">=</span> <span class="n">graphene</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">ActorInput</span><span class="p">)</span>
+        <span class="n">air_date</span> <span class="o">=</span> <span class="n">graphene_datetime</span><span class="o">.</span><span class="n">DateTime</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">rating</span> <span class="o">=</span> <span class="n">graphene</span><span class="o">.</span><span class="n">Int</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="n">film</span> <span class="o">=</span> <span class="n">graphene</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">Film</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">mutate_and_get_payload</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="n">actors_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">from_global_id</span><span class="p">(</span><span class="n">actor</span><span class="p">[</span><span class="s1">&#39;actor_id&#39;</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">actor</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;actors&#39;</span><span class="p">]]</span>
+        <span class="n">data_to_sent</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;actors&#39;</span><span class="p">:</span> <span class="n">actors_ids</span><span class="p">,</span>
+            <span class="s1">&#39;air_date&#39;</span><span class="p">:</span> <span class="n">arrow</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;air_date&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span>
+            <span class="s1">&#39;rating&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">ALL_FILMS_ENDPOINT</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data_to_sent</span><span class="p">)</span>
+        <span class="n">data_from_server</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">film</span> <span class="o">=</span> <span class="n">Film</span><span class="o">.</span><span class="n">create_from_data</span><span class="p">(</span><span class="n">data_from_server</span><span class="p">,</span> <span class="n">data_from_server</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">CreateFilm</span><span class="p">(</span><span class="n">film</span><span class="o">=</span><span class="n">film</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Mutation</span><span class="p">(</span><span class="n">graphene</span><span class="o">.</span><span class="n">AbstractType</span><span class="p">):</span>
+    <span class="n">create_film</span> <span class="o">=</span> <span class="n">CreateFilm</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+</pre></div>
+<p>Main logic sits in <tt class="docutils literal">mutate_and_get_payload</tt> where I get database ids from ones sent by Relay. I also
+hit the Django API to get all actors and create a film entry. My mutation can look like this:</p>
+<div class="highlight"><pre><span></span><span class="nx">mutation</span> <span class="nx">createNewFilm</span> <span class="p">{</span>
+    <span class="nx">createFilm</span><span class="p">(</span><span class="nx">input</span><span class="o">:</span> <span class="p">{</span><span class="nx">title</span><span class="o">:</span> <span class="s2">&quot;New title&quot;</span><span class="p">,</span> <span class="nx">actors</span><span class="o">:</span> <span class="p">[{</span><span class="nx">actorId</span><span class="o">:</span> <span class="s2">&quot;QWN0b3I6MQ==&quot;</span><span class="p">}],</span> <span class="nx">airDate</span><span class="o">:</span> <span class="s2">&quot;2017-01-01&quot;</span><span class="p">,</span> <span class="nx">rating</span><span class="o">:</span> <span class="mi">3</span><span class="p">})</span> <span class="p">{</span>
+            <span class="nx">film</span> <span class="p">{</span>
+            <span class="nx">id</span>
+            <span class="nx">title</span>
+            <span class="nx">rating</span>
+            <span class="nx">airDate</span>
+            <span class="nx">actors</span> <span class="p">{</span>
+                <span class="nx">firstName</span>
+                <span class="nx">lastName</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>and I get back:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;createFilm&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;film&quot;</span><span class="o">:</span> <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="s2">&quot;RmlsbTo0OQ==&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="s2">&quot;New title&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;rating&quot;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+                <span class="s2">&quot;airDate&quot;</span><span class="o">:</span> <span class="s2">&quot;2017-01-01&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;actors&quot;</span><span class="o">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;firstName&quot;</span><span class="o">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;lastName&quot;</span><span class="o">:</span> <span class="s2">&quot;Travolta&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>That's all for today! I have my backend ready to work in Relay! Please let me know if you have any questions
+or comments regarding this blog post - all are welcome and take care!</p>
+<div class="section" id="other-blog-posts-in-this-series">
+<h3>Other blog posts in this series:</h3>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/django-graphql-react-part-one.html">Django, GraphQL &amp; React - part one</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/django-graphql-react-part-two.html">Django, GraphQL &amp; React - part two</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/monorepo-structure.html">Monorepo structure for Django &amp; React Applications</a></li>
+</ul>
+<p>Repo with code can be found on <a class="reference external" href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_django_graphql_react_relay">github</a>.</p>
+<p>Cover image from <a class="reference external" href="https://unsplash.com/search/server?photo=Re6__yidc48">Unsplash</a> under
+<a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+</div>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/python.html">python</a>, <a href="https://krzysztofzuraw.com/tag/relay.html">relay</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

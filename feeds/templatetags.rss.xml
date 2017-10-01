@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - templatetags</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 23 Apr 2017 10:00:00 +0200</lastBuildDate><item><title>Testing django template tags</title><link>https://krzysztofzuraw.com/blog/2017/how-to-test-django-template-tags.html</link><description>&lt;p&gt;&lt;strong&gt;In this blog post I will give you simple example how to test your template tags
+in django using django testing tools. Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="section" id="how-to-test-templatetags"&gt;
+&lt;h2&gt;How to test templatetags?&lt;/h2&gt;
+&lt;p&gt;Let say that you got this template tag under &lt;tt class="docutils literal"&gt;/templatetags/create_header.py&lt;/tt&gt; in django:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt;
+
+&lt;span class="n"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Library …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 23 Apr 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-04-23:/blog/2017/how-to-test-django-template-tags.html</guid><category>testing</category><category>django</category><category>python</category><category>templatetags</category></item></channel></rss>

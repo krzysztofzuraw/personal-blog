@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Django cookiecutter</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Automate everything.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/django-cookiecutter.html">
+	<meta property="og:title" content="Django cookiecutter">
+	<meta property="article:published_time" content="2016-02-19 10:20:00+01:00">
+            <meta property="og:description" content="Automate everything.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/cookie.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/cookie.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Django cookiecutter" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/cookie.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/cookie.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Django cookiecutter</h1>
+                        <span class="meta">Posted on Fri 19 February 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Have you ever wanted to automate all these boring things that you have
+to do while setting up new django project? Like writing proper settings,
+setting up whole folder structure, adding docs, readmes, setup.py etc?
+There is app that can do these mundane actions for you:</strong> <a class="reference external" href="https://github.com/pydanny/cookiecutter-django">Cookiecutter
+Django</a>.</p>
+<p>Q: What you get after reading this post?</p>
+<p>A: Basic understanding how you can automate boring tasks and get
+exciting ones done!</p>
+<p>Let's start with
+<a class="reference external" href="https://github.com/audreyr/cookiecutter">cookiecutter</a>. What exactly
+is it? It's CLI tool for automatically generating projects from given
+template. What do I mean by that?</p>
+<p>Suppose that when you make new python project you want certain things to
+be setup the same way every time. For instance: <tt class="docutils literal">setup.py</tt> or docs
+folders. Thanks to cookiecutter it's possible to automate these things
+so every time you make the new project the boring stuff is already made
+for you.</p>
+<p>Django Cookiecutter is made especially for django applications. Based on
+GitHub
+<a class="reference external" href="https://github.com/pydanny/cookiecutter-django/blob/master/README.rst">README</a>
+it provides:</p>
+<blockquote>
+<ul class="simple">
+<li>For Django 1.9</li>
+<li>Renders Django projects with 100% test coverage</li>
+<li>Twitter Bootstrap v4.0.0 - alpha</li>
+<li>End-to-end via Hitch</li>
+<li>AngularJS</li>
+<li>12-Factor based settings via django-environ</li>
+<li>Optimized development and production settings</li>
+<li>Registration via django-allauth</li>
+<li>Comes with custom user model ready to go.</li>
+<li>Grunt build for compass and livereload</li>
+<li>Basic e-mail configurations for sending emails via Mailgun</li>
+<li>Media storage using Amazon S3</li>
+<li>Docker support using docker-compose for development and
+production</li>
+<li>Procfile for deploying to Heroku</li>
+</ul>
+</blockquote>
+<p>And some additional features:</p>
+<blockquote>
+<ul class="simple">
+<li>Serve static files from Amazon S3 or Whitenoise</li>
+<li>Configuration for Celery</li>
+<li>Integration with MailHog for local email testing</li>
+<li>Integration with Sentry for error logging</li>
+<li>Integration with NewRelic for performance monitoring</li>
+<li>Integration with Opbeat for performance monitoring</li>
+</ul>
+</blockquote>
+<p>So it can make a huge improvement in initial project configuration.
+Let's try this out!</p>
+<p>After installation via pip by:</p>
+<div class="highlight"><pre><span></span>$ pip install cookiecutter
+</pre></div>
+<p>Then after typing:</p>
+<div class="highlight"><pre><span></span>$ cookiecutter https://github.com/pydanny/cookiecutter-django.git
+</pre></div>
+<p>And answering all these questions:</p>
+<div class="highlight"><pre><span></span>project_name [project_name]: blog_cookiecutter
+repo_name [blog_cookiecutter]: blog-cookiecutter
+author_name [Your Name]: Krzysztof Żuraw
+email [Your email]: kz@example.com
+description [A short description of the project.]: This is example of cookiecutter django usage
+domain_name [example.com]: example.com
+version [0.1.0]: 0.0.1
+timezone [UTC]: UTC
+now [2016/01/29]: 2016/02/18
+year [2016]:
+use_whitenoise [y]: n
+use_celery [n]: y
+use_mailhog [n]: n
+use_sentry [n]: y
+use_newrelic [n]: n
+use_opbeat [n]: n
+windows [n]: n
+use_python2 [n]: n
+Select open_source_license:
+1 - MIT
+2 - BSD
+3 - Not open source
+Choose from 1, 2, 3 [1]: 1
+</pre></div>
+<p>You got the simple django application with celery, sentry, tests, grunt,
+less and docker.</p>
+<p>Folder structure looks as follows:</p>
+<div class="highlight"><pre><span></span>$ tree . -a -L 3
+.
+└── blog-cookiecutter
+    ├── app.json
+    ├── blog-cookiecutter
+    │   ├── contrib
+    │   ├── __init__.py
+    │   ├── static
+    │   ├── taskapp
+    │   ├── templates
+    │   └── users
+    ├── compose
+    │   ├── django
+    │   └── nginx
+    ├── config
+    │   ├── __init__.py
+    │   ├── settings
+    │   ├── urls.py
+    │   └── wsgi.py
+    ├── CONTRIBUTORS.txt
+    ├── .coveragerc
+    ├── dev.yml
+    ├── docker-compose.yml
+    ├── Dockerfile
+    ├── Dockerfile-dev
+    ├── .dockerignore
+    ├── docs
+    │   ├── conf.py
+    │   ├── deploy.rst
+    │   ├── docker_ec2.rst
+    │   ├── index.rst
+    │   ├── __init__.py
+    │   ├── install.rst
+    │   ├── make.bat
+    │   └── Makefile
+    ├── .editorconfig
+    ├── env.example
+    ├── .gitattributes
+    ├── .gitignore
+    ├── Gruntfile.js
+    ├── install_os_dependencies.sh
+    ├── install_python_dependencies.sh
+    ├── LICENSE
+    ├── manage.py
+    ├── package.json
+    ├── Procfile
+    ├── .pylintrc
+    ├── README.rst
+    ├── requirements
+    │   ├── base.txt
+    │   ├── local.txt
+    │   ├── production.txt
+    │   └── test.txt
+    ├── requirements.apt
+    ├── requirements.txt
+    ├── runtime.txt
+    ├── setup.cfg
+    ├── tests
+    │   ├── all.settings
+    │   ├── base.yml
+    │   ├── ci.settings
+    │   ├── engine.py
+    │   ├── hitchreqs.txt
+    │   ├── register-and-log-in.test
+    │   ├── system.packages
+    │   └── tdd.settings
+    └── .travis.yml
+</pre></div>
+<p>So as this application follows the <a class="reference external" href="http://12factor.net/">12-Factor</a>
+application guidelines most of django settings variables are set in an
+environment so it's good to run this in docker.</p>
+<p>To install docker on ubuntu type:</p>
+<div class="highlight"><pre><span></span>$ sudo apt-get update
+$ sudo apt-get install apt-transport-https ca-certificates
+$ sudo sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+</pre></div>
+<p>Now it's time to add entry in <tt class="docutils literal">/etc/apt/sources.list.d/docker.list</tt>
+for Ubuntu 14.04</p>
+<div class="highlight"><pre><span></span>deb https://apt.dockerproject.org/repo ubuntu-trusty main
+</pre></div>
+<p>And run:</p>
+<div class="highlight"><pre><span></span>$ sudo apt-get update
+$ sudo apt-get install linux-image-extra-$(uname -r)
+$ sudo apt-get install docker-engine
+</pre></div>
+<p>Then verify if everything is installed:</p>
+<div class="highlight"><pre><span></span>$ sudo service docker start $ sudo docker run hello-world
+</pre></div>
+<p>Now you have Docker! But to be able to use docker in cookiecutter-django
+project there is need for installing additional package called
+<a class="reference external" href="https://docs.docker.com/compose/">docker-compose</a>. It allows to run
+multiple docker containers.</p>
+<p>Installation is simple:</p>
+<div class="highlight"><pre><span></span>$ sudo pip install docker-compose
+$ docker-compose --version
+docker-compose version 1.6.0, build d99cad6
+</pre></div>
+<p>So it's time to fire up the installation:</p>
+<div class="highlight"><pre><span></span>$ sudo docker-compose -f dev.yml build
+$ sudo docker-compose -f dev.yml up -d
+</pre></div>
+<p><tt class="docutils literal"><span class="pre">-f</span></tt> flag means that we specify which yml file is taken for
+configuration (by default it is <tt class="docutils literal"><span class="pre">docker-compose.yml</span></tt>) and <tt class="docutils literal"><span class="pre">-d</span></tt> flag
+in the second command is for detached mode.</p>
+<p>Now it's time to run basic django commands to migrate data to database
+and to create superuser:</p>
+<div class="highlight"><pre><span></span>$ sudo docker-compose -f dev.yml run django python manage.py makemigrations
+$ sudo docker-compose -f dev.yml run django python manage.py migrate
+$ sudo docker-compose -f dev.yml run django python manage.py createsuperuser
+</pre></div>
+<p>Then go to the <tt class="docutils literal">localhost:8000</tt> and you can see that Django
+application works!:</p>
+<video src="/videos/cookiecutter.mp4" width="720" autoplay loop><p>And that's it! You got the working project made in few minutes. If you
+found this post helpful please share it with your friends.</p>
+<div class="section" id="resources">
+<h2>Resources:</h2>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://realpython.com/blog/python/development-and-deployment-of-cookiecutter-django-via-docker/">Development and deployment of cookiecutter django via docker</a></li>
+<li><a class="reference external" href="https://github.com/pydanny/cookiecutter-django">Cookiecutter django github</a></li>
+<li><a class="reference external" href="http://cookiecutter.readthedocs.org/en/latest/">Cookiecutter docs</a></li>
+</ol>
+<p>Cover image by <a class="reference external" href="http://www.flickr.com/photos/87542849&#64;N00">Kimberly Vardeman</a> under <a class="reference external" href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

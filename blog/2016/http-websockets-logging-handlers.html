@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Http and websockets logging handlers</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Quick introduction to HTTP and Websockets logging handlers.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="python">
+        <meta name="tags" content="logging">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/http-websockets-logging-handlers.html">
+	<meta property="og:title" content="Http and websockets logging handlers">
+	<meta property="article:published_time" content="2016-01-16 10:20:00+01:00">
+            <meta property="og:description" content="Quick introduction to HTTP and Websockets logging handlers.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/log.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/log.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Http and websockets logging handlers" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/log.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/log.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Http and websockets logging handlers</h1>
+                        <span class="meta">Posted on Sat 16 January 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Hello, this posts will be about 3 specific logging handlers:
+HTTPHandler, SocketHandler and DatagramHandler.</strong></p>
+<div class="section" id="httphandler">
+<h2>HTTPHandler</h2>
+<p>Let's start with HTTPHandler: reading python docs about
+<a class="reference external" href="https://docs.python.org/3.4/library/logging.handlers.html#httphandler">HTTPHandler</a>
+we can see that:</p>
+<blockquote>
+The HTTPHandler class, located in the logging.handlers module,
+supports sending logging messages to a Web server, using either GET
+or POST semantics.</blockquote>
+<p>So this will be useful to have such handler in case of many different
+modules in different machines that sends logs to one central server.</p>
+<p>As an example, I will build simple flask application which prints out
+the logging message from the client.</p>
+<p>To install Flask:</p>
+<div class="highlight"><pre><span></span>$ pip install Flask
+</pre></div>
+<p>Then make server.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+<span class="k">return</span> <span class="s1">&#39;response&#39;</span> <span class="c1"># it has to return something</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+<p>To send some data, create script called send_log.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.handlers</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">server</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1:5000&#39;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>
+<span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;GET&#39;</span>
+
+<span class="n">sh</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">HTTPHandler</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Test message.&quot;</span><span class="p">)</span>
+</pre></div>
+<p>Running server.py and send_log.py will result in this output:</p>
+<video src="/videos/http_logger.mp4" autoplay width="720" loop>
+Your browser does not support the video tag.
+</video></div>
+<div class="section" id="sockethandler">
+<h2>SocketHandler</h2>
+<p>Now let's move to the
+<a class="reference external" href="https://docs.python.org/3.4/library/logging.handlers.html#sockethandler">SocketHandler</a>:
+this is what python docs say about it</p>
+<blockquote>
+The SocketHandler class, located in the logging.handlers module,
+sends logging output to a network socket. The base class uses a TCP
+socket.</blockquote>
+<p>Based on this we can now guess that web socket will receive logging
+message.Then we can process it further. It will be useful when there is
+a lot of logs to be sent to the server. So opening HTTP connection every
+time is not a good solution.</p>
+<p>So first we need some TCP server:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LogRecordSocketReceiver</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">ThreadingTCPServer</span><span class="p">):</span>
+    <span class="n">allow_reuse_address</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+                 <span class="n">port</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">DEFAULT_TCP_LOGGING_PORT</span><span class="p">,</span>
+                 <span class="n">handler</span><span class="o">=</span><span class="n">LogRecordStreamHandler</span><span class="p">):</span>
+        <span class="n">socketserver</span><span class="o">.</span><span class="n">ThreadingTCPServer</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">),</span> <span class="n">handler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abort</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logname</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">serve_until_stopped</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">select</span>
+        <span class="n">abort</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">abort</span><span class="p">:</span>
+            <span class="n">rd</span><span class="p">,</span> <span class="n">wr</span><span class="p">,</span> <span class="n">ex</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">fileno</span><span class="p">()],</span>
+                                       <span class="p">[],</span> <span class="p">[],</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rd</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_request</span><span class="p">()</span>
+            <span class="n">abort</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">abort</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">tcpserver</span> <span class="o">=</span> <span class="n">LogRecordSocketReceiver</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;About to start TCP server...&#39;</span><span class="p">)</span>
+    <span class="n">tcpserver</span><span class="o">.</span><span class="n">serve_until_stopped</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+<p>What is going on here? In the <tt class="docutils literal">main</tt> function we instantiate threading TCP server and
+we serve it until we don't hit Ctrl+C. In the <tt class="docutils literal">serve_until_stopped</tt> method of <tt class="docutils literal">LogRecordSocketReceiver</tt>
+we are waiting for the key combination to the stop server and if this not happening the we retrieve information about the
+socket by <tt class="docutils literal">self.socket.fileno()</tt> which is a descriptor of a socket. Then we pass it to another function
+call: this time <tt class="docutils literal">select()</tt>. Select is system call for examining the status of file descriptors of open input/output channels
+which in this case is information from the socket. If there is anything ready to be read we handle the request and
+process it.</p>
+<p>To process it we need handler:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LogRecordStreamHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">StreamRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">slen</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;&gt;L&#39;</span><span class="p">,</span> <span class="n">chunk</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">slen</span><span class="p">)</span>
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">slen</span><span class="p">:</span>
+                <span class="n">chunk</span> <span class="o">=</span> <span class="n">chunk</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">slen</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">chunk</span><span class="p">))</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</pre></div>
+<p>In method <tt class="docutils literal">handle</tt> we read chunks of information from sent logging message. The chunk is byte type so
+then we need to translate it to python object by calling <tt class="docutils literal">pickle.loads()</tt>.</p>
+<p>So running our TCP server and sending log looks like this:</p>
+<video src="/videos/socket_logger.mp4" autoplay width="720" loop>
+Your browser does not support the video tag.
+</video><p>Full gist with socket logger looks like this:</p>
+<script src="https://gist.github.com/krzysztofzuraw/dea92aad16cd157e5ea6.js"></script><p>And with socket sender:</p>
+<script src="https://gist.github.com/krzysztofzuraw/8d7684664ba16fc43b6c.js"></script></div>
+<div class="section" id="datagramhandler">
+<h2>DatagramHandler</h2>
+<p>Lastly, there is
+<a class="reference external" href="https://docs.python.org/3.4/library/logging.handlers.html#datagramhandler">DatagramHandler</a>
+which supports sending logging messages over UDP.</p>
+<p>The actual code is very similar to SocketHandler:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyUDPHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">client_address</span><span class="p">,</span> <span class="n">server</span><span class="p">):</span>
+        <span class="n">socketserver</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span>
+                                                 <span class="n">client_address</span><span class="p">,</span>
+                                                 <span class="n">server</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">msg</span><span class="p">,</span> <span class="n">socket</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{} wrote:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">4</span><span class="p">:]))</span>
+        <span class="n">socket</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">)</span>
+</pre></div>
+<p>Thanks to <a class="reference external" href="http://stackoverflow.com/users/5807830/rooter">RooTer</a>
+answer on
+<a class="reference external" href="http://stackoverflow.com/questions/34761688/unpickling-data-in-udp-server-send-from-logger-results-in-eoferror">stackoverflow</a>
+I got this working by omitting first 4 bytes of data because they
+contain length of dumped object.</p>
+<p>So the full upd_server looks as follows:</p>
+<script src="https://gist.github.com/krzysztofzuraw/24e21feeadaff88ae6f5.js"></script><p>Which works like this:</p>
+<video src="/videos/udp_logger.mp4" autoplay width="720" loop>
+Your browser does not support the video tag.
+</video><div class="section" id="resources">
+<h3>Resources</h3>
+<ul class="simple">
+<li>Socket server and log sender based on python logging
+<a class="reference external" href="https://docs.python.org/3/howto/logging-cookbook.html#sending-and-receiving-logging-events-across-a-network">cookbook</a></li>
+</ul>
+</div>
+<div class="section" id="updates">
+<h3>Updates</h3>
+<ul class="simple">
+<li>23.01.16 Thanks to RooTer answer I added UDP log handler</li>
+</ul>
+<p>Cover image by <a class="reference external" href="https://www.flickr.com/photos/quinnanya/">Quinn Dombrowski</a> under <a class="reference external" href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>.</p>
+</div>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/python.html">python</a>, <a href="https://krzysztofzuraw.com/tag/logging.html">logging</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

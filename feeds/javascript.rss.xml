@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - javascript</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 20 Aug 2017 10:00:00 +0200</lastBuildDate><item><title>Monorepo structure for Django &amp; React Applications</title><link>https://krzysztofzuraw.com/blog/2017/monorepo-structure.html</link><description>&lt;p&gt;&lt;strong&gt;Hello! Today I will guide you through setting up React application with Django! Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;First thing is where I place my javascript application? Should it be in another repository? Or maybe Django should
+use webpack to render js?&lt;/p&gt;
+&lt;p&gt;I decided to use pattern called &lt;tt class="docutils literal"&gt;monorepo&lt;/tt&gt;. What does it …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 20 Aug 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-08-20:/blog/2017/monorepo-structure.html</guid><category>django</category><category>python</category><category>javascript</category><category>react</category></item><item><title>Testing React form components</title><link>https://krzysztofzuraw.com/blog/2017/testing-react-form-components.html</link><description>&lt;p&gt;&lt;strong&gt;In this blog post, I will present quick code snippets on how to
+test your React component. Especially the one that renders the form.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;My history with writing React application starts from an excellent course by
+&lt;a class="reference external" href="https://reactforbeginners.com/"&gt;Wes Bos&lt;/a&gt;. So I completed this course and
+with bright future ahead of me …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 11 Jun 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-06-11:/blog/2017/testing-react-form-components.html</guid><category>react</category><category>javascript</category><category>testing</category><category>components</category><category>form</category></item><item><title>Chaining promises in JavaScript</title><link>https://krzysztofzuraw.com/blog/2017/chaining-promises-in-javascript.html</link><description>&lt;p&gt;&lt;strong&gt;In this blog post, I will present to you how you can chain promises JavaScript. Let's go!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Recently I ended my small &lt;a class="reference external" href="https://krzysztofzuraw.github.io/all-roads-lead-to/"&gt;side project&lt;/a&gt; .
+I used there google maps api to perform various tasks. All the responses from Google
+API were asynchronous so I thought: let's wrap them in promises …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 28 May 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-05-28:/blog/2017/chaining-promises-in-javascript.html</guid><category>javascript</category><category>promise</category></item><item><title>Callbacks &amp; promises in JS for newbies</title><link>https://krzysztofzuraw.com/blog/2017/callbacks-promises-in-js-for-newbies.html</link><description>&lt;p&gt;&lt;strong&gt;You are a newbie in JavaScript? You want to know a little bit more about asynchronous
+nature of this language? Join me!&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#problem" id="id2"&gt;Problem&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#solution" id="id3"&gt;Solution&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-i-ve-learn" id="id4"&gt;What I've learn&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#update-10-07-2017" id="id5"&gt;Update 10.07.2017&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="problem"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id2"&gt;Problem&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I was working on my project that is using Google Maps. I
+stumbled upon an …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 02 Apr 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-04-02:/blog/2017/callbacks-promises-in-js-for-newbies.html</guid><category>javascript</category><category>callbacks</category><category>promises</category><category>newbies</category><category>google_maps</category></item><item><title>On building application using Google Maps API</title><link>https://krzysztofzuraw.com/blog/2017/building-application-using-google-maps-api.html</link><description>&lt;p&gt;&lt;strong&gt;This blog post will be about my failure. Failure to understand how
+javascript works but also what I learned along the way.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-i-wanted-to-accomplish-this-week" id="id1"&gt;What I wanted to accomplish this week&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-problem-i-had" id="id2"&gt;What problem I had&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-to-do-next" id="id3"&gt;What to do next?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id4"&gt;Other blog posts in this series:&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-i-wanted-to-accomplish-this-week"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;What I wanted to …&lt;/a&gt;&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 26 Mar 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-03-26:/blog/2017/building-application-using-google-maps-api.html</guid><category>javascript</category><category>google_maps</category></item><item><title>New blog series - all roads lead to</title><link>https://krzysztofzuraw.com/blog/2017/all-roads-lead-to.html</link><description>&lt;p&gt;&lt;strong&gt;All of us know this saying -&lt;/strong&gt; &lt;cite&gt;all roads lead to Rome&lt;/cite&gt;. &lt;strong&gt;After taking with
+one of my coworkers about that all roads lead somewhere I decided to write
+small application that do exactly this thing - leading to somewhere&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-this-application-will-be-about" id="id1"&gt;What this application will be about&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#entry-screen-implementation-in-html" id="id2"&gt;Entry screen implementation …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 19 Mar 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-03-19:/blog/2017/all-roads-lead-to.html</guid><category>javascript</category></item><item><title>Pomodoro timer - how good was your pomodoro?</title><link>https://krzysztofzuraw.com/blog/2017/pomodoro-timer-how-good-was-your-pomodoro.html</link><description>&lt;p&gt;&lt;strong&gt;Hello! This week I made the main feature of my pomodoro timer - checking if pomodoro was good or bad.
+I believe that is one of the ways to measure your productivity. Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#how-to-check-how-good-your-pomodoro-was" id="id1"&gt;How to check how good your pomodoro was?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#modals-in-javascript" id="id2"&gt;Modals in javascript&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#references" id="id3"&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id4"&gt;Other …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 12 Mar 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-03-12:/blog/2017/pomodoro-timer-how-good-was-your-pomodoro.html</guid><category>javascript</category></item><item><title>Pomodoro timer - breaks &amp; localStorage</title><link>https://krzysztofzuraw.com/blog/2017/pomodoro-timer-breaks-localstorage.html</link><description>&lt;p&gt;&lt;strong&gt;Hello! In today blog post I will write what I learn during this week of
+pomodoro timer development - breaks and localStorage.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#breaks-for-pomodoro-timer" id="id1"&gt;Breaks for pomodoro timer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#displaying-storing-breaks-and-pomodoros" id="id2"&gt;Displaying &amp;amp; storing breaks and pomodoros&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id3"&gt;Other blog posts in this series&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="breaks-for-pomodoro-timer"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Breaks for pomodoro timer&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The whole idea of pomodoro is that …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 05 Mar 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-03-05:/blog/2017/pomodoro-timer-breaks-localstorage.html</guid><category>javascript</category></item><item><title>Pomodoro timer - notifications</title><link>https://krzysztofzuraw.com/blog/2017/pomodoro-timer-notifications.html</link><description>&lt;p&gt;&lt;strong&gt;Welcome! Today I will focus on notifications in JavaScript. Let's go!&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#notifications-in-javascript" id="id1"&gt;Notifications in JavaScript&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#how-i-implemented-notifications" id="id2"&gt;How I implemented notifications&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-next" id="id3"&gt;What next?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id4"&gt;Other blog posts in this series&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#references" id="id5"&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="notifications-in-javascript"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Notifications in JavaScript&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I want my pomodoro timer to run in the background - I decided my website
+will be one …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 26 Feb 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-02-26:/blog/2017/pomodoro-timer-notifications.html</guid><category>javascript</category></item><item><title>Pomodoro timer - counting</title><link>https://krzysztofzuraw.com/blog/2017/pomodoro-timer-counting.html</link><description>&lt;p&gt;&lt;strong&gt;Welcome to today's blog post! This blog post will be about implementing countdown in
+JavaScript and also about some CSS work I have to do so my timer looks decent.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#core-functionality-of-pomodoro-timer" id="id1"&gt;Core functionality of pomodoro timer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#implementing-timer-in-javascript" id="id2"&gt;Implementing timer in JavaScript&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-is-next" id="id3"&gt;What is next?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id4"&gt;Other blog posts in this …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Fri, 17 Feb 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-02-17:/blog/2017/pomodoro-timer-counting.html</guid><category>javascript</category></item><item><title>Pomodoro timer - beginning</title><link>https://krzysztofzuraw.com/blog/2017/pomodoro-timer-beginning.html</link><description>&lt;p&gt;&lt;strong&gt;From this post I will try to make new a blog post series - documenting my projects. In previous
+projects like this, I had every time a fixed number of blog posts I wanted to write about a specific
+project - from 2 to 4. Right now, I want to try writing …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 12 Feb 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-02-12:/blog/2017/pomodoro-timer-beginning.html</guid><category>javascript</category></item></channel></rss>

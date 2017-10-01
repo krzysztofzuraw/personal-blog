@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Transcoding with AWS- part two</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Using Elastic Transcoder to transcode files">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="aws">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-two.html">
+	<meta property="og:title" content="Transcoding with AWS- part two">
+	<meta property="article:published_time" content="2016-12-11 10:00:00+01:00">
+            <meta property="og:description" content="Using Elastic Transcoder to transcode files">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/cloud.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/cloud.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Transcoding with AWS- part two" />
+            <meta name="twitter:description" content="Using Elastic Transcoder to transcode files" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/cloud.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/cloud.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Transcoding with AWS- part two</h1>
+                            <h3 class="subheading" >Using Elastic Transcoder to transcode files</h3>
+                        <span class="meta">Posted on Sun 11 December 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>As I have static and media files integrated with AWS now it's time to transcode
+them. In this post, I will write a short example of how to integrate AWS ElasticTranscoder
+with Django application.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#basic-terms" id="id1">Basic terms</a></li>
+<li><a class="reference internal" href="#code" id="id2">Code</a></li>
+<li><a class="reference internal" href="#other-blog-posts-in-this-series" id="id3">Other blog posts in this series</a></li>
+</ul>
+</div>
+<div class="section" id="basic-terms">
+<h2><a class="toc-backref" href="#id1">Basic terms</a></h2>
+<p>ElasticTranscoder allows you to transcode files from your S3 bucket to various formats.
+To set this service up first you have to create a pipeline. What pipeline is? Basically, it's
+a workflow- how your transcoder should work. You can create a different pipeline for long
+content and different for short one. In my application I created the following pipeline:</p>
+<img alt="Pipeline configuration" src="/images/aws_transcoder1.png" />
+<p>As I have my pipeline configured next step is to create jobs. Jobs are tasks for a transcoder
+that say which file I want to transcode, to what format or codec I want to do this:</p>
+<img alt="Job details" src="/images/aws_transcoder2.png" />
+<p>PresetID is user created or already existing configuration that defines the format of transcoder
+output: is it mp4 or maybe flac? What resolution should video files have? All of this
+is set up in present.</p>
+<p>As we know basic terms used in AWS Elastic Transcoder let's jump into the code.</p>
+</div>
+<div class="section" id="code">
+<h2><a class="toc-backref" href="#id2">Code</a></h2>
+<p>AWS has very good python API called <a class="reference external" href="http://boto3.readthedocs.io/en/latest/">boto3</a>. Using that
+API and few examples from the internet I was able to create a simple class to create transcode job:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+
+<span class="kn">import</span> <span class="nn">boto3</span>
+
+
+<span class="k">class</span> <span class="nc">AudioTranscoder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">region_name</span><span class="o">=</span><span class="s1">&#39;eu-west-1&#39;</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="o">=</span><span class="s1">&#39;Audio Files&#39;</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">region_name</span> <span class="o">=</span> <span class="n">region_name</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_name</span> <span class="o">=</span> <span class="n">pipeline_name</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">transcoder</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;elastictranscoder&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">region_name</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pipeline</span><span class="p">()</span>
+
+  <span class="k">def</span> <span class="nf">get_pipeline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+      <span class="n">paginator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcoder</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">(</span><span class="s1">&#39;list_pipelines&#39;</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">paginator</span><span class="o">.</span><span class="n">paginate</span><span class="p">():</span>
+          <span class="k">for</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="n">page</span><span class="p">[</span><span class="s1">&#39;Pipelines&#39;</span><span class="p">]:</span>
+              <span class="k">if</span> <span class="n">pipeline</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipeline_name</span><span class="p">:</span>
+                  <span class="k">return</span> <span class="n">pipeline</span><span class="p">[</span><span class="s1">&#39;Id&#39;</span><span class="p">]</span>
+
+  <span class="k">def</span> <span class="nf">start_transcode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+      <span class="n">base_filename</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_aws_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+      <span class="n">wav_aws_filename</span><span class="p">,</span> <span class="n">wav_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_aws_filename</span><span class="p">(</span>
+          <span class="n">filename</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.wav&#39;</span>
+      <span class="p">)</span>
+      <span class="n">flac_aws_filename</span><span class="p">,</span> <span class="n">flac_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_aws_filename</span><span class="p">(</span>
+          <span class="n">filename</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.flac&#39;</span>
+      <span class="p">)</span>
+      <span class="n">mp4_aws_filename</span><span class="p">,</span> <span class="n">mp4_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_aws_filename</span><span class="p">(</span>
+          <span class="n">filename</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s1">&#39;.mp4&#39;</span>
+      <span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">transcoder</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span>
+          <span class="n">PipelineId</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pipeline_id</span><span class="p">,</span>
+          <span class="n">Input</span><span class="o">=</span><span class="p">{</span>
+              <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="n">base_filename</span><span class="p">,</span>
+              <span class="s1">&#39;FrameRate&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Resolution&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;AspectRatio&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Interlaced&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;Container&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span>
+          <span class="p">},</span>
+          <span class="n">Outputs</span><span class="o">=</span><span class="p">[{</span>
+              <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="n">wav_aws_filename</span><span class="p">,</span>
+              <span class="s1">&#39;PresetId&#39;</span><span class="p">:</span> <span class="s1">&#39;1351620000001-300300&#39;</span>
+              <span class="p">},</span> <span class="p">{</span>
+              <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="n">flac_aws_filename</span><span class="p">,</span>
+              <span class="s1">&#39;PresetId&#39;</span><span class="p">:</span> <span class="s1">&#39;1351620000001-300110&#39;</span>
+              <span class="p">},</span> <span class="p">{</span>
+              <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="n">mp4_aws_filename</span><span class="p">,</span>
+              <span class="s1">&#39;PresetId&#39;</span><span class="p">:</span> <span class="s1">&#39;1351620000001-100110&#39;</span>
+              <span class="p">}</span>
+          <span class="p">]</span>
+      <span class="p">)</span>
+      <span class="k">return</span> <span class="p">(</span><span class="n">wav_filename</span><span class="p">,</span> <span class="n">flac_filename</span><span class="p">,</span> <span class="n">mp4_filename</span><span class="p">)</span>
+
+  <span class="nd">@staticmethod</span>
+  <span class="k">def</span> <span class="nf">create_aws_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">extension</span><span class="p">):</span>
+      <span class="n">aws_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+          <span class="n">settings</span><span class="o">.</span><span class="n">MEDIAFILES_LOCATION</span><span class="p">,</span> <span class="n">filename</span> <span class="o">+</span> <span class="n">extension</span>
+      <span class="p">)</span>
+      <span class="k">return</span> <span class="n">aws_filename</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">aws_filename</span><span class="p">)</span>
+
+
+<span class="n">transcoder</span> <span class="o">=</span> <span class="n">AudioTranscoder</span><span class="p">()</span>
+</pre></div>
+<p>Going from the top - I specified my <tt class="docutils literal">region_name</tt> as well as <tt class="docutils literal">pipeline_name</tt>
+for boto3 to know to which region it should connect. In method <tt class="docutils literal">get_pipeline</tt> I
+iterate through all available pipelines and return that has the same name as <tt class="docutils literal">pipeline_name</tt>.
+In this function <tt class="docutils literal">paginator</tt> is an object which holds on portion of data so user
+don't have to wait until all available pipelines are fetched.</p>
+<p>The main logic is in <tt class="docutils literal">start_transcode</tt> method. At the beginning, I used helper function
+<tt class="docutils literal">create_aws_filename</tt> that's creating proper AWS file name like <tt class="docutils literal">media/my_mp3.mp3</tt> and
+returns that whole path with filename. After I created filenames for all of my files I'm
+calling <tt class="docutils literal">create_job</tt> that creates a job basing on <tt class="docutils literal">pipeline_id</tt> and <tt class="docutils literal">base_filename</tt>. The job
+can have multiple outputs so I specified one for wav, flac and mp4 files. How is it used in code?
+Let's go to view:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">UploadAudioFileView</span><span class="p">(</span><span class="n">FormView</span><span class="p">):</span>
+  <span class="c1"># some code</span>
+
+  <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+      <span class="n">audio_file</span> <span class="o">=</span> <span class="n">AudioFile</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_form_kwargs</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+            <span class="n">mp3_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_form_kwargs</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;files&#39;</span><span class="p">)[</span><span class="s1">&#39;mp3_file&#39;</span><span class="p">]</span>
+      <span class="p">)</span>
+      <span class="n">audio_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+      <span class="n">wav_filename</span><span class="p">,</span> <span class="n">flac_filename</span><span class="p">,</span> <span class="n">mp4_filename</span> <span class="o">=</span> <span class="n">transcoder</span><span class="o">.</span><span class="n">start_transcode</span><span class="p">(</span>
+          <span class="n">filename</span><span class="o">=</span><span class="n">audio_file</span><span class="o">.</span><span class="n">mp3_file</span><span class="o">.</span><span class="n">name</span>
+      <span class="p">)</span>
+      <span class="n">audio_file</span><span class="o">.</span><span class="n">mp4_file</span> <span class="o">=</span> <span class="n">mp4_filename</span>
+      <span class="n">audio_file</span><span class="o">.</span><span class="n">flac_file</span> <span class="o">=</span> <span class="n">flac_filename</span>
+      <span class="n">audio_file</span><span class="o">.</span><span class="n">wav_file</span> <span class="o">=</span> <span class="n">wav_filename</span>
+      <span class="n">audio_file</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+      <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span>
+          <span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;audio:detail&#39;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;pk&#39;</span><span class="p">:</span> <span class="n">audio_file</span><span class="o">.</span><span class="n">pk</span><span class="p">})</span>
+      <span class="p">)</span>
+</pre></div>
+<p>In <tt class="docutils literal">form_valid</tt> first I'm calling <tt class="docutils literal">save()</tt> on <tt class="docutils literal">AudioFile</tt> object which is uploading the file
+to S3 bucket. Then I'm using <tt class="docutils literal">transcoder.start_transcode</tt> and basing on output from this function
+I match filenames to their respective fields. I know that this solution is not the best one
+as I have to call <tt class="docutils literal">save</tt> twice and if you have a better way to do this I'm glad to hear
+it from you.</p>
+<p>That's all for today! Transcoding works fine but there is a problem with what when files are big?
+Transcoding such files will take lots of time and user don't want to wait for a response.
+The solution will be revealed in next post.</p>
+</div>
+<div class="section" id="other-blog-posts-in-this-series">
+<h2><a class="toc-backref" href="#id3">Other blog posts in this series</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-one.html">Transcoding with AWS- part one</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-three.html">Transcoding with AWS- part three</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-four.html">Transcoding with AWS- part four</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-five.html">Transcoding with AWS- part five</a></li>
+</ul>
+<p>The code that I have made so far is available on
+<a class="reference external" href="https://github.com/krzysztofzuraw/blog_transcoder_aws">github</a>. Stay
+tuned for next blog post from this series.</p>
+<p>Special thanks to Kasia for being an editor for this post. Thank you.</p>
+<p>While creating this blog post I used an code from offcial
+<a class="reference external" href="https://github.com/boto/boto3-sample/blob/master/transcoder.py">boto github account</a>.</p>
+<p>Cover image by <a class="reference external" href="http://www.flickr.com/people/25691430&#64;N04">Harald Hoyer</a> under <a class="reference external" href="http://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>, via Wikimedia Commons</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/aws.html">aws</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

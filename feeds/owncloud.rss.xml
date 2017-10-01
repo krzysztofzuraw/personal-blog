@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - owncloud</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 11 Sep 2016 10:00:00 +0200</lastBuildDate><item><title>Python &amp; WebDAV- part one</title><link>https://krzysztofzuraw.com/blog/2016/python-webdav-part-one.html</link><description>&lt;p&gt;&lt;strong&gt;I must confess I was ignorant. Recently I saw an application done by my
+colleague at work and it was using python WebDAV client. I was intrigued
+because for me WebDAV was connected with calendars (CalDAV) and contacts (CardDAV).
+And there I have WebDAV which is filesystem.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;I decided to …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 11 Sep 2016 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-09-11:/blog/2016/python-webdav-part-one.html</guid><category>owncloud</category></item></channel></rss>

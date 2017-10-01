@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Monorepo structure for Django &amp; React Applications</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Setting up React to work with Django">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="python">
+        <meta name="tags" content="javascript">
+        <meta name="tags" content="react">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2017/monorepo-structure.html">
+	<meta property="og:title" content="Monorepo structure for Django &amp; React Applications">
+	<meta property="article:published_time" content="2017-08-20 10:00:00+02:00">
+            <meta property="og:description" content="Setting up React to work with Django">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/server.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/server.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Monorepo structure for Django &amp; React Applications" />
+            <meta name="twitter:description" content="Setting up React to work with Django" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/server.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/server.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Monorepo structure for Django &amp; React Applications</h1>
+                            <h3 class="subheading" >Setting up React to work with Django</h3>
+                        <span class="meta">Posted on Sun 20 August 2017
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Hello! Today I will guide you through setting up React application with Django! Let's get started!</strong></p>
+<p>First thing is where I place my javascript application? Should it be in another repository? Or maybe Django should
+use webpack to render js?</p>
+<p>I decided to use pattern called <tt class="docutils literal">monorepo</tt>. What does it mean? It means that you will have your Django application in one
+folder and React application in another folder under the <strong>same</strong> repository.</p>
+<p>What are benefits of such approach? Deployment is a little bit easier as you deploy whole repository, not different services.
+You can write integrations tests more easily. Everything will be governed by <tt class="docutils literal"><span class="pre">docker-compose</span></tt>. Downsides? To release the only backend
+you will have to release also frontend part.</p>
+<p>So how will my folder structure look like?</p>
+<div class="highlight"><pre><span></span>.
+├── compose
+│   ├── django
+│   └── ui
+├── film_api
+│   ├── config
+│   ├── film_database
+│   └── requirements
+└── film_ui
+    ├── public
+    └── src
+</pre></div>
+<p>So in <tt class="docutils literal">film_api</tt>, I keep all my backend service. In <tt class="docutils literal">film_ui</tt> lays React code from <a class="reference external" href="https://github.com/facebookincubator/create-react-app">create-react-app</a>.</p>
+<p>How do I setup this everything? I use docker-compose:</p>
+<div class="highlight"><pre><span></span>film_ui:
+    build:
+    context: .
+    dockerfile: ./compose/ui/Dockerfile
+    volumes:
+    - ./film_ui/:/app
+    - /app/node_modules
+    command: yarn start
+    ports:
+    - &quot;3000:3000&quot;
+</pre></div>
+<p>The interesting setting here is volume <tt class="docutils literal">/app/node_modules</tt> which allow docker to see node_modules from a host machine. I also use Dockerfile:</p>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="s"> node:8</span>
+
+<span class="k">WORKDIR</span><span class="s"> /app</span>
+COPY ./film_ui/package.json /app
+COPY ./film_ui/yarn.lock /app
+
+<span class="k">RUN</span> yarn install
+
+<span class="k">ADD</span><span class="s"> ./film_ui/ /app</span>
+</pre></div>
+<p>Thanks to such configuration I have live reloading and docker see changes that I made in the code base. This part was based on <a class="reference external" href="http://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html">Lessons from Building a Node App in Docker</a>.</p>
+<p>That's all! I got my application ready to connect it to GraphQL so I will be displaying real data from the database instead of hard coded ones.</p>
+<p>What's your approach to the structure of python with javascript application? Let me know in comments!</p>
+<div class="section" id="other-blog-posts-in-this-series">
+<h2>Other blog posts in this series:</h2>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/django-graphql-react-part-one.html">Django, GraphQL &amp; React - part one</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/django-graphql-react-part-two.html">Django, GraphQL &amp; React - part two</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/moving-to-relay-in-django-backend.html">Moving to Relay in Django backend</a></li>
+</ul>
+<p>Repo with code can be found on <a class="reference external" href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_django_graphql_react_relay">github</a>.</p>
+<p>Cover image from <a class="reference external" href="https://unsplash.com/search/server?photo=Re6__yidc48">Unsplash</a> under
+<a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/python.html">python</a>, <a href="https://krzysztofzuraw.com/tag/javascript.html">javascript</a>, <a href="https://krzysztofzuraw.com/tag/react.html">react</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

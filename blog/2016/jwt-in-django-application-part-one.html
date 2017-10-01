@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>JSON Web Tokens in django application- part one</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="What is JWT and why use it?">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="web">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-one.html">
+	<meta property="og:title" content="JSON Web Tokens in django application- part one">
+	<meta property="article:published_time" content="2016-10-02 09:00:00+02:00">
+            <meta property="og:description" content="What is JWT and why use it?">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/jwt.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/jwt.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="JSON Web Tokens in django application- part one" />
+            <meta name="twitter:description" content="What is JWT and why use it?" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/jwt.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/jwt.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >JSON Web Tokens in django application- part one</h1>
+                            <h3 class="subheading" >What is JWT and why use it?</h3>
+                        <span class="meta">Posted on Sun 02 October 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Recently I attended a workshop about web security. During these hours I
+learnt quite a lot but one thing got my attention- JWT. Based on that I decided
+to write a blog post series about how to use JSON Web Tokens in simple django
+application. Today it is the first part of this series.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-jwt" id="id1">What is JWT?</a></li>
+<li><a class="reference internal" href="#how-can-you-use-jwt-and-why" id="id2">How can you use JWT and why?</a></li>
+<li><a class="reference internal" href="#resources" id="id3">Resources:</a></li>
+<li><a class="reference internal" href="#other-blog-posts-in-this-series" id="id4">Other blog posts in this series:</a></li>
+</ul>
+</div>
+<div class="section" id="what-is-jwt">
+<h2><a class="toc-backref" href="#id1">What is JWT?</a></h2>
+<p>JWT aka JSON Web Tokens is a method of authentication. What it does: You as a user
+first send a request to the server saying: I want to login! And server gives you in response
+a long sequence of characters. As you get this sequence you can use it as a way to tell the
+server that you are the person you really are.</p>
+<p>In a more technical sense: you send a request which logs you to service for example
+headers with login and password. In response, you got encrypted token. Then you want
+to get some info about another resource on the server that requires authentication. So to
+your request you simply add one more header with previously received token and that's
+all! You are authenticated.</p>
+<p>JSON Web Token looks like this:</p>
+<div class="highlight"><pre><span></span>HEADER.PAYLOAD.SIGNATURE
+</pre></div>
+<p>The header is a JSON that consists of a type of token (JWT) and which hash algorithm will be
+used (HMAC SHA256 or RSA). HMAC stands for keyed-Hash Message Authentication Code. Message
+Authentication Code (MAC) is used to confirm that message comes from the good sender and its
+integrity has not been changed. Keyed-Hash stands for hashing MAC in combination with a
+secret key.</p>
+<p>The payload contains the claims. Claim store information user wants to transmit and server can
+use to properly handle authentication. There are a lot of registered claims but we will use
+only:</p>
+<ul class="simple">
+<li>&quot;exp&quot; (Expiration Time) Claim</li>
+<li>&quot;nbf&quot; (Not Before Time) Claim</li>
+<li>&quot;iss&quot; (Issuer) Claim</li>
+<li>&quot;aud&quot; (Audience) Claim</li>
+<li>&quot;iat&quot; (Issued At) Claim</li>
+</ul>
+<p>Payload will look like this:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;exp&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Krzysztof Zuraw&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+<p>Last part is a signature. It is basically the sum of all previously mentioned parts
+encoded in base64 + secret.</p>
+</div>
+<div class="section" id="how-can-you-use-jwt-and-why">
+<h2><a class="toc-backref" href="#id2">How can you use JWT and why?</a></h2>
+<p>When you get your response back from a server with JSON Web Token you can use it in header
+like this:</p>
+<div class="highlight"><pre><span></span>Authorization: Bearer &lt;JWT token&gt;
+</pre></div>
+<p>In comparison with another method of authentication: SAML, JWT is more compact. JSON format
+is widely used in programming word so there is no problem with parsers for that format.</p>
+<p>That's all for today and stay tuned for the next post in blog series about JWT!</p>
+</div>
+<div class="section" id="resources">
+<h2><a class="toc-backref" href="#id3">Resources:</a></h2>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://jwt.io/">https://jwt.io/</a></li>
+</ol>
+</div>
+<div class="section" id="other-blog-posts-in-this-series">
+<h2><a class="toc-backref" href="#id4">Other blog posts in this series:</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-two.html">JSON Web Tokens in django application- part two</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-three.html">JSON Web Tokens in django application- part three</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-four.html">JSON Web Tokens in django application- part four</a></li>
+</ul>
+<p>Special thanks to Kasia for being editor for this post. Thank you.</p>
+<p>Cover picture by <a class="reference external" href="https://pixabay.com/pl/users/Lalmch-1026205/">Lalmch</a> under <a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0 Public Domain</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/web.html">web</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

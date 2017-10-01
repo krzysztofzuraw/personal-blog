@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>JSON Web Tokens in django application- part four</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="JWT in urls">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="tutorial">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-four.html">
+	<meta property="og:title" content="JSON Web Tokens in django application- part four">
+	<meta property="article:published_time" content="2016-11-13 09:00:00+01:00">
+            <meta property="og:description" content="JWT in urls">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/jwt.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/jwt.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="JSON Web Tokens in django application- part four" />
+            <meta name="twitter:description" content="JWT in urls" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/jwt.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/jwt.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >JSON Web Tokens in django application- part four</h1>
+                            <h3 class="subheading" >JWT in urls</h3>
+                        <span class="meta">Posted on Sun 13 November 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>When I started this series I have got one comment from my co-worker that
+instead of authentication JWT can be used to sign one time links. After
+reading through the documentation I found that can be a great idea so I
+decided to write a blog post about it.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#use-case" id="id1">Use case</a></li>
+<li><a class="reference internal" href="#json-web-tokens-in-urls" id="id2">JSON Web Tokens in urls</a></li>
+<li><a class="reference internal" href="#other-blog-posts-in-this-series" id="id3">Other blog posts in this series</a></li>
+</ul>
+</div>
+<div class="section" id="use-case">
+<h2><a class="toc-backref" href="#id1">Use case</a></h2>
+<p>Nowadays when a user creates an account he or she has to confirm identity. It is done by sending an email with the link to confirm and activate an account.</p>
+<p>As this link has to expire and be safe this is a good use case for using JSON Web
+Tokens. Such tokens can be generated for every user and set to expire for example
+after two hours. How can it be done in Django? Let's jump into the code.</p>
+</div>
+<div class="section" id="json-web-tokens-in-urls">
+<h2><a class="toc-backref" href="#id2">JSON Web Tokens in urls</a></h2>
+<p>First I change the previous code from series and made special django app just for users.
+But the first user has to register - that's why I made new endpoint in <tt class="docutils literal">urls.py</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">users.views</span> <span class="kn">import</span> <span class="n">UserViewSet</span><span class="p">,</span> <span class="n">CreateUserView</span><span class="p">,</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># rest of url patterns</span>
+    <span class="n">url</span><span class="p">(</span><span class="s1">&#39;^api-register/$&#39;</span><span class="p">,</span> <span class="n">CreateUserView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span>
+<span class="p">]</span>
+</pre></div>
+<p><tt class="docutils literal">CreateUserView</tt> looks as follows:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">status</span>
+<span class="kn">from</span> <span class="nn">rest_framework.generics</span> <span class="kn">import</span> <span class="n">CreateAPIView</span>
+<span class="kn">from</span> <span class="nn">rest_framework.response</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="kn">from</span> <span class="nn">rest_framework_jwt.settings</span> <span class="kn">import</span> <span class="n">api_settings</span>
+
+<span class="n">jwt_payload_handler</span> <span class="o">=</span> <span class="n">api_settings</span><span class="o">.</span><span class="n">JWT_PAYLOAD_HANDLER</span>
+<span class="n">jwt_encode_handler</span> <span class="o">=</span> <span class="n">api_settings</span><span class="o">.</span><span class="n">JWT_ENCODE_HANDLER</span>
+
+<span class="k">class</span> <span class="nc">CreateUserView</span><span class="p">(</span><span class="n">CreateAPIView</span><span class="p">):</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">permissions</span><span class="o">.</span><span class="n">AllowAny</span> <span class="c1"># Or anon users can&#39;t register</span>
+    <span class="p">]</span>
+    <span class="n">serializer_class</span> <span class="o">=</span> <span class="n">UserSerializer</span>
+
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">serializer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_serializer</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">serializer</span><span class="o">.</span><span class="n">is_valid</span><span class="p">(</span><span class="n">raise_exception</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perform_create</span><span class="p">(</span><span class="n">serializer</span><span class="p">)</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_success_headers</span><span class="p">(</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">])</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">jwt_payload_handler</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">jwt_encode_handler</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;confirmation_url&#39;</span><span class="p">:</span> <span class="n">reverse</span><span class="p">(</span>
+                    <span class="s1">&#39;activate-user&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">token</span><span class="p">],</span> <span class="n">request</span><span class="o">=</span><span class="n">request</span>
+                <span class="p">)</span>
+            <span class="p">},</span>
+            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_201_CREATED</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span>
+        <span class="p">)</span>
+</pre></div>
+<p>In this view, I simply add few additional lines for creating JWT. Rest of this is
+a standard code from <a class="reference external" href="www.cdrf.co">DRF</a>. First I created payload by adding <tt class="docutils literal">user</tt>
+to JWT creation process, then I created the token from payload by calling
+<tt class="docutils literal">jwt_encode_handler</tt>. At the end instead of returning user data, I return
+<tt class="docutils literal">confirmation_url</tt> for the end user to enter and activate the account. By default django
+make every user active so I have to write my own <tt class="docutils literal">create</tt> method for <tt class="docutils literal">UserSerializer</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
+<span class="kn">from</span> <span class="nn">tasks.models</span> <span class="kn">import</span> <span class="n">Task</span>
+
+<span class="k">class</span> <span class="nc">UserSerializer</span><span class="p">(</span><span class="n">serializers</span><span class="o">.</span><span class="n">ModelSerializer</span><span class="p">):</span>
+    <span class="n">tasks</span> <span class="o">=</span> <span class="n">serializers</span><span class="o">.</span><span class="n">PrimaryKeyRelatedField</span><span class="p">(</span>
+        <span class="n">many</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">queryset</span><span class="o">=</span><span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;tasks&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validated_data</span><span class="p">):</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span>
+            <span class="n">email</span><span class="o">=</span><span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
+            <span class="n">username</span><span class="o">=</span><span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">validated_data</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">])</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">user</span>
+</pre></div>
+<p>It is simply for setting user as inactive during the process of account creation. Right
+now when user wants to create an account he/she has to send the following request:</p>
+<div class="highlight"><pre><span></span>$ http POST <span class="m">127</span>.0.0.1:9000/api-register/ <span class="nv">username</span><span class="o">=</span>krzysiek <span class="nv">password</span><span class="o">=</span>krzysiek <span class="nv">email</span><span class="o">=</span>krzysztof@kz.com
+HTTP/1.0 <span class="m">201</span> Created
+Allow: POST, OPTIONS
+Content-Type: application/json
+Date: Sun, <span class="m">13</span> Nov <span class="m">2016</span> <span class="m">15</span>:16:33 GMT
+Server: WSGIServer/0.2 CPython/3.5.2
+Vary: Accept
+X-Frame-Options: SAMEORIGIN
+
+<span class="o">{</span>
+    <span class="s2">&quot;confirmation_url&quot;</span>: <span class="s2">&quot;http://127.0.0.1:9000/api-activate/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtyenlzenRvZkBrei5jb20iLCJ1c2VyX2lkIjoyNSwidXNlcm5hbWUiOiJrcnp5c2llayIsImV4cCI6MTQ3OTA1MDQ5M30.CMcW8ZtU6AS9LfVvO-PoLyqcwi6cOK1VzI2o7pEPX2k/&quot;</span>
+<span class="o">}</span>
+</pre></div>
+<p>How this <tt class="docutils literal">confirmation_url</tt> works? I made additional urlpattern:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">users.views</span> <span class="kn">import</span> <span class="n">ActivateUser</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># rest of url patterns</span>
+    <span class="n">url</span><span class="p">(</span>
+        <span class="s1">&#39;^api-activate/(?P&lt;token&gt;.+?)/$&#39;</span><span class="p">,</span>
+        <span class="n">ActivateUser</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span>
+        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;activate-user&#39;</span>
+    <span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+<p>and in <tt class="docutils literal">ActivateUser</tt>:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ActivateUser</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">payload</span> <span class="o">=</span> <span class="n">jwt_decode_handler</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">jwt</span><span class="o">.</span><span class="n">ExpiredSignature</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Signature has expired.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">AuthenticationFailed</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">jwt</span><span class="o">.</span><span class="n">DecodeError</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">&#39;Error decoding signature.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">AuthenticationFailed</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">jwt</span><span class="o">.</span><span class="n">InvalidTokenError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">AuthenticationFailed</span><span class="p">()</span>
+
+        <span class="n">user_to_activate</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">))</span>
+        <span class="n">user_to_activate</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">user_to_activate</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">Response</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;User Activated&#39;</span><span class="p">},</span>
+            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span>
+        <span class="p">)</span>
+</pre></div>
+<p>This is generic <tt class="docutils literal">APIView</tt> so I write get method for handling GET requests. I was
+wondering if it's a good idea to activate user in GET request or do it in PUT. If you
+have some thoughts about this I will be happy to hear them. In <tt class="docutils literal">get</tt> I simply take
+the token from kwargs and perform validation on that token - if it's valid or expired. This
+part of code usually lies in <a class="reference external" href="https://github.com/GetBlimp/django-rest-framework-jwt/blob/master/rest_framework_jwt/authentication.py#L81">authentication</a>
+backend but in such class I don't have access
+to url of a request so in this case, I have to implement this in such a way. If you have other
+ways of handling such a case please let me know! So if everything looks good I activate user:</p>
+<div class="highlight"><pre><span></span>$ http GET http://127.0.0.1:9000/api-activate/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtyenlzenRvZkBrei5jb20iLCJ1c2VyX2lkIjoyNSwidXNlcm5hbWUiOiJrcnp5c2llayIsImV4cCI6MTQ3OTA1MDQ5M30.CMcW8ZtU6AS9LfVvO-PoLyqcwi6cOK1VzI2o7pEPX2k/
+HTTP/1.0 <span class="m">200</span> OK
+Allow: GET, HEAD, OPTIONS
+Content-Type: application/json
+Date: Sun, <span class="m">13</span> Nov <span class="m">2016</span> <span class="m">15</span>:17:37 GMT
+Server: WSGIServer/0.2 CPython/3.5.2
+Vary: Accept
+X-Frame-Options: SAMEORIGIN
+
+<span class="o">[</span>
+    <span class="s2">&quot;User Activated&quot;</span>
+<span class="o">]</span>
+
+$ http GET http://127.0.0.1:9000/api-activate/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImtyenlzenRvZkBrei5jb20iLCJ1c2VyX2lkIjoyNSwidXNlcm5hbWUiOiJrcnp5c2llayIsImV4cCI6MTQ3OTA1MDQ5M30.CMcW8ZtU6AS9LfVvO-PoLyqcwi6cOK1VzI2o7pEPX2k/
+ HTTP/1.0 <span class="m">401</span> Unauthorized
+ Allow: GET, HEAD, OPTIONS
+ Content-Type: application/json
+ Date: Sun, <span class="m">13</span> Nov <span class="m">2016</span> <span class="m">15</span>:28:00 GMT
+ Server: WSGIServer/0.2 CPython/3.5.2
+ Vary: Accept
+ WWW-Authenticate: JWT <span class="nv">realm</span><span class="o">=</span><span class="s2">&quot;api&quot;</span>
+ X-Frame-Options: SAMEORIGIN
+
+ <span class="o">{</span>
+     <span class="s2">&quot;detail&quot;</span>: <span class="s2">&quot;Signature has expired.&quot;</span>
+ <span class="o">}</span>
+</pre></div>
+<p>By default django rest framework jwt sets token expiry time to 5 minutes. If you want to change
+that add following lines in settings.py:</p>
+<div class="highlight"><pre><span></span><span class="n">JWT_AUTH</span> <span class="o">=</span> <span class="p">{</span>
+     <span class="s1">&#39;JWT_EXPIRATION_DELTA&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+<p>That's all for today! Feel free to comment and check repo for this blog post under
+this <a class="reference external" href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_jwt">link</a>.</p>
+</div>
+<div class="section" id="other-blog-posts-in-this-series">
+<h2><a class="toc-backref" href="#id3">Other blog posts in this series</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-one.html">JSON Web Tokens in django application- part one</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-two.html">JSON Web Tokens in django application- part two</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-three.html">JSON Web Tokens in django application- part three</a></li>
+</ul>
+<p>Special thanks to Kasia for being editor for this post. Thank you.</p>
+<p>Cover picture by <a class="reference external" href="https://pixabay.com/pl/users/Lalmch-1026205/">Lalmch</a> under <a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0 Public Domain</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/tutorial.html">tutorial</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

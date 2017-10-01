@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 01 Oct 2017 10:00:00 +0200</lastBuildDate><item><title>Debugging python code with wdb</title><link>https://krzysztofzuraw.com/blog/2017/debugging-python-code-with-wdb.html</link><description>&lt;p&gt;&lt;strong&gt;While I was on PyConPL conference last year I heard about interesting debugger called wdb. Since then
+I don't have much chance to find out how it is to work with the tool. Yet I decided to write a quick blog
+post about it. Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;What exactly is …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 01 Oct 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-10-01:/blog/2017/debugging-python-code-with-wdb.html</guid><category>python</category><category>debugging</category><category>wdb</category></item><item><title>Python imports validation</title><link>https://krzysztofzuraw.com/blog/2017/python-imports-validation.html</link><description>&lt;p&gt;&lt;strong&gt;Recently a colleague from work presented to me a nice pattern. I immediately decided to write about it. This blog post is all about this pattern!
+Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This pattern is useful when working with python modules. When you import module code inside this file gets executed. All of …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 24 Sep 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-09-24:/blog/2017/python-imports-validation.html</guid><category>python</category><category>import</category><category>validation</category><category>modules</category></item><item><title>Moving to Relay in Django backend</title><link>https://krzysztofzuraw.com/blog/2017/moving-to-relay-in-django-backend.html</link><description>&lt;p&gt;&lt;strong&gt;Today I want to talk a little bit more about my next step in developing
+a GraphQL application. This step is connected with moving backend so it understands
+Relay.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="section" id="what-exactly-is-realy"&gt;
+&lt;h2&gt;What exactly is Realy?&lt;/h2&gt;
+&lt;p&gt;As documentation of &lt;a class="reference external" href="https://facebook.github.io/relay/"&gt;Relay&lt;/a&gt; suggests - it's framework
+for working with external data in React. What does it …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 03 Sep 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-09-03:/blog/2017/moving-to-relay-in-django-backend.html</guid><category>django</category><category>python</category><category>relay</category></item><item><title>Monorepo structure for Django &amp; React Applications</title><link>https://krzysztofzuraw.com/blog/2017/monorepo-structure.html</link><description>&lt;p&gt;&lt;strong&gt;Hello! Today I will guide you through setting up React application with Django! Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;First thing is where I place my javascript application? Should it be in another repository? Or maybe Django should
+use webpack to render js?&lt;/p&gt;
+&lt;p&gt;I decided to use pattern called &lt;tt class="docutils literal"&gt;monorepo&lt;/tt&gt;. What does it …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 20 Aug 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-08-20:/blog/2017/monorepo-structure.html</guid><category>django</category><category>python</category><category>javascript</category><category>react</category></item><item><title>Django, GraphQL &amp; React - part two</title><link>https://krzysztofzuraw.com/blog/2017/django-graphql-react-part-two.html</link><description>&lt;p&gt;&lt;strong&gt;In this post, I will guide you through setting up GraphQL with Django.
+Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I will use a library called &lt;a class="reference external" href="https://github.com/graphql-python/graphene-django"&gt;graphene-django&lt;/a&gt;.
+It will help a lot and allow me to get the job done instead of writing boilerplate code.&lt;/p&gt;
+&lt;p&gt;I decided I will have 3 django applications: actors …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 30 Jul 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-07-30:/blog/2017/django-graphql-react-part-two.html</guid><category>django</category><category>python</category><category>graphql</category></item><item><title>Solutions reviews</title><link>https://krzysztofzuraw.com/blog/2017/solutions-reviews.html</link><description>&lt;p&gt;&lt;strong&gt;What are solutions reviews? Why may you need one? Read this blog post to find out!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Recently I was listening to the podcast - &lt;a class="reference external" href="http://devtalk.pl/"&gt;DevTalk&lt;/a&gt;.  In one of the episodes, guys
+were talking about the interesting concept  - solution reviews. I started thinking - maybe it is a good idea?&lt;/p&gt;
+&lt;p&gt;As my mind …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 23 Jul 2017 08:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-07-23:/blog/2017/solutions-reviews.html</guid><category>programming</category><category>review</category><category>code</category><category>solution</category></item><item><title>Lessons learned from being a mentor</title><link>https://krzysztofzuraw.com/blog/2017/lessons-learned-from-being-a-mentor.html</link><description>&lt;p&gt;&lt;strong&gt;Last week I was a mentor in two day Python workshop. The main goal of this event was to
+show people who didn't have any prior experience with programming that coding can be fun.
+Text below is note to myself that I took from conducting such workshop.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 15 Jul 2017 08:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-07-15:/blog/2017/lessons-learned-from-being-a-mentor.html</guid><category>python</category><category>mentoring</category><category>workshop</category><category>geekgirlscarrots</category></item><item><title>Django, GraphQL &amp; React - part one</title><link>https://krzysztofzuraw.com/blog/2017/django-graphql-react-part-one.html</link><description>&lt;p&gt;&lt;strong&gt;Hello! Welcome back after a little break - I recently started working on a project
+that uses GraphQL. Thant's why I thought that it will be the best to show you how
+to build a simple application using these tools. Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;First, comes this idea - what application can I …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 02 Jul 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-07-02:/blog/2017/django-graphql-react-part-one.html</guid><category>django</category><category>python</category></item><item><title>Testing React form components</title><link>https://krzysztofzuraw.com/blog/2017/testing-react-form-components.html</link><description>&lt;p&gt;&lt;strong&gt;In this blog post, I will present quick code snippets on how to
+test your React component. Especially the one that renders the form.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;My history with writing React application starts from an excellent course by
+&lt;a class="reference external" href="https://reactforbeginners.com/"&gt;Wes Bos&lt;/a&gt;. So I completed this course and
+with bright future ahead of me …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 11 Jun 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-06-11:/blog/2017/testing-react-form-components.html</guid><category>react</category><category>javascript</category><category>testing</category><category>components</category><category>form</category></item><item><title>Building python packages for debian</title><link>https://krzysztofzuraw.com/blog/2017/building-python-packages-for-debian.html</link><description>&lt;p&gt;&lt;strong&gt;There are many ways how to build &amp;amp; distribute python packages: pypi, devpi.
+But if you happen to use debian based OSes you can build python packages as
+debian native ones. This blog post is all about it - let's go!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Let's say you have following structure of your project:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;├── Makefile
+├── MANIFEST …&lt;/pre&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 04 Jun 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-06-04:/blog/2017/building-python-packages-for-debian.html</guid><category>python</category><category>debian</category><category>ubuntu</category><category>packages</category><category>building</category><category>docker</category></item><item><title>Chaining promises in JavaScript</title><link>https://krzysztofzuraw.com/blog/2017/chaining-promises-in-javascript.html</link><description>&lt;p&gt;&lt;strong&gt;In this blog post, I will present to you how you can chain promises JavaScript. Let's go!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Recently I ended my small &lt;a class="reference external" href="https://krzysztofzuraw.github.io/all-roads-lead-to/"&gt;side project&lt;/a&gt; .
+I used there google maps api to perform various tasks. All the responses from Google
+API were asynchronous so I thought: let's wrap them in promises …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 28 May 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-05-28:/blog/2017/chaining-promises-in-javascript.html</guid><category>javascript</category><category>promise</category></item><item><title>Django and nginx file proxy - part two</title><link>https://krzysztofzuraw.com/blog/2017/django-nginx-file-proxy-part-two.html</link><description>&lt;p&gt;&lt;strong&gt;You have our application up and running but there is a problem. You don't want
+the user to see that your media files are served from media url. How to fix that?
+This blog post will tell you one of the solutions. Let's go!&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="section" id="how-to-hide-urls-from-the-user"&gt;
+&lt;h2&gt;How to hide urls from the …&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 21 May 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-05-21:/blog/2017/django-nginx-file-proxy-part-two.html</guid><category>django</category><category>nginx</category><category>python</category><category>proxy</category></item><item><title>Django and nginx file proxy - part one</title><link>https://krzysztofzuraw.com/blog/2017/django-nginx-file-proxy-part-one.html</link><description>&lt;p&gt;&lt;strong&gt;In this blog post series, I will show you how to use Nginx for hiding download
+urls. Django will serve us as a backend. Let's go!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In this series I will build simple web application - user upload a file via api
+and then she/he wants to download it. But …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 14 May 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-05-14:/blog/2017/django-nginx-file-proxy-part-one.html</guid><category>django</category><category>nginx</category><category>python</category><category>proxy</category></item><item><title>Don't use defaults</title><link>https://krzysztofzuraw.com/blog/2017/dont-use-defaults.html</link><description>&lt;p&gt;&lt;strong&gt;Recently I bought simple LTE router. While reading through manual I noticed
+something interesting.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#why-leaving-insecure-defaults-can-be-a-problem" id="id1"&gt;Why leaving insecure defaults can be a problem?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-can-you-do" id="id2"&gt;What can you do?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#conclusion" id="id3"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="why-leaving-insecure-defaults-can-be-a-problem"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Why leaving insecure defaults can be a problem?&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Everyone who buys this model will have the same settings. For example …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 07 May 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-05-07:/blog/2017/dont-use-defaults.html</guid><category>opinion</category></item><item><title>Testing django template tags</title><link>https://krzysztofzuraw.com/blog/2017/how-to-test-django-template-tags.html</link><description>&lt;p&gt;&lt;strong&gt;In this blog post I will give you simple example how to test your template tags
+in django using django testing tools. Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="section" id="how-to-test-templatetags"&gt;
+&lt;h2&gt;How to test templatetags?&lt;/h2&gt;
+&lt;p&gt;Let say that you got this template tag under &lt;tt class="docutils literal"&gt;/templatetags/create_header.py&lt;/tt&gt; in django:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt;
+
+&lt;span class="n"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Library …&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 23 Apr 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-04-23:/blog/2017/how-to-test-django-template-tags.html</guid><category>testing</category><category>django</category><category>python</category><category>templatetags</category></item><item><title>Testing django mixins</title><link>https://krzysztofzuraw.com/blog/2017/how-to-test-django-mixins.html</link><description>&lt;p&gt;&lt;strong&gt;You may read all these books and tutorials that tell you - test your code!
+This blog post is to help you test your django mixins.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#why-is-it-worth-to-test-mixins" id="id1"&gt;Why is it worth to test mixins?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#how-to-test-mixins" id="id2"&gt;How to test mixins?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="why-is-it-worth-to-test-mixins"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Why is it worth to test mixins?&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;You come to django …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 09 Apr 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-04-09:/blog/2017/how-to-test-django-mixins.html</guid><category>testing</category><category>django</category><category>mixins</category></item><item><title>Callbacks &amp; promises in JS for newbies</title><link>https://krzysztofzuraw.com/blog/2017/callbacks-promises-in-js-for-newbies.html</link><description>&lt;p&gt;&lt;strong&gt;You are a newbie in JavaScript? You want to know a little bit more about asynchronous
+nature of this language? Join me!&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#problem" id="id2"&gt;Problem&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#solution" id="id3"&gt;Solution&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-i-ve-learn" id="id4"&gt;What I've learn&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#update-10-07-2017" id="id5"&gt;Update 10.07.2017&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="problem"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id2"&gt;Problem&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I was working on my project that is using Google Maps. I
+stumbled upon an …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 02 Apr 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-04-02:/blog/2017/callbacks-promises-in-js-for-newbies.html</guid><category>javascript</category><category>callbacks</category><category>promises</category><category>newbies</category><category>google_maps</category></item><item><title>On building application using Google Maps API</title><link>https://krzysztofzuraw.com/blog/2017/building-application-using-google-maps-api.html</link><description>&lt;p&gt;&lt;strong&gt;This blog post will be about my failure. Failure to understand how
+javascript works but also what I learned along the way.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-i-wanted-to-accomplish-this-week" id="id1"&gt;What I wanted to accomplish this week&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-problem-i-had" id="id2"&gt;What problem I had&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-to-do-next" id="id3"&gt;What to do next?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id4"&gt;Other blog posts in this series:&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-i-wanted-to-accomplish-this-week"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;What I wanted to …&lt;/a&gt;&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 26 Mar 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-03-26:/blog/2017/building-application-using-google-maps-api.html</guid><category>javascript</category><category>google_maps</category></item><item><title>New blog series - all roads lead to</title><link>https://krzysztofzuraw.com/blog/2017/all-roads-lead-to.html</link><description>&lt;p&gt;&lt;strong&gt;All of us know this saying -&lt;/strong&gt; &lt;cite&gt;all roads lead to Rome&lt;/cite&gt;. &lt;strong&gt;After taking with
+one of my coworkers about that all roads lead somewhere I decided to write
+small application that do exactly this thing - leading to somewhere&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-this-application-will-be-about" id="id1"&gt;What this application will be about&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#entry-screen-implementation-in-html" id="id2"&gt;Entry screen implementation …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 19 Mar 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-03-19:/blog/2017/all-roads-lead-to.html</guid><category>javascript</category></item><item><title>Pomodoro timer - how good was your pomodoro?</title><link>https://krzysztofzuraw.com/blog/2017/pomodoro-timer-how-good-was-your-pomodoro.html</link><description>&lt;p&gt;&lt;strong&gt;Hello! This week I made the main feature of my pomodoro timer - checking if pomodoro was good or bad.
+I believe that is one of the ways to measure your productivity. Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#how-to-check-how-good-your-pomodoro-was" id="id1"&gt;How to check how good your pomodoro was?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#modals-in-javascript" id="id2"&gt;Modals in javascript&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#references" id="id3"&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id4"&gt;Other …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 12 Mar 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-03-12:/blog/2017/pomodoro-timer-how-good-was-your-pomodoro.html</guid><category>javascript</category></item><item><title>Pomodoro timer - breaks &amp; localStorage</title><link>https://krzysztofzuraw.com/blog/2017/pomodoro-timer-breaks-localstorage.html</link><description>&lt;p&gt;&lt;strong&gt;Hello! In today blog post I will write what I learn during this week of
+pomodoro timer development - breaks and localStorage.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#breaks-for-pomodoro-timer" id="id1"&gt;Breaks for pomodoro timer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#displaying-storing-breaks-and-pomodoros" id="id2"&gt;Displaying &amp;amp; storing breaks and pomodoros&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id3"&gt;Other blog posts in this series&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="breaks-for-pomodoro-timer"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Breaks for pomodoro timer&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The whole idea of pomodoro is that …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 05 Mar 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-03-05:/blog/2017/pomodoro-timer-breaks-localstorage.html</guid><category>javascript</category></item><item><title>Pomodoro timer - notifications</title><link>https://krzysztofzuraw.com/blog/2017/pomodoro-timer-notifications.html</link><description>&lt;p&gt;&lt;strong&gt;Welcome! Today I will focus on notifications in JavaScript. Let's go!&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#notifications-in-javascript" id="id1"&gt;Notifications in JavaScript&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#how-i-implemented-notifications" id="id2"&gt;How I implemented notifications&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-next" id="id3"&gt;What next?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id4"&gt;Other blog posts in this series&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#references" id="id5"&gt;References&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="notifications-in-javascript"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Notifications in JavaScript&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I want my pomodoro timer to run in the background - I decided my website
+will be one …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 26 Feb 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-02-26:/blog/2017/pomodoro-timer-notifications.html</guid><category>javascript</category></item><item><title>Pomodoro timer - counting</title><link>https://krzysztofzuraw.com/blog/2017/pomodoro-timer-counting.html</link><description>&lt;p&gt;&lt;strong&gt;Welcome to today's blog post! This blog post will be about implementing countdown in
+JavaScript and also about some CSS work I have to do so my timer looks decent.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#core-functionality-of-pomodoro-timer" id="id1"&gt;Core functionality of pomodoro timer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#implementing-timer-in-javascript" id="id2"&gt;Implementing timer in JavaScript&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-is-next" id="id3"&gt;What is next?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id4"&gt;Other blog posts in this …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Fri, 17 Feb 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-02-17:/blog/2017/pomodoro-timer-counting.html</guid><category>javascript</category></item><item><title>Pomodoro timer - beginning</title><link>https://krzysztofzuraw.com/blog/2017/pomodoro-timer-beginning.html</link><description>&lt;p&gt;&lt;strong&gt;From this post I will try to make new a blog post series - documenting my projects. In previous
+projects like this, I had every time a fixed number of blog posts I wanted to write about a specific
+project - from 2 to 4. Right now, I want to try writing …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 12 Feb 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-02-12:/blog/2017/pomodoro-timer-beginning.html</guid><category>javascript</category></item><item><title>Gunicorn &amp; LRU cache pitfall</title><link>https://krzysztofzuraw.com/blog/2017/gunicorn-lru-cache-pitfall.html</link><description>&lt;p&gt;&lt;strong&gt;Today I want to write about some interesting situation connected with using
+python LRU cache in an application that uses gunicorn.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-is-lru-cache" id="id1"&gt;What is LRU cache?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#gunicorn-lru-pitfall" id="id2"&gt;Gunicorn &amp;amp; LRU pitfall&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="what-is-lru-cache"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;What is LRU cache?&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;When you cache is starting to grow more and more you have to remove something …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 05 Feb 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-02-05:/blog/2017/gunicorn-lru-cache-pitfall.html</guid><category>python</category></item><item><title>Provisioning django application using ansible</title><link>https://krzysztofzuraw.com/blog/2017/provisioning-django-application-ansible.html</link><description>&lt;p&gt;&lt;strong&gt;As I recently have opportunity of having a workshop about ansible in my work
+and I decided to write a blog post on how to provision django application using this
+tool. In this blog post I am using the same application as in&lt;/strong&gt;
+&lt;a class="reference external" href="https://krzysztofzuraw.com/blog/2016/django-application-puppet-part-one.html"&gt;puppet post&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-is-ansible-and-how-s-is-different-from-puppet" id="id2"&gt;What is …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 29 Jan 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-01-29:/blog/2017/provisioning-django-application-ansible.html</guid><category>django</category><category>ansible</category></item><item><title>Transcoding with AWS- part five</title><link>https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-five.html</link><description>&lt;p&gt;&lt;strong&gt;This is the last blog post in this series - the only thing that has to be done
+is telling the user that file he or she uploads is processed.
+It will be done by writing custom message application.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="tabel-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Tabel of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#how-message-application-should-work" id="id1"&gt;How message application should work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#implementation-in-django" id="id2"&gt;Implementation in django&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id3"&gt;Other …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 22 Jan 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-01-22:/blog/2017/transcoding-aws-part-five.html</guid><category>django</category><category>aws</category></item><item><title>Transcoding with AWS- part four</title><link>https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-four.html</link><description>&lt;p&gt;&lt;strong&gt;As I have my transcoder up and running now it's time to let user know that their
+uploaded files were transcoded. To this occasion I will use AWS SNS service which
+allows me to send notification about completion of transcode job.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#setting-up-aws-sns-to-work-with-aws-transcoder" id="id1"&gt;Setting up AWS SNS to work …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 15 Jan 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-01-15:/blog/2017/transcoding-aws-part-four.html</guid><category>django</category><category>aws</category></item><item><title>Review of 2016</title><link>https://krzysztofzuraw.com/blog/2017/2016-review.html</link><description>&lt;p&gt;&lt;strong&gt;Hello in the new year - 2017! I wish you all good things! Today's post will be about
+one year of this very blog and other things that I was able to accomplish in
+the previous year. This blog post won't contain code so if you are hungry for that
+please …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 08 Jan 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-01-08:/blog/2017/2016-review.html</guid><category>blogging</category></item><item><title>Transcoding with AWS- part three</title><link>https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-three.html</link><description>&lt;p&gt;&lt;strong&gt;In previous&lt;/strong&gt; &lt;a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-two.html"&gt;blog post&lt;/a&gt; &lt;strong&gt;I've ran transcoder
+from django application using AWS python API. But there is also one more way to do the same
+- use AWS Lambda. Today I will write how to use this tool to trigger transcoding
+of uploaded files.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-is-aws-lambda" id="id1"&gt;What is AWS Lambda …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 18 Dec 2016 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-12-18:/blog/2016/transcoding-aws-part-three.html</guid><category>aws</category></item><item><title>Transcoding with AWS- part two</title><link>https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-two.html</link><description>&lt;p&gt;&lt;strong&gt;As I have static and media files integrated with AWS now it's time to transcode
+them. In this post, I will write a short example of how to integrate AWS ElasticTranscoder
+with Django application.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#basic-terms" id="id1"&gt;Basic terms&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#code" id="id2"&gt;Code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id3"&gt;Other blog posts in this series&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="basic-terms"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Basic terms&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;ElasticTranscoder allows …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 11 Dec 2016 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-12-11:/blog/2016/transcoding-aws-part-two.html</guid><category>django</category><category>aws</category></item><item><title>Transcoding with AWS- part one</title><link>https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-one.html</link><description>&lt;p&gt;&lt;strong&gt;Nowadays moving everything to the cloud becomes more and more popular. A lot of
+software companies move their technology stack to such infrastructure. One of
+the biggest players in this field is Amazon Web Services - AWS. That's why I decided
+decided to adapt existing code from my previous project and …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 04 Dec 2016 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-12-04:/blog/2016/transcoding-aws-part-one.html</guid><category>django</category><category>aws</category></item><item><title>Docker.py- python API for Docker</title><link>https://krzysztofzuraw.com/blog/2016/docker-py.html</link><description>&lt;p&gt;&lt;strong&gt;Once upon a time I and my friend decided to write an application that helps us
+doing code kata. The first problem that we faced was how to run a code provided by
+the user in a safe manner so our server won't be destroyed. After giving it some thought …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 27 Nov 2016 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-11-27:/blog/2016/docker-py.html</guid><category>python</category><category>docker</category></item><item><title>Django Grils- Kraków #3</title><link>https://krzysztofzuraw.com/blog/2016/django-girls-krakow-3.html</link><description>&lt;p&gt;&lt;strong&gt;As I said many times on this blog I really like teaching others so I can improve
+myself. That's why when I heard about Django Girls Kraków I didn't hesitate and
+I joined this event as a coach. This is short recap from Django Girls Kraków #3.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 20 Nov 2016 14:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-11-20:/blog/2016/django-girls-krakow-3.html</guid><category>django</category></item><item><title>JSON Web Tokens in django application- part four</title><link>https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-four.html</link><description>&lt;p&gt;&lt;strong&gt;When I started this series I have got one comment from my co-worker that
+instead of authentication JWT can be used to sign one time links. After
+reading through the documentation I found that can be a great idea so I
+decided to write a blog post about it.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 13 Nov 2016 09:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-11-13:/blog/2016/jwt-in-django-application-part-four.html</guid><category>django</category><category>tutorial</category></item><item><title>Django Under The Hood 2016 recap</title><link>https://krzysztofzuraw.com/blog/2016/duth-2016-recap.html</link><description>&lt;p&gt;&lt;strong&gt;From the beginning I really wanted to contribute to Django.
+I asked a friend of mine- &amp;quot;Do you know where I can start contributing?&amp;quot;
+She answers- &amp;quot;Go to Django Under The Hood&amp;quot;. So I went. This is my small
+recap of this very event.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#day-one" id="id1"&gt;Day one&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#day-two" id="id2"&gt;Day …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 06 Nov 2016 20:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-11-06:/blog/2016/duth-2016-recap.html</guid><category>django</category><category>conference</category></item><item><title>JSON Web Tokens in django application- part three</title><link>https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-three.html</link><description>&lt;p&gt;&lt;strong&gt;As we have working application now it's high time to make it more secure by
+authenticating users. To do this I will use JSON Web Tokens.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#jwt-in-django-rest-framework" id="id1"&gt;JWT in Django Rest Framework&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#implementing-jwt-in-drf-application" id="id2"&gt;Implementing JWT in DRF application&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id3"&gt;Other blog posts in this series&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="jwt-in-django-rest-framework"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;JWT in Django Rest Framework …&lt;/a&gt;&lt;/h2&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 30 Oct 2016 09:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-10-30:/blog/2016/jwt-in-django-application-part-three.html</guid><category>django</category><category>tutorial</category></item><item><title>JSON Web Tokens in django application- part two</title><link>https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-two.html</link><description>&lt;p&gt;&lt;strong&gt;In this blog post, I will deal with creating simple Django application for
+creating tasks using django rest framework.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;From this blog post, you can learn how to setup basic DRF application.&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#overview-of-application" id="id1"&gt;Overview of application&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#application-code" id="id2"&gt;Application code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id3"&gt;Other blog posts in this series&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="overview-of-application"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Overview of application&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 23 Oct 2016 09:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-10-23:/blog/2016/jwt-in-django-application-part-two.html</guid><category>django</category><category>tutorial</category></item><item><title>PyConPL 2016</title><link>https://krzysztofzuraw.com/blog/2016/pyconpl-2016.html</link><description>&lt;p&gt;&lt;strong&gt;This weekend I was on PyConPL conference. This is a short relation from this
+event.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#day-1" id="id1"&gt;Day 1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#day-2" id="id2"&gt;Day 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#day-3" id="id3"&gt;Day 3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#day-4" id="id4"&gt;Day 4&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="day-1"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Day 1&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I was on a presentation by Marcin Bardź &lt;em&gt;PostgreSQL i SQLAlchemy Duet (nie)doskonały&lt;/em&gt;. It was a talk
+about the tandem of …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 16 Oct 2016 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-10-16:/blog/2016/pyconpl-2016.html</guid><category>python</category><category>conference</category></item><item><title>Microservices in Flask</title><link>https://krzysztofzuraw.com/blog/2016/microservices-in-flask.html</link><description>&lt;p&gt;&lt;strong&gt;I recently gave a talk about microservices in Flask on&lt;/strong&gt; &lt;a class="reference external" href="http://www.meetup.com/wrocpy/"&gt;Wrocpy&lt;/a&gt;.
+&lt;strong&gt;This blog post is a translation of that talk into English.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#monolithic-application" id="id6"&gt;Monolithic application&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#flask-microservices" id="id7"&gt;Flask microservices&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#flask-script" id="id8"&gt;Flask-Script&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#flask-restful" id="id9"&gt;Flask-RESTful&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#marshallow-flask-marshallow" id="id10"&gt;Marshallow &amp;amp; flask-marshallow&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#flask-sqlalchemy" id="id11"&gt;Flask-SQLAlchemy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#flask-migrate" id="id12"&gt;Flask-Migrate&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#testing" id="id13"&gt;Testing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#deployment" id="id14"&gt;Deployment&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#puppet" id="id15"&gt;Puppet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#cookiecutter" id="id16"&gt;Cookiecutter&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#dh-virtualenv" id="id17"&gt;Dh-virtualenv&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="monolithic-application"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id6"&gt;Monolithic application&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Microservices talk usually starts with a monolithic application …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 09 Oct 2016 09:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-10-09:/blog/2016/microservices-in-flask.html</guid><category>flask</category></item><item><title>JSON Web Tokens in django application- part one</title><link>https://krzysztofzuraw.com/blog/2016/jwt-in-django-application-part-one.html</link><description>&lt;p&gt;&lt;strong&gt;Recently I attended a workshop about web security. During these hours I
+learnt quite a lot but one thing got my attention- JWT. Based on that I decided
+to write a blog post series about how to use JSON Web Tokens in simple django
+application. Today it is the first …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 02 Oct 2016 09:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-10-02:/blog/2016/jwt-in-django-application-part-one.html</guid><category>web</category></item><item><title>Archives from memory- libarchive</title><link>https://krzysztofzuraw.com/blog/2016/archives-from-memory.html</link><description>&lt;p&gt;&lt;strong&gt;This blog post is about python wrapper around libarchive and how to use it to
+generate archive from memory.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#libarchive-python-libarchive-c" id="id1"&gt;Libarchive &amp;amp; python-libarchive-c&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#add-entry-from-memory" id="id2"&gt;Add entry from memory&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="libarchive-python-libarchive-c"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Libarchive &amp;amp; python-libarchive-c&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;If you happen to learn more about how to create archives in various formats like
+tar, iso or zip I …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 25 Sep 2016 09:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-09-25:/blog/2016/archives-from-memory.html</guid><category>python</category></item><item><title>Python &amp; WebDAV- part two</title><link>https://krzysztofzuraw.com/blog/2016/python-webdav-part-two.html</link><description>&lt;p&gt;&lt;strong&gt;In the last post, I set up owncloud with WebDAV server. Now it's time to use it.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#python-webdav-client-easywebdav" id="id1"&gt;Python WebDAV client - easywebdav&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#webdav-editor" id="id2"&gt;WebDAV editor&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#conclusion" id="id3"&gt;Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="python-webdav-client-easywebdav"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Python WebDAV client - easywebdav&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I was searching for good python library to work with WebDAV for a long time.
+I finally found it- …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 18 Sep 2016 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-09-18:/blog/2016/python-webdav-part-two.html</guid><category>python</category></item><item><title>Python &amp; WebDAV- part one</title><link>https://krzysztofzuraw.com/blog/2016/python-webdav-part-one.html</link><description>&lt;p&gt;&lt;strong&gt;I must confess I was ignorant. Recently I saw an application done by my
+colleague at work and it was using python WebDAV client. I was intrigued
+because for me WebDAV was connected with calendars (CalDAV) and contacts (CardDAV).
+And there I have WebDAV which is filesystem.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;I decided to …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 11 Sep 2016 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-09-11:/blog/2016/python-webdav-part-one.html</guid><category>owncloud</category></item><item><title>Makefiles in python projects</title><link>https://krzysztofzuraw.com/blog/2016/makefiles-in-python-projects.html</link><description>&lt;p&gt;&lt;strong&gt;When I join my current company I saw in their git repos strange file. It wasn't
+used by any python code. It just sits in the main directory of the project. I asked my
+colleagues what is this file for? They told me- to make your life easier. That's
+why …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 03 Sep 2016 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-09-03:/blog/2016/makefiles-in-python-projects.html</guid><category>python</category></item><item><title>My thoughts on blogging</title><link>https://krzysztofzuraw.com/blog/2016/my-thoughts-on-blogging.html</link><description>&lt;p&gt;&lt;strong&gt;This week I decided to write something more about what are reasons I wrote this blog,
+what I am taking from it so if you want some more technical post please check other articles.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-i-want-from-this-blog" id="id1"&gt;What I want from this blog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#why-blogging" id="id2"&gt;Why blogging?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#conclusion-and-why-i-write-this-post" id="id3"&gt;Conclusion and why I write …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Fri, 26 Aug 2016 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-08-26:/blog/2016/my-thoughts-on-blogging.html</guid><category>blogging</category></item><item><title>Factory pattern in python</title><link>https://krzysztofzuraw.com/blog/2016/factory-pattern-python.html</link><description>&lt;p class="first last"&gt;Recently I discovered another design pattern that I found interesting. This blog post is all about this pattern.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 07 Aug 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-08-07:/blog/2016/factory-pattern-python.html</guid><category>python</category></item><item><title>Design by contract in python- part three</title><link>https://krzysztofzuraw.com/blog/2016/design-by-contract-in-python-part-three.html</link><description>&lt;p class="first last"&gt;Short description of libraries used to implement design by contract in python.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 31 Jul 2016 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-07-31:/blog/2016/design-by-contract-in-python-part-three.html</guid><category>python</category></item><item><title>Design by contract in python- part two</title><link>https://krzysztofzuraw.com/blog/2016/design-by-contract-in-python-part-two.html</link><description>&lt;p class="first last"&gt;Short description of libraries used to implement design by contract in python.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 23 Jul 2016 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-07-23:/blog/2016/design-by-contract-in-python-part-two.html</guid><category>python</category></item><item><title>Design by contract in python- part one</title><link>https://krzysztofzuraw.com/blog/2016/design-by-contract-in-python-part-one.html</link><description>&lt;p class="first last"&gt;Short description of libraries used to implement design by contract in python.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 16 Jul 2016 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-07-16:/blog/2016/design-by-contract-in-python-part-one.html</guid><category>python</category></item><item><title>Django application with puppet- part two</title><link>https://krzysztofzuraw.com/blog/2016/django-application-puppet-part-two.html</link><description>&lt;p class="first last"&gt;Second post in series how to provision vagrant box using puppet for geodjango application.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 09 Jul 2016 08:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-07-09:/blog/2016/django-application-puppet-part-two.html</guid><category>django</category><category>puppet</category></item><item><title>Django application with puppet- part one</title><link>https://krzysztofzuraw.com/blog/2016/django-application-puppet-part-one.html</link><description>&lt;p class="first last"&gt;First post in series how to provision vagrant box using puppet for geodjango application.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 03 Jul 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-07-03:/blog/2016/django-application-puppet-part-one.html</guid><category>django</category><category>puppet</category></item><item><title>Two forms one view in django</title><link>https://krzysztofzuraw.com/blog/2016/two-forms-one-view-django.html</link><description>&lt;p class="first last"&gt;Quick reference how to create two forms in one view using django.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 26 Jun 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-06-26:/blog/2016/two-forms-one-view-django.html</guid><category>django</category></item><item><title>Ports and Adapters in python - part three</title><link>https://krzysztofzuraw.com/blog/2016/ports-and-adapters-in-python-part-three.html</link><description>&lt;p class="first last"&gt;Third part of series about Django application made using Ports and Adapters design pattern.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 12 Jun 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-06-12:/blog/2016/ports-and-adapters-in-python-part-three.html</guid><category>django</category></item><item><title>Ports and Adapters in python - part two</title><link>https://krzysztofzuraw.com/blog/2016/ports-and-adapters-in-python-part-two.html</link><description>&lt;p class="first last"&gt;Second part of series about Django application made using Ports and Adapters design pattern.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 05 Jun 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-06-05:/blog/2016/ports-and-adapters-in-python-part-two.html</guid><category>django</category></item><item><title>Ports and Adapters in python - part one</title><link>https://krzysztofzuraw.com/blog/2016/ports-and-adapters-in-python-part-one.html</link><description>&lt;p class="first last"&gt;First part of series about Django application made using Ports and Adapters design pattern.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 22 May 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-05-22:/blog/2016/ports-and-adapters-in-python-part-one.html</guid><category>django</category><category>python</category><category>design_patterns</category></item><item><title>My first personal project</title><link>https://krzysztofzuraw.com/blog/2016/my-first-personal-project.html</link><description>&lt;p class="first last"&gt;My thoughts about personal project that I made.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 14 May 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-05-14:/blog/2016/my-first-personal-project.html</guid><category>python</category></item><item><title>Mocks and monkeypatching in python</title><link>https://krzysztofzuraw.com/blog/2016/mocks-monkeypatching-in-python.html</link><description>&lt;p class="first last"&gt;How to mocks function and classes in python.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 24 Apr 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-04-24:/blog/2016/mocks-monkeypatching-in-python.html</guid><category>python</category><category>testing</category></item><item><title>My first workshop experience</title><link>https://krzysztofzuraw.com/blog/2016/my-first-workshop%20experience.html</link><description>&lt;p class="first last"&gt;How I conduct my first python workshop.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 17 Apr 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-04-17:/blog/2016/my-first-workshop experience.html</guid><category>python</category></item><item><title>Automatic blog deployment with TravisCI</title><link>https://krzysztofzuraw.com/blog/2016/automatic-blog-deployment-with-travis.html</link><description>&lt;p class="first last"&gt;First part of series about Django application with Celery and RabbitMQ.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 09 Apr 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-04-09:/blog/2016/automatic-blog-deployment-with-travis.html</guid><category>pelican</category></item><item><title>Moving blog to pelican</title><link>https://krzysztofzuraw.com/blog/2016/moving-blog-to-pelican.html</link><description>&lt;p class="first last"&gt;Why I moved my blog to pelican.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 03 Apr 2016 10:20:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-04-03:/blog/2016/moving-blog-to-pelican.html</guid><category>pelican</category><category>jekyll</category><category>nikola</category></item><item><title>Django + Celery &amp; Rabbit - part four</title><link>https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-four.html</link><description>&lt;p class="first last"&gt;Fourth part of series about Django application with Celery and RabbitMQ.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 19 Mar 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-03-19:/blog/2016/django-celery-rabbit-part-four.html</guid><category>django</category><category>celery</category><category>rabbit</category></item><item><title>Django + Celery &amp; Rabbit - part three</title><link>https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-three.html</link><description>&lt;p class="first last"&gt;Third part of series about Django application with Celery and RabbitMQ.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 12 Mar 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-03-12:/blog/2016/django-celery-rabbit-part-three.html</guid><category>django</category><category>celery</category><category>rabbit</category></item><item><title>Django + Celery &amp; Rabbit - part two</title><link>https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-two.html</link><description>&lt;p class="first last"&gt;Second part of series about Django application with Celery and RabbitMQ.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 05 Mar 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-03-05:/blog/2016/django-celery-rabbit-part-two.html</guid><category>django</category><category>celery</category><category>rabbit</category></item><item><title>Django + Celery &amp; Rabbit - part one</title><link>https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-one.html</link><description>&lt;p class="first last"&gt;First part of series about Django application with Celery and RabbitMQ.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Fri, 26 Feb 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-02-26:/blog/2016/django-celery-rabbit-part-one.html</guid><category>django</category><category>celery</category><category>rabbit</category></item><item><title>Django cookiecutter</title><link>https://krzysztofzuraw.com/blog/2016/django-cookiecutter.html</link><description>&lt;p class="first last"&gt;Automate everything.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Fri, 19 Feb 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-02-19:/blog/2016/django-cookiecutter.html</guid><category>django</category></item><item><title>Django Haystack and Elasticsearch- part two</title><link>https://krzysztofzuraw.com/blog/2016/haystack-elasticsearch-part-two.html</link><description>&lt;p class="first last"&gt;Second part of tutorial about django haystack with elasticsearch.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Fri, 12 Feb 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-02-12:/blog/2016/haystack-elasticsearch-part-two.html</guid><category>django</category><category>elasticsearch</category></item><item><title>Django Haystack and Elasticsearch- part one</title><link>https://krzysztofzuraw.com/blog/2016/haystack-elasticsearch-part-one.html</link><description>&lt;p class="first last"&gt;First part of tutorial about django haystack with elasticsearch.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 06 Feb 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-02-06:/blog/2016/haystack-elasticsearch-part-one.html</guid><category>django</category><category>elasticsearch</category></item><item><title>Python class @decorators</title><link>https://krzysztofzuraw.com/blog/2016/python-class-decorators.html</link><description>&lt;p class="first last"&gt;Post about syntax sugar in python.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Fri, 29 Jan 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-01-29:/blog/2016/python-class-decorators.html</guid><category>python</category></item><item><title>Python __slots__</title><link>https://krzysztofzuraw.com/blog/2016/python-slots.html</link><description>&lt;p class="first last"&gt;Quick glance at python __slots__.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 23 Jan 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-01-23:/blog/2016/python-slots.html</guid><category>python</category></item><item><title>Http and websockets logging handlers</title><link>https://krzysztofzuraw.com/blog/2016/http-websockets-logging-handlers.html</link><description>&lt;p class="first last"&gt;Quick introduction to HTTP and Websockets logging handlers.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sat, 16 Jan 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-01-16:/blog/2016/http-websockets-logging-handlers.html</guid><category>python</category><category>logging</category></item><item><title>GeoDjango and Leaflet.js- part two</title><link>https://krzysztofzuraw.com/blog/2016/geodjango-leaflet-part-two.html</link><description>&lt;p class="first last"&gt;How to setup basic GeoDjango application second part.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Fri, 08 Jan 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-01-08:/blog/2016/geodjango-leaflet-part-two.html</guid><category>django</category><category>leaflet.js</category></item><item><title>GeoDjango and Leaflet.js- part one</title><link>https://krzysztofzuraw.com/blog/2016/geodjango-leaflet-part-one.html</link><description>&lt;p class="first last"&gt;How to setup basic GeoDjango application first part.&lt;/p&gt;
+</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Fri, 01 Jan 2016 10:20:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-01-01:/blog/2016/geodjango-leaflet-part-one.html</guid><category>django</category><category>leaflet.js</category></item></channel></rss>

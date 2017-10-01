@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>GeoDjango and Leaflet.js- part two</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="How to setup basic GeoDjango application second part.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="leaflet.js">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/geodjango-leaflet-part-two.html">
+	<meta property="og:title" content="GeoDjango and Leaflet.js- part two">
+	<meta property="article:published_time" content="2016-01-08 10:20:00+01:00">
+            <meta property="og:description" content="How to setup basic GeoDjango application second part.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/geodjango.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/geodjango.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="GeoDjango and Leaflet.js- part two" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/geodjango.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/geodjango.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >GeoDjango and Leaflet.js- part two</h1>
+                        <span class="meta">Posted on Fri 08 January 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>This is the second post from GeoDjango i Leaflet.js series.
+You can find the previous post under this</strong> <a class="reference external" href="https://krzysztofzuraw.com/blog/2016/geodjango-leaflet-part-one.html">link</a>.</p>
+<p>After loading data to GeoDjango application now, it's time to present it
+to the user. You can use django template tag like <tt class="docutils literal">{{object}}</tt> but I
+think it's better to provide api endpoints. I will be using GeoDjango
+builtin GeoJSON serializer. To do this declare new views in views.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<span class="kn">from</span> <span class="nn">django.core.serializers</span> <span class="kn">import</span> <span class="n">serialize</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">Voivodeship</span>
+
+<span class="k">def</span> <span class="nf">points_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">points_as_geojson</span> <span class="o">=</span> <span class="n">serialize</span><span class="p">(</span><span class="s1">&#39;geojson&#39;</span><span class="p">,</span> <span class="n">Point</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">points_as_geojson</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">wojewodztwa_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">voivodeships_as_geojson</span> <span class="o">=</span> <span class="n">serialize</span><span class="p">(</span><span class="s1">&#39;geojson&#39;</span><span class="p">,</span> <span class="n">Voivodeship</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">voivodeships_as_geojson</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+</pre></div>
+<p><a class="reference external" href="http://geojson.org/">GeoJSON</a> is open format for encoding
+geographical data. It's based on JSON.</p>
+<p>Then add lines to urls.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">include</span><span class="p">,</span> <span class="n">url</span>
+<span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">voivodeships.views</span> <span class="kn">import</span> <span class="n">points_view</span><span class="p">,</span> <span class="n">voivodeships_view</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^admin/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">)),</span>
+    <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^points.data/&#39;</span><span class="p">,</span> <span class="n">points_view</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;points&#39;</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^voivodeships.data/&#39;</span><span class="p">,</span> <span class="n">voivodeships_view</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;voivodeships&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+<p>As you can see GeoDjango displays data from database in GeoJSON:</p>
+<img alt="GeoJSON from GeoDjango" src="/images/geojson.gif" />
+<p>It's nice but end user need to see results on the map not in JSON format
+so I use <a class="reference external" href="http://leafletjs.com/">Leaflet.js</a>.</p>
+<p>You can download leaflet.js from the web page but there is a better way:
+<a class="reference external" href="https://github.com/makinacorpus/django-leaflet">django-leaflet</a>.
+It's django application with allows you embed leaflet to django project.
+Install it by:</p>
+<div class="highlight"><pre><span></span>$ pip install django-leaflet
+</pre></div>
+<p>Then make sure that <tt class="docutils literal">leaflet</tt> is added to <tt class="docutils literal">INSTALLED_APPS</tt> in
+settings.py:</p>
+<div class="highlight"><pre><span></span><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="c1"># other applications</span>
+  <span class="n">leaflet</span>
+<span class="p">)</span>
+</pre></div>
+<p>Let's add main page view to GeoDjango application in views.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">TemplateView</span>
+
+<span class="k">class</span> <span class="nc">MainPageView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;voivodeships/index.html&#39;</span>
+</pre></div>
+<p>And to urls.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">voivodeships.views</span> <span class="kn">import</span> <span class="n">MainPageView</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span><span class="c1"># rest of urls</span>
+               <span class="n">url</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^$&#39;</span><span class="p">,</span> <span class="n">MainPageView</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),]</span>
+</pre></div>
+<p>After this add new <tt class="docutils literal">index.html</tt> under
+<tt class="docutils literal">voivodeships/templates/voivodeships/index.html</tt> with this content:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+{% load leaflet_tags %}
+    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+        {% leaflet_js %}
+        {% leaflet_css %}
+    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+        {% leaflet_map &quot;poland&quot; %}
+    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<p>And going to the web page with running GeoDjango application you can see
+map:</p>
+<img alt="Basic Leaflet.js map" src="/images/leaflet.gif" />
+<p>Thanks to <tt class="docutils literal"><span class="pre">django-leaflet</span></tt> you can control behavior of all maps. Let
+add the following content to end of settings.py:</p>
+<div class="highlight"><pre><span></span><span class="n">LEAFLET_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;DEFAULT_CENTER&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">52.00</span><span class="p">,</span><span class="mf">20.00</span><span class="p">),</span>
+  <span class="s1">&#39;DEFAULT_ZOOM&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+  <span class="s1">&#39;MIN_ZOOM&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s1">&#39;MAX_ZOOM&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+<p>But still map is not taking full space in the web page so let's add more
+CSS lines to fix that in index.html:</p>
+<div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">style</span> <span class="na">media</span><span class="o">=</span><span class="s">&quot;screen&quot;</span><span class="p">&gt;</span>
+     <span class="p">#</span><span class="nn">poland</span> <span class="p">{</span> <span class="k">width</span><span class="p">:</span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span> <span class="k">height</span><span class="p">:</span><span class="mi">100</span><span class="kt">%</span> <span class="p">}</span>
+   <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+   <span class="c">&lt;!-- Rest of html --&gt;</span>
+</pre></div>
+<p>One of the Leaflet.js strong points is huge extensions
+<a class="reference external" href="http://leafletjs.com/plugins.html">database</a>. In this project I will
+use few of them including:
+<a class="reference external" href="https://github.com/calvinmetcalf/leaflet-ajax">leaflet-ajax</a>,
+<a class="reference external" href="https://github.com/makinacorpus/Leaflet.Spin">leaflet-spin</a>,
+<a class="reference external" href="https://github.com/Leaflet/Leaflet.markercluster">markercluster</a>.
+It's up to you how you want to install it. I will use
+<a class="reference external" href="http://bower.io/">bower</a> for that:</p>
+<div class="highlight"><pre><span></span>$ bower install leaflet-ajax leaflet-spin leaflet.markerculster
+</pre></div>
+<p>Add <tt class="docutils literal">STATICFILES_DIRS</tt> to settings.py:</p>
+<div class="highlight"><pre><span></span><span class="n">STATICFILES_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">&#39;static&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+<p>After installation got to index.html and use these plugins:</p>
+<div class="highlight"><pre><span></span>{% load static %}
+   <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+      <span class="c">&lt;!-- style tag and django-leaflet tag here --&gt;</span>
+      <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;{% static &#39;leaflet-ajax/dist/leaflet.ajax.min.js&#39; %}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;{% static &#39;spin.js/spin.min.js&#39; %}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;{% static &#39;leaflet-spin/leaflet.spin.js&#39; %}&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+   <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+         <span class="kd">function</span> <span class="nx">map_init_basic</span> <span class="p">(</span><span class="nx">map</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+               <span class="kd">var</span> <span class="nx">geojsonPointLayer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">L</span><span class="p">.</span><span class="nx">GeoJSON</span><span class="p">.</span><span class="nx">AJAX</span><span class="p">(</span><span class="s2">&quot;{% url &#39;points&#39; %}&quot;</span><span class="p">,</span> <span class="p">{</span>
+                   <span class="nx">onEachFeature</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">feature</span><span class="p">,</span> <span class="nx">layer</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">layer</span><span class="p">.</span><span class="nx">bindPopup</span><span class="p">(</span><span class="nx">feature</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+                    <span class="p">}</span>
+                <span class="p">});</span>
+               <span class="nx">geojsonPointLayer</span><span class="p">.</span><span class="nx">addTo</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span>
+
+               <span class="kd">var</span> <span class="nx">geojsonVoivodeshipsLayer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">L</span><span class="p">.</span><span class="nx">GeoJSON</span><span class="p">.</span><span class="nx">AJAX</span><span class="p">(</span><span class="s2">&quot;{% url &#39;voivodeships&#39; %}&quot;</span><span class="p">,</span> <span class="p">{</span>
+                   <span class="nx">onEachFeature</span><span class="o">:</span><span class="kd">function</span><span class="p">(</span><span class="nx">feature</span><span class="p">,</span> <span class="nx">layer</span><span class="p">)</span> <span class="p">{</span>
+                       <span class="nx">layer</span><span class="p">.</span><span class="nx">bindPopup</span><span class="p">(</span><span class="nx">feature</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">jpt_nazwa_field</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+                   <span class="p">}</span>
+               <span class="p">});</span>
+               <span class="nx">geojsonVoivodeshipsLayer</span><span class="p">.</span><span class="nx">addTo</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span>
+           <span class="p">}</span>
+      <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+      {% leaflet_map &quot;poland&quot; callback=&quot;window.map_init_basic&quot; %}
+   <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</pre></div>
+<p>I added new function <tt class="docutils literal">map_init_basic</tt> which is a callback for
+django-leaflet tag. Then thanks to leaflet-ajax I get points and
+voivodeships GeoJSONs from GeoDjango. Moreover, I use function from
+leaflet.js: <tt class="docutils literal">onEachFeature</tt>. This function add popup with the name of
+point or voivodeship.</p>
+<p>After this changes main page looks like this:</p>
+<video src="/videos/poland.mp4" autoplay loop>
+Your browser does not support the video tag.
+</video><p>There is one problem. GeoJSON with voivodeship is so accurate that
+deserializing takes a lot of time (about 41 sec). So one of the solution
+is to dump GeoJSON to cache, I will use Redis as a cache database.</p>
+<p>First, install and check if Redis is working by:</p>
+<div class="highlight"><pre><span></span>$ sudo apt-get install redis-server $ redis-cli ping PONG
+</pre></div>
+<p>Then it's time to install python bindings:</p>
+<div class="highlight"><pre><span></span>$ pip install redis $ pip install django-redis-cache
+</pre></div>
+<p>After this adjust some settings in settings.py:</p>
+<div class="highlight"><pre><span></span><span class="n">MIDDLEWARE_CLASSES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;django.middleware.cache.UpdateCacheMiddleware&#39;</span><span class="p">,</span>
+    <span class="c1"># ... another middlewares</span>
+    <span class="s1">&#39;django.middleware.common.CommonMiddleware&#39;</span><span class="p">,</span>
+    <span class="c1"># ... rest of middlewares</span>
+    <span class="s1">&#39;django.middleware.cache.FetchFromCacheMiddleware&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">CACHES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;BACKEND&#39;</span><span class="p">:</span> <span class="s1">&#39;redis_cache.RedisCache&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;LOCATION&#39;</span><span class="p">:</span> <span class="s1">&#39;127.0.0.1:6379&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+<p>What is important in <tt class="docutils literal">MIDDLEWARE_CLASSES</tt> is order:
+<tt class="docutils literal">UpdateCacheMiddleware</tt> should go before <tt class="docutils literal">CommonMiddleware</tt> and
+<tt class="docutils literal">FetchFromCacheMiddleware</tt> is supposed to be last.</p>
+<p>Lastly, add cache to <tt class="docutils literal">voivodeships_view</tt> in views.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.core.cache</span> <span class="kn">import</span> <span class="n">cache</span>
+
+<span class="k">def</span> <span class="nf">voivodeships_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">redis_key</span> <span class="o">=</span> <span class="s1">&#39;voivodeships&#39;</span>
+    <span class="n">voivodeships</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">redis_key</span><span class="p">)</span>  <span class="c1"># getting value for given key from redis</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">voivodeships</span><span class="p">:</span>
+       <span class="n">voivodeships</span> <span class="o">=</span> <span class="n">serialize</span><span class="p">(</span><span class="s1">&#39;geojson&#39;</span><span class="p">,</span> <span class="n">Voivodeship</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
+       <span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">redis_key</span><span class="p">,</span> <span class="n">voivodeships</span><span class="p">)</span>  <span class="c1"># if not GeoJSON is not in cache set it</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">voivodeships</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+</pre></div>
+<p>Right now GeoJSON will be loaded from the database. After reloading the
+web page, django will get results from cache.</p>
+<p>That's all: you have working GeoDjango application. The github repo is
+under this
+<a class="reference external" href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/blog_geodjango_leaflet">link</a></p>
+<p>Cover image present <a class="reference external" href="https://en.wikipedia.org/wiki/File:OrteliusWorldMap1570.jpg">1570 Abraham Ortelius</a> map.</p>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/leafletjs.html">leaflet.js</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

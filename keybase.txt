@@ -1,0 +1,52 @@
+==================================================================
+https://keybase.io/krzysztofzuraw
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://krzysztofzuraw.com
+  * I am krzysztofzuraw (https://keybase.io/krzysztofzuraw) on keybase.
+  * I have a public key ASCUL8ptppLUmByvp5pepG_q9ZSIEBLTluy-jEwFIXN57wo
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "0120942fca6da692d4981cafa79a5ea46feaf594881012d396ecbe8c4c05217379ef0a",
+            "host": "keybase.io",
+            "kid": "0120942fca6da692d4981cafa79a5ea46feaf594881012d396ecbe8c4c05217379ef0a",
+            "uid": "b8f19b0959c4d649dbc53c2529ef4d19",
+            "username": "krzysztofzuraw"
+        },
+        "service": {
+            "hostname": "krzysztofzuraw.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "client": {
+        "name": "keybase.io go client",
+        "version": "1.0.18"
+    },
+    "ctime": 1479051410,
+    "expire_in": 504576000,
+    "merkle_root": {
+        "ctime": 1479051368,
+        "hash": "3bda0190e9e75cbc2d673fe4d2d7ff9792f2f6e06e56e1de63e73db3cc2ced856e6fad6257169160990d5642ad791e97f3d85eb491cd9cab26de411612113117",
+        "seqno": 712211
+    },
+    "prev": "818edcfe4444d3c7d665536a56179ea1f7df0386fbc5deb67cc0e842d0123ee6",
+    "seqno": 31,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEglC/KbaaS1Jgcr6eaXqRv6vWUiBAS05bsvoxMBSFzee8Kp3BheWxvYWTFAwB7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwOTQyZmNhNmRhNjkyZDQ5ODFjYWZhNzlhNWVhNDZmZWFmNTk0ODgxMDEyZDM5NmVjYmU4YzRjMDUyMTczNzllZjBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwOTQyZmNhNmRhNjkyZDQ5ODFjYWZhNzlhNWVhNDZmZWFmNTk0ODgxMDEyZDM5NmVjYmU4YzRjMDUyMTczNzllZjBhIiwidWlkIjoiYjhmMTliMDk1OWM0ZDY0OWRiYzUzYzI1MjllZjRkMTkiLCJ1c2VybmFtZSI6ImtyenlzenRvZnp1cmF3In0sInNlcnZpY2UiOnsiaG9zdG5hbWUiOiJrcnp5c3p0b2Z6dXJhdy5jb20iLCJwcm90b2NvbCI6Imh0dHA6In0sInR5cGUiOiJ3ZWJfc2VydmljZV9iaW5kaW5nIiwidmVyc2lvbiI6MX0sImNsaWVudCI6eyJuYW1lIjoia2V5YmFzZS5pbyBnbyBjbGllbnQiLCJ2ZXJzaW9uIjoiMS4wLjE4In0sImN0aW1lIjoxNDc5MDUxNDEwLCJleHBpcmVfaW4iOjUwNDU3NjAwMCwibWVya2xlX3Jvb3QiOnsiY3RpbWUiOjE0NzkwNTEzNjgsImhhc2giOiIzYmRhMDE5MGU5ZTc1Y2JjMmQ2NzNmZTRkMmQ3ZmY5NzkyZjJmNmUwNmU1NmUxZGU2M2U3M2RiM2NjMmNlZDg1NmU2ZmFkNjI1NzE2OTE2MDk5MGQ1NjQyYWQ3OTFlOTdmM2Q4NWViNDkxY2Q5Y2FiMjZkZTQxMTYxMjExMzExNyIsInNlcW5vIjo3MTIyMTF9LCJwcmV2IjoiODE4ZWRjZmU0NDQ0ZDNjN2Q2NjU1MzZhNTYxNzllYTFmN2RmMDM4NmZiYzVkZWI2N2NjMGU4NDJkMDEyM2VlNiIsInNlcW5vIjozMSwidGFnIjoic2lnbmF0dXJlIn2jc2lnxECf5GG9aJ090jMFLw2T/7vDZ3LiQ7vZ1PESB7vfrKWCxHk3zPA4t2Uf5utQxwXQ6f5dcypyeY1qUKfeAJphyMQAqHNpZ190eXBlIKRoYXNogqR0eXBlCKV2YWx1ZcQgfxqwLtS1jn/KIN80vb1jhXqAfP7OMfcR0NvzGxu/GV+jdGFnzQICp3ZlcnNpb24B
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/krzysztofzuraw

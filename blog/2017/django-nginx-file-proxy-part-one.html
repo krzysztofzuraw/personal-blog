@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Django and nginx file proxy - part one</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="1st part - setting up Django & Nginx">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="nginx">
+        <meta name="tags" content="python">
+        <meta name="tags" content="proxy">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2017/django-nginx-file-proxy-part-one.html">
+	<meta property="og:title" content="Django and nginx file proxy - part one">
+	<meta property="article:published_time" content="2017-05-14 10:00:00+02:00">
+            <meta property="og:description" content="1st part - setting up Django & Nginx">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/server.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/server.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Django and nginx file proxy - part one" />
+            <meta name="twitter:description" content="1st part - setting up Django & Nginx" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/server.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/server.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Django and nginx file proxy - part one</h1>
+                            <h3 class="subheading" >1st part - setting up Django & Nginx</h3>
+                        <span class="meta">Posted on Sun 14 May 2017
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>In this blog post series, I will show you how to use Nginx for hiding download
+urls. Django will serve us as a backend. Let's go!</strong></p>
+<p>In this series I will build simple web application - user upload a file via api
+and then she/he wants to download it. But as a creator of this service I decided
+to not show my url to end user - instead I want to use a proxy.</p>
+<div class="section" id="setting-up-django-nginx-application-in-docker">
+<h2>Setting up Django &amp; Nginx application in docker</h2>
+<p>In this blog post, I will setup django with Nginx using docker containers. If you
+want to know how to use Nginx for hiding download urls wait till next week.</p>
+<p>I have my django application up and running in docker with following structure:</p>
+<div class="highlight"><pre><span></span>.
+├── compose
+│   ├── django
+│   │   ├── Dockerfile
+│   │   └── entrypoint.sh
+├── config
+│   ├── __init__.py
+│   ├── settings
+│   │   ├── common.py
+│   │   ├── __init__.py
+│   │   ├── local.py
+│   ├── urls.py
+│   └── wsgi.py
+├── django_nginx_proxy
+│   ├── images
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── __init__.py
+│   │   ├── migrations
+│   │   │   ├── 0001_initial.py
+│   │   │   ├── __init__.py
+│   │   ├── models.py
+│   │   ├── serializers.py
+│   │   ├── urls.py
+│   │   └── views.py
+│   ├── media
+├── docker-compose.yml
+├── LICENSE
+├── Makefile
+├── manage.py
+├── README.rst
+└── requirements
+  ├── base.txt
+  └── local.txt
+</pre></div>
+<p>It's one app - <tt class="docutils literal">Images</tt> with stores information about image - <tt class="docutils literal">title</tt> and
+<tt class="docutils literal">image_file</tt>.</p>
+<p>To add nginx I have to create a new subfolder in compose directory - <tt class="docutils literal">nginx</tt> with
+<tt class="docutils literal">Dockerfile</tt>:</p>
+<div class="highlight"><pre><span></span><span class="k">FROM</span><span class="s"> nginx:latest</span>
+
+<span class="k">ADD</span><span class="s"> nginx.conf /etc/nginx/nginx.conf</span>
+
+<span class="k">RUN</span> mkdir -p /var/www/media
+
+<span class="k">WORKDIR</span><span class="s"> /var/www/media</span>
+
+<span class="k">RUN</span> chown -R nginx:nginx /var/www/media
+</pre></div>
+<p>It's using the latest nginx and copies it configuration. Then make sure that nginx
+user has access to interesting for us folder. <tt class="docutils literal">nginx.conf</tt> is presenting as
+follows:</p>
+<div class="highlight"><pre><span></span><span class="k">user</span>  <span class="s">nginx</span><span class="p">;</span>
+
+<span class="k">http</span> <span class="p">{</span>
+
+  <span class="kn">client_max_body_size</span> <span class="s">100M</span><span class="p">;</span>
+
+
+  <span class="kn">upstream</span> <span class="s">app</span> <span class="p">{</span>
+    <span class="kn">server</span> <span class="n">django</span><span class="p">:</span><span class="mi">5000</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kn">server</span> <span class="p">{</span>
+    <span class="kn">listen</span> <span class="mi">80</span><span class="p">;</span>
+    <span class="kn">charset</span>     <span class="s">utf-8</span><span class="p">;</span>
+
+    <span class="kn">location</span> <span class="s">/media/</span> <span class="p">{</span>
+      <span class="kn">root</span> <span class="s">/var/www/</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+      <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="s">@proxy_to_app</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kn">location</span> <span class="s">@proxy_to_app</span> <span class="p">{</span>
+      <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+      <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$http_host</span><span class="p">;</span>
+      <span class="kn">proxy_redirect</span> <span class="no">off</span><span class="p">;</span>
+      <span class="kn">proxy_pass</span>   <span class="s">http://app</span><span class="p">;</span>
+
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>I just present you the most important lines - the rest you will find in a repo.
+Setting <tt class="docutils literal">client_max_body_size</tt> allows me to upload files till 100M. I use
+nginx just to serve media files - uploaded images. That's why I needed
+<tt class="docutils literal">location /media/</tt>.</p>
+<p>The rest of requests goes to django application - and in production settings - gunicorn.</p>
+<p>The last piece of a puzzle is <tt class="docutils literal"><span class="pre">docker-compose.yml</span></tt>:</p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">nginx</span><span class="p p-Indicator">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">build</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">./compose/nginx</span>
+  <span class="l l-Scalar l-Scalar-Plain">depends_on</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">django</span>
+  <span class="l l-Scalar l-Scalar-Plain">ports</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="s">&quot;0.0.0.0:80:80&quot;</span>
+  <span class="l l-Scalar l-Scalar-Plain">volumes</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">./django_nginx_proxy/media:/var/www/media</span>
+</pre></div>
+<p>This config tells docker-compose to build nginx from Dockerfile under <tt class="docutils literal">compose/nginx</tt>.</p>
+<p>Important line here is volumes - I use only one folder in nginx container. Thanks
+to that we user upload a file it goes from django container to media folder and
+then is taken up by nginx container.</p>
+<p>That's all for today! Stay tuned for next blog post and feel free to comment.</p>
+<p>Source code is available in this <a class="reference external" href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/django_nginx_proxy">repo</a>.</p>
+</div>
+<div class="section" id="other-blog-posts-in-this-series">
+<h2>Other blog posts in this series:</h2>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/django-nginx-file-proxy-part-two.html">Django and nginx file proxy - part two</a></li>
+</ul>
+<p>Cover image from <a class="reference external" href="https://unsplash.com/search/server?photo=Re6__yidc48">Unsplash</a> under
+<a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/nginx.html">nginx</a>, <a href="https://krzysztofzuraw.com/tag/python.html">python</a>, <a href="https://krzysztofzuraw.com/tag/proxy.html">proxy</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

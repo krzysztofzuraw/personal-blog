@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Pomodoro timer - beginning</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Beginning of my new series">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="javascript">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2017/pomodoro-timer-beginning.html">
+	<meta property="og:title" content="Pomodoro timer - beginning">
+	<meta property="article:published_time" content="2017-02-12 10:00:00+01:00">
+            <meta property="og:description" content="Beginning of my new series">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/timer.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/timer.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Pomodoro timer - beginning" />
+            <meta name="twitter:description" content="Beginning of my new series" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/timer.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/timer.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Pomodoro timer - beginning</h1>
+                            <h3 class="subheading" >Beginning of my new series</h3>
+                        <span class="meta">Posted on Sun 12 February 2017
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>From this post I will try to make new a blog post series - documenting my projects. In previous
+projects like this, I had every time a fixed number of blog posts I wanted to write about a specific
+project - from 2 to 4. Right now, I want to try writing as many blog posts as it will be necessary
+to end a project - without any specific number in mind. Let's get started!</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-pomodoro-timer-project-will-be-about" id="id1">What pomodoro-timer project will be about</a></li>
+<li><a class="reference internal" href="#a-few-words-about-tools" id="id2">A few words about tools</a></li>
+<li><a class="reference internal" href="#other-blog-posts-in-this-series" id="id3">Other blog posts in this series:</a></li>
+</ul>
+</div>
+<div class="section" id="what-pomodoro-timer-project-will-be-about">
+<h2><a class="toc-backref" href="#id1">What pomodoro-timer project will be about</a></h2>
+<p>I stumbled upon <a class="reference external" href="http://cirillocompany.de/pages/pomodoro-technique">pomodoro technique</a> during my
+student times when I wanted to be more productive. It works great and I tried many different tools
+starting from web apps and ending on google play store. Recently I reread the pomodoro technique
+manifesto and I found out that I have missed one important aspect - tracking if 25min of work
+was without distraction. To accomplish that I started noting down which pomodoro was without distractions
+and which wasn't. I started noticing that I sometimes forgot to write down if pomodoro was good or not.</p>
+<p>Then I had an idea - what if I write my own timer and at the end of 25min application will ask
+me: 'How productive last 25min was?'. Based on that I can start tracking my productivity throughout the day.</p>
+<p>Moreover, I wanted to learn javascript so I decided to create my own pomodoro timer as a web page.</p>
+</div>
+<div class="section" id="a-few-words-about-tools">
+<h2><a class="toc-backref" href="#id2">A few words about tools</a></h2>
+<p>In today javascript there are infinite number of tools, frameworks - by the way I recommend to read this
+<a class="reference external" href="https://hackernoon.com/how-it-feels-to-learn-javascript-in-2016-d3a717dd577f#.oifaoe6ph">piece</a>.</p>
+<p>I wanted to start from the basics without any framework to help me. I believe that frameworks come and go
+but understanding how language works stays. So I pick the newest javascript implementation -
+<a class="reference external" href="http://es6-features.org/">ECMAScript 6</a>.</p>
+<p>Then I started searching for web application template and I found one - <a class="reference external" href="https://developers.google.com/web/tools/starter-kit/">Web Started Kit</a>.
+I've opened it and looked inside the code. I looked one more time. So many tools! Sass, gulp, babel and other.
+I closed the editor. I removed this code and I started from scratch. I know it can help me a lot but I
+want to start from the basics. As I'm doing <a class="reference external" href="https://javascript30.com">javascript course</a> by Wes Bos I
+decided to use some tools that he is using. I really like <a class="reference external" href="https://www.npmjs.com/package/browser-sync">browser-sync</a>.
+It automatically reloads web pages when I change html, css or js files. To start browser-sync I have this
+one line in my <tt class="docutils literal">package.json</tt>:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;scripts&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;start&quot;</span><span class="p">:</span> <span class="s2">&quot;browser-sync start --server --files &#39;*.css, *.html, *.js&#39;&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>Then I just write <tt class="docutils literal">npm start</tt>.</p>
+<p>When I learn a new language I always look for the best practices. In javascript word there is a couple of
+them but I choose <a class="reference external" href="https://github.com/airbnb/javascript">Airbnb JavaScript Style Guide</a>. Hot tool
+for linting js files right now is <a class="reference external" href="http://eslint.org/">eslint</a>. To use eslint with this style guide
+I installed <tt class="docutils literal"><span class="pre">eslint-config-airbnb</span></tt>. Thanks to that in my <tt class="docutils literal">.eslintrc</tt> I just wrote:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">&quot;extends&quot;</span><span class="p">:</span> <span class="s2">&quot;airbnb&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+<p>Right now I'm ready to write some javascript code! Stay tuned for the next blog post. If you have anything
+to add please comment below.</p>
+<p>Repo with this code is available on <a class="reference external" href="https://github.com/krzysztofzuraw/pomodoro-timer">github</a>.</p>
+<p>Special thanks to Kasia for being an editor for this post. Thank you.</p>
+</div>
+<div class="section" id="other-blog-posts-in-this-series">
+<h2><a class="toc-backref" href="#id3">Other blog posts in this series:</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/pomodoro-timer-counting.html">Pomodoro timer - counting</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/pomodoro-timer-notifications.html">Pomodoro timer - notifications</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/pomodoro-timer-notifications.html">Pomodoro timer - breaks &amp; localStorage</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/pomodoro-timer-how-good-was-your-pomodoro.html">Pomodoro timer - how good was your pomodoro?</a></li>
+</ul>
+<p>Cover image from <a class="reference external" href="https://unsplash.com/search/timer?photo=QqE158hev1I">Unsplash</a> under
+<a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/javascript.html">javascript</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

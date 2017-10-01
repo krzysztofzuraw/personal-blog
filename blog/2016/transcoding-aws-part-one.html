@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Transcoding with AWS- part one</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Setting up Django app to work with AWS">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="aws">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-one.html">
+	<meta property="og:title" content="Transcoding with AWS- part one">
+	<meta property="article:published_time" content="2016-12-04 10:00:00+01:00">
+            <meta property="og:description" content="Setting up Django app to work with AWS">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/cloud.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/cloud.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Transcoding with AWS- part one" />
+            <meta name="twitter:description" content="Setting up Django app to work with AWS" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/cloud.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/cloud.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Transcoding with AWS- part one</h1>
+                            <h3 class="subheading" >Setting up Django app to work with AWS</h3>
+                        <span class="meta">Posted on Sun 04 December 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>Nowadays moving everything to the cloud becomes more and more popular. A lot of
+software companies move their technology stack to such infrastructure. One of
+the biggest players in this field is Amazon Web Services - AWS. That's why I decided
+decided to adapt existing code from my previous project and move transcoding
+to write blog posts about that. In this series I
+process to cloud.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#overview-of-series" id="id1">Overview of series</a></li>
+<li><a class="reference internal" href="#moving-static-and-media-files-to-aws" id="id2">Moving static and media files to AWS</a></li>
+<li><a class="reference internal" href="#other-blog-posts-in-this-series" id="id3">Other blog posts in this series:</a></li>
+</ul>
+</div>
+<div class="section" id="overview-of-series">
+<h2><a class="toc-backref" href="#id1">Overview of series</a></h2>
+<p>I decided to adapt code from my previous blog series about
+<a class="reference external" href="https://krzysztofzuraw.com/blog/2016/django-celery-rabbit-part-one.html">celery and rabbit-mq</a>. I did that because code
+from this django application actually transcodes mp3 files to other formats. This
+series will be divided into these parts:</p>
+<ul class="simple">
+<li>Moving static and media files to AWS</li>
+<li>Transcoding files inside AWS transcoder</li>
+<li>Notifying user that transcode is complete</li>
+<li>User downloads transcoded file</li>
+</ul>
+</div>
+<div class="section" id="moving-static-and-media-files-to-aws">
+<h2><a class="toc-backref" href="#id2">Moving static and media files to AWS</a></h2>
+<p>AWS transcoder operates only on files that are inside S3 bucket so first I need
+to change how these files are served in django.</p>
+<p>Let's say that I already had my account on AWS. Next step is to generate specific
+account using <a class="reference external" href="http://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html">IAM</a>.
+While creating a user I want to give him access to AWS S3:</p>
+<img alt="Policy for IAM user" src="/images/aws1.png" />
+<p>and after I download its
+credentials I can create S3 container - I have chosen Ireland because with Frankfurt
+I have a problem with uploading files to S3. After bucket creation, it's time to add
+policy. The policy is basically JSON that tells AWS which user can access given bucket.
+More information about that can be found <a class="reference external" href="http://docs.aws.amazon.com/AmazonS3/latest/dev/intro-managing-access-s3-resources.html">here</a>.
+Adding policy is quite simple from S3 management view:</p>
+<img alt="Policy for S3 bucket" src="/images/aws2.png" />
+<p>This policy looks like this:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+      <span class="nt">&quot;Version&quot;</span><span class="p">:</span> <span class="s2">&quot;2008-10-17&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;Statement&quot;</span><span class="p">:</span> <span class="p">[</span>
+              <span class="p">{</span>
+                      <span class="nt">&quot;Sid&quot;</span><span class="p">:</span> <span class="s2">&quot;PublicReadForGetBucketObjects&quot;</span><span class="p">,</span>
+                      <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+                      <span class="nt">&quot;Principal&quot;</span><span class="p">:</span> <span class="p">{</span>
+                              <span class="nt">&quot;AWS&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+                      <span class="p">},</span>
+                      <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;s3:GetObject&quot;</span><span class="p">,</span>
+                      <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="s2">&quot;AWS_RESOURCE&quot;</span>
+              <span class="p">},</span>
+              <span class="p">{</span>
+                      <span class="nt">&quot;Effect&quot;</span><span class="p">:</span> <span class="s2">&quot;Allow&quot;</span><span class="p">,</span>
+                      <span class="nt">&quot;Principal&quot;</span><span class="p">:</span> <span class="p">{</span>
+                              <span class="nt">&quot;AWS&quot;</span><span class="p">:</span> <span class="s2">&quot;AWS_PRINCIPAL&quot;</span>
+                      <span class="p">},</span>
+                      <span class="nt">&quot;Action&quot;</span><span class="p">:</span> <span class="s2">&quot;s3:*&quot;</span><span class="p">,</span>
+                      <span class="nt">&quot;Resource&quot;</span><span class="p">:</span> <span class="p">[</span>
+                              <span class="s2">&quot;AWS_RESOURCE&quot;</span><span class="p">,</span>
+                      <span class="p">]</span>
+              <span class="p">}</span>
+      <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+<p>Where AWS_PRINCIPAL is your IAM user in format of
+<a class="reference external" href="http://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html">ARN resource</a>:
+<tt class="docutils literal"><span class="pre">&quot;arn:aws:iam::AMAZON_ID:user/IAM_USER&quot;</span></tt> and AWS_RESOURCE: <tt class="docutils literal"><span class="pre">arn:aws:s3:::S3_BUCKET_NAME/*</span></tt>.</p>
+<p>As I have this set up right now I can make changes in the application itself. To use S3 as
+a static and media files container I used <a class="reference external" href="https://django-storages.readthedocs.io/en/latest/">django-storages</a>.
+To make django-storages to work I have to add couple things in settings.py:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">environ</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">environ</span><span class="o">.</span><span class="n">Env</span><span class="p">()</span>
+
+
+<span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="c1"># other applicaitons</span>
+  <span class="s1">&#39;storages&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">AWS_STORAGE_BUCKET_NAME</span> <span class="o">=</span> <span class="n">env</span><span class="p">(</span><span class="s1">&#39;AWS_STORAGE_BUCKET_NAME&#39;</span><span class="p">)</span>
+<span class="n">AWS_ACCESS_KEY_ID</span> <span class="o">=</span> <span class="n">env</span><span class="p">(</span><span class="s1">&#39;AWS_ACCESS_KEY_ID&#39;</span><span class="p">)</span>
+<span class="n">AWS_SECRET_ACCESS_KEY</span> <span class="o">=</span> <span class="n">env</span><span class="p">(</span><span class="s1">&#39;AWS_SECRET_ACCESS_KEY&#39;</span><span class="p">)</span>
+<span class="n">AWS_S3_CUSTOM_DOMAIN</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.s3.amazonaws.com&#39;</span> <span class="o">%</span> <span class="n">AWS_STORAGE_BUCKET_NAME</span>
+<span class="n">AWS_HEADERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Expires&#39;</span><span class="p">:</span> <span class="s1">&#39;Thu, 15 Apr 2010 20:00:00 GMT&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Cache-Control&#39;</span><span class="p">:</span> <span class="s1">&#39;max-age=86400&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">AWS_S3_HOST</span> <span class="o">=</span> <span class="s1">&#39;s3-eu-west-1.amazonaws.com&#39;</span>
+</pre></div>
+<p>I'm using here another package called <a class="reference external" href="https://github.com/joke2k/django-environ">django-environ</a>.
+It allows me to get certain settings from environmental variables. I'm setting them
+in my virtualenvwrapper script inside <tt class="docutils literal">$ENV_PATH/bin/postactivate</tt>:</p>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">AWS_STORAGE_BUCKET_NAME</span><span class="o">=</span><span class="s1">&#39;name&#39;</span>
+<span class="nb">export</span> <span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="s1">&#39;key&#39;</span>
+<span class="nb">export</span> <span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="s1">&#39;acces_id&#39;</span>
+</pre></div>
+<p>The last line with <tt class="docutils literal">AWS_S3_HOST</tt> is really important here as boto - client that
+django-storages use underneath to connect to AWS doesn't have default region set up.
+If this is not specified I upload files with redirection which don't allow to transfer
+static files or upload any large media file.</p>
+<p>As I have AWS settings set up there is time to change static files settings in settings.py:</p>
+<div class="highlight"><pre><span></span><span class="n">STATICFILES_LOCATION</span> <span class="o">=</span> <span class="s1">&#39;static&#39;</span>
+<span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s2">&quot;https://</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">AWS_S3_CUSTOM_DOMAIN</span><span class="p">,</span> <span class="n">STATICFILES_LOCATION</span><span class="p">)</span>
+<span class="n">STATICFILES_STORAGE</span> <span class="o">=</span> <span class="s1">&#39;audio_transcoder.storages.StaticStorage&#39;</span>
+<span class="n">STATICFILES_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;static&#39;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+<p>I add custom <tt class="docutils literal">StaticStorage</tt> as I want my static files to be under static in S3 bucket:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">storages.backends.s3boto</span> <span class="kn">import</span> <span class="n">S3BotoStorage</span>
+
+
+<span class="k">class</span> <span class="nc">StaticStorage</span><span class="p">(</span><span class="n">S3BotoStorage</span><span class="p">):</span>
+  <span class="n">location</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">STATICFILES_LOCATION</span>
+</pre></div>
+<p>To upload my static files I simply run <tt class="docutils literal">python manage.py collectstatic</tt>. After a while
+I can see that my files are in a bucket:</p>
+<img alt="Static files inside S3" src="/images/aws3.png" />
+<p>Right now when I run my server I can see the location of my static files:</p>
+<img alt="Static files loaded from S3" src="/images/aws4.png" />
+<p>As static files are working it's high time to use AWS for media files. Right now it's simple - in
+settings I add:</p>
+<div class="highlight"><pre><span></span><span class="n">MEDIAFILES_LOCATION</span> <span class="o">=</span> <span class="s1">&#39;media&#39;</span>
+<span class="n">MEDIA_URL</span> <span class="o">=</span> <span class="s2">&quot;https://</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">AWS_S3_CUSTOM_DOMAIN</span><span class="p">,</span> <span class="n">MEDIAFILES_LOCATION</span><span class="p">)</span>
+<span class="n">DEFAULT_FILE_STORAGE</span> <span class="o">=</span> <span class="s1">&#39;audio_transcoder.storages.MediaStorage&#39;</span>
+</pre></div>
+<p>with custom storage:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MediaStorage</span><span class="p">(</span><span class="n">S3BotoStorage</span><span class="p">):</span>
+  <span class="n">location</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIAFILES_LOCATION</span>
+</pre></div>
+<p>Now when I upload my mp3 file it's sent directly to S3 bucket under media location:</p>
+<img alt="Media files in S3" src="/images/aws5.png" />
+<p>That's all for today! In the next blog post, I will write about how to set up AWS transcoder.</p>
+</div>
+<div class="section" id="other-blog-posts-in-this-series">
+<h2><a class="toc-backref" href="#id3">Other blog posts in this series:</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-two.html">Transcoding with AWS- part two</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-three.html">Transcoding with AWS- part three</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-four.html">Transcoding with AWS- part four</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-five.html">Transcoding with AWS- part five</a></li>
+</ul>
+<p>The code that I have made so far is available on
+<a class="reference external" href="https://github.com/krzysztofzuraw/blog_transcoder_aws">github</a>. Stay
+tuned for next blog post from this series.</p>
+<p>Special thanks to Kasia for being an editor for this post. Thank you.</p>
+<p>While creating this blog post I used an excellent tutorial from
+<a class="reference external" href="https://www.caktusgroup.com/blog/2014/11/10/Using-Amazon-S3-to-store-your-Django-sites-static-and-media-files/">cactus group</a>.</p>
+<p>Cover image by <a class="reference external" href="http://www.flickr.com/people/25691430&#64;N04">Harald Hoyer</a> under <a class="reference external" href="http://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>, via Wikimedia Commons</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/aws.html">aws</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

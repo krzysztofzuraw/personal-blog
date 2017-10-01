@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - aws</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 22 Jan 2017 10:00:00 +0100</lastBuildDate><item><title>Transcoding with AWS- part five</title><link>https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-five.html</link><description>&lt;p&gt;&lt;strong&gt;This is the last blog post in this series - the only thing that has to be done
+is telling the user that file he or she uploads is processed.
+It will be done by writing custom message application.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="tabel-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Tabel of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#how-message-application-should-work" id="id1"&gt;How message application should work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#implementation-in-django" id="id2"&gt;Implementation in django&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id3"&gt;Other …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 22 Jan 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-01-22:/blog/2017/transcoding-aws-part-five.html</guid><category>django</category><category>aws</category></item><item><title>Transcoding with AWS- part four</title><link>https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-four.html</link><description>&lt;p&gt;&lt;strong&gt;As I have my transcoder up and running now it's time to let user know that their
+uploaded files were transcoded. To this occasion I will use AWS SNS service which
+allows me to send notification about completion of transcode job.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#setting-up-aws-sns-to-work-with-aws-transcoder" id="id1"&gt;Setting up AWS SNS to work …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 15 Jan 2017 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-01-15:/blog/2017/transcoding-aws-part-four.html</guid><category>django</category><category>aws</category></item><item><title>Transcoding with AWS- part three</title><link>https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-three.html</link><description>&lt;p&gt;&lt;strong&gt;In previous&lt;/strong&gt; &lt;a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-two.html"&gt;blog post&lt;/a&gt; &lt;strong&gt;I've ran transcoder
+from django application using AWS python API. But there is also one more way to do the same
+- use AWS Lambda. Today I will write how to use this tool to trigger transcoding
+of uploaded files.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#what-is-aws-lambda" id="id1"&gt;What is AWS Lambda …&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 18 Dec 2016 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-12-18:/blog/2016/transcoding-aws-part-three.html</guid><category>aws</category></item><item><title>Transcoding with AWS- part two</title><link>https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-two.html</link><description>&lt;p&gt;&lt;strong&gt;As I have static and media files integrated with AWS now it's time to transcode
+them. In this post, I will write a short example of how to integrate AWS ElasticTranscoder
+with Django application.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="contents topic" id="table-of-contents"&gt;
+&lt;p class="topic-title first"&gt;Table of Contents:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#basic-terms" id="id1"&gt;Basic terms&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#code" id="id2"&gt;Code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference internal" href="#other-blog-posts-in-this-series" id="id3"&gt;Other blog posts in this series&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class="section" id="basic-terms"&gt;
+&lt;h2&gt;&lt;a class="toc-backref" href="#id1"&gt;Basic terms&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;ElasticTranscoder allows …&lt;/p&gt;&lt;/div&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 11 Dec 2016 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-12-11:/blog/2016/transcoding-aws-part-two.html</guid><category>django</category><category>aws</category></item><item><title>Transcoding with AWS- part one</title><link>https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-one.html</link><description>&lt;p&gt;&lt;strong&gt;Nowadays moving everything to the cloud becomes more and more popular. A lot of
+software companies move their technology stack to such infrastructure. One of
+the biggest players in this field is Amazon Web Services - AWS. That's why I decided
+decided to adapt existing code from my previous project and …&lt;/strong&gt;&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 04 Dec 2016 10:00:00 +0100</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2016-12-04:/blog/2016/transcoding-aws-part-one.html</guid><category>django</category><category>aws</category></item></channel></rss>

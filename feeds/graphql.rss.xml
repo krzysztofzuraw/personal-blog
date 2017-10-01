@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - graphql</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 30 Jul 2017 10:00:00 +0200</lastBuildDate><item><title>Django, GraphQL &amp; React - part two</title><link>https://krzysztofzuraw.com/blog/2017/django-graphql-react-part-two.html</link><description>&lt;p&gt;&lt;strong&gt;In this post, I will guide you through setting up GraphQL with Django.
+Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I will use a library called &lt;a class="reference external" href="https://github.com/graphql-python/graphene-django"&gt;graphene-django&lt;/a&gt;.
+It will help a lot and allow me to get the job done instead of writing boilerplate code.&lt;/p&gt;
+&lt;p&gt;I decided I will have 3 django applications: actors …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 30 Jul 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-07-30:/blog/2017/django-graphql-react-part-two.html</guid><category>django</category><category>python</category><category>graphql</category></item></channel></rss>

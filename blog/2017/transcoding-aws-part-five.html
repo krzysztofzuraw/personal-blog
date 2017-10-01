@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Transcoding with AWS- part five</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Inform user that file was transcoded">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="django">
+        <meta name="tags" content="aws">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-five.html">
+	<meta property="og:title" content="Transcoding with AWS- part five">
+	<meta property="article:published_time" content="2017-01-22 10:00:00+01:00">
+            <meta property="og:description" content="Inform user that file was transcoded">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/cloud.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/cloud.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Transcoding with AWS- part five" />
+            <meta name="twitter:description" content="Inform user that file was transcoded" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/cloud.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/cloud.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Transcoding with AWS- part five</h1>
+                            <h3 class="subheading" >Inform user that file was transcoded</h3>
+                        <span class="meta">Posted on Sun 22 January 2017
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>This is the last blog post in this series - the only thing that has to be done
+is telling the user that file he or she uploads is processed.
+It will be done by writing custom message application.</strong></p>
+<div class="contents topic" id="tabel-of-contents">
+<p class="topic-title first">Tabel of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#how-message-application-should-work" id="id1">How message application should work</a></li>
+<li><a class="reference internal" href="#implementation-in-django" id="id2">Implementation in django</a></li>
+<li><a class="reference internal" href="#other-blog-posts-in-this-series" id="id3">Other blog posts in this series</a></li>
+</ul>
+</div>
+<div class="section" id="how-message-application-should-work">
+<h2><a class="toc-backref" href="#id1">How message application should work</a></h2>
+<p>From previous <a class="reference external" href="https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-four.html">post</a> I know that the last
+point of my application flow is to inform user that file is transcoded and ready
+to download. To do such thing I have to display message on every webpage that
+current user is. This message should have information about which file was processed.
+First I wanted to do this with existing django messaging framework but as it turns
+out is works only with request. As I decided to show message for different users as long
+as they dismiss this information I had to write my own small application.</p>
+</div>
+<div class="section" id="implementation-in-django">
+<h2><a class="toc-backref" href="#id2">Implementation in django</a></h2>
+<p>In my newly created application I created following model:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+
+<span class="k">class</span> <span class="nc">Message</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+    <span class="n">read</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+<p>I decided to display my message only when it wasn't read. Based on that right
+now I can use it in endpoint that works with AWS (<tt class="docutils literal">audio_transcode/views.py</tt>):</p>
+<div class="highlight"><pre><span></span><span class="nd">@csrf_exempt</span>
+<span class="k">def</span> <span class="nf">transcode_complete</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="c1"># rest of code is in previous blog post</span>
+    <span class="k">if</span> <span class="n">json_body</span><span class="p">[</span><span class="s1">&#39;Message&#39;</span><span class="p">][</span><span class="s1">&#39;state&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;COMPLETED&#39;</span><span class="p">:</span>
+        <span class="n">audio_file</span> <span class="o">=</span> <span class="n">AudioFile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">mp3_file</span><span class="o">=</span><span class="n">json_body</span><span class="p">[</span><span class="s1">&#39;Message&#39;</span><span class="p">][</span><span class="s1">&#39;input&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">][</span><span class="mi">6</span><span class="p">:]</span>
+        <span class="p">)</span>
+        <span class="n">Message</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Your file {} has been processed&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">audio_file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+         <span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;OK&#39;</span><span class="p">)</span>
+</pre></div>
+<p>As my message is created right now comes time for displaying it to the user. To do that
+I have to add a message to template context. It can be done via creating your own
+context manager:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Message</span>
+
+<span class="k">def</span> <span class="nf">message_context_processor</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_anonymous</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="n">Message</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">read</span><span class="o">=</span><span class="bp">False</span><span class="p">)}</span>
+</pre></div>
+<p>And registering it:</p>
+<div class="highlight"><pre><span></span><span class="n">TEMPLATES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="c1"># rest of options</span>
+        <span class="s1">&#39;OPTIONS&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;context_processors&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="c1"># rest of context processors</span>
+                <span class="s1">&#39;transcode_messages.context_processors.message_context_processor&#39;</span>
+            <span class="p">],</span>
+        <span class="p">},</span>
+     <span class="p">},</span>
+ <span class="p">]</span>
+</pre></div>
+<p>And adding a message as django template tag:</p>
+<div class="highlight"><pre><span></span>{% if messages %}
+  {% for message in messages %}
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;alert alert-success alert-dismissible&quot;</span> <span class="na">data-message-id</span><span class="o">=</span><span class="s">&quot;{{ message.id }}&quot;</span> <span class="na">data-message-url</span><span class="o">=</span><span class="s">&quot;{% url &#39;messages:read-message&#39; %}&quot;</span><span class="na">role</span><span class="o">=</span><span class="s">&quot;alert&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;close&quot;</span> <span class="na">data-dismiss</span><span class="o">=</span><span class="s">&quot;alert&quot;</span> <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Close&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">span</span> <span class="na">aria-hidden</span><span class="o">=</span><span class="s">&quot;true&quot;</span><span class="p">&gt;</span>x<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      {{ message.text }}
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  {% endfor %}
+{% endif %}
+</pre></div>
+<p>Which renders as follows:</p>
+<img alt="Transcode complete message" src="/images/aws_message1.jpg" />
+<p>In the previous screenshot, there is an <cite>X</cite> that dismiss the message and make it read. To communicate with
+the backend I wrote quick jQuery script:</p>
+<div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">csrftoken</span> <span class="o">=</span> <span class="nx">Cookies</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;csrftoken&#39;</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// these HTTP methods do not require CSRF protection</span>
+    <span class="k">return</span> <span class="p">(</span><span class="sr">/^(GET|HEAD|OPTIONS|TRACE)$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">method</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajaxSetup</span><span class="p">({</span>
+    <span class="nx">beforeSend</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xhr</span><span class="p">,</span> <span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">csrfSafeMethod</span><span class="p">(</span><span class="nx">settings</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">crossDomain</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">xhr</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="s2">&quot;X-CSRFToken&quot;</span><span class="p">,</span> <span class="nx">csrftoken</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+
+
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.alert&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;closed.bs.alert&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">messageUrl</span><span class="p">,</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+    <span class="nx">data</span><span class="o">:</span> <span class="p">{</span><span class="s1">&#39;message_id&#39;</span><span class="o">:</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">messageId</span><span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+<p>Going from the top - django by default uses csrftoken so I have to get it that my request passes
+the authentication. I'm using here library called <a class="reference external" href="https://github.com/js-cookie/js-cookie">js-cookie</a>.
+In <tt class="docutils literal">ajaxSetup</tt> I tell jQuery to always send csrftokens while using ajax request. Below I add the event
+listener to an element that has <tt class="docutils literal">.alert</tt> class. This event - <tt class="docutils literal">closed.bs.alert</tt> is provided by
+bootstrap. On triggering this event I send ajax POST to url from data attribute in alert element -
+<tt class="docutils literal"><span class="pre">data-message-url</span></tt>. Data that I send is taken from <tt class="docutils literal"><span class="pre">data-message-id</span></tt> attribute on alerts div.
+How endpoint for receiving such messages looks like? See below:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Message</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+
+<span class="k">def</span> <span class="nf">read_message</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+     <span class="n">message</span> <span class="o">=</span> <span class="n">Message</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;message_id&#39;</span><span class="p">])</span>
+     <span class="n">message</span><span class="o">.</span><span class="n">read</span> <span class="o">=</span> <span class="bp">True</span>
+     <span class="n">message</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+     <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s1">&#39;OK&#39;</span><span class="p">)</span>
+</pre></div>
+<p>Here I take <tt class="docutils literal">message_id</tt> and set read to True and save message.</p>
+<p>That's all for this blog post and blog series! I know that in this design are particular flaws like:
+what is there will be more users than one? Everybody will see everyone messages. If you have idea how
+to fix that please write in comments below.</p>
+</div>
+<div class="section" id="other-blog-posts-in-this-series">
+<h2><a class="toc-backref" href="#id3">Other blog posts in this series</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-one.html">Transcoding with AWS- part one</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-two.html">Transcoding with AWS- part two</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-three.html">Transcoding with AWS- part three</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-four.html">Transcoding with AWS- part four</a></li>
+</ul>
+<p>The code that I have made so far is available on
+<a class="reference external" href="https://github.com/krzysztofzuraw/blog_transcoder_aws">github</a>. Stay
+tuned for next blog post from this series.</p>
+<p>Cover image by <a class="reference external" href="http://www.flickr.com/people/25691430&#64;N04">Harald Hoyer</a> under <a class="reference external" href="http://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>, via Wikimedia Commons</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/django.html">django</a>, <a href="https://krzysztofzuraw.com/tag/aws.html">aws</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

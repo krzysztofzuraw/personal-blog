@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Factory pattern in python</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Recently I discovered another design pattern that I found interesting. This blog post is all about this pattern.">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="python">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/factory-pattern-python.html">
+	<meta property="og:title" content="Factory pattern in python">
+	<meta property="article:published_time" content="2016-08-07 10:20:00+02:00">
+            <meta property="og:description" content="Recently I discovered another design pattern that I found interesting. This blog post is all about this pattern.">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/factory2.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/factory2.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Factory pattern in python" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/factory2.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/factory2.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Factory pattern in python</h1>
+                        <span class="meta">Posted on Sun 07 August 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p>What is factory pattern all about? It introduces abstraction.
+In other words: helps software developers with the problem
+of creating objects without knowing exact class of the object that will be created.</p>
+<p>Why use it? From <a class="reference external" href="http://programmers.stackexchange.com/questions/253254/why-should-i-use-a-factory-class-instead-of-direct-object-construction">programmers stack exchange</a>:</p>
+<blockquote>
+<p>(...) they allow the project to follow the SOLID principles more closely. In particular, the interface segregation and dependency inversion principles.</p>
+<p>Factories and interfaces allow for a lot more long term flexibility. It allows for a more decoupled - and therefore more testable - design. (...)</p>
+<ul class="simple">
+<li>It allows you to introduce an IoC container easily</li>
+<li>It makes your code more testable as you can mock interfaces</li>
+<li>It gives you a lot more flexibility when it comes time to change the application (i.e. you can create new implementations without changing the dependent code)</li>
+</ul>
+</blockquote>
+<p>As we know why to use it let's jump into the code:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BaseArchive</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">EXTENSION</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location_path</span><span class="p">,</span> <span class="n">files_to_pack</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">location_path</span> <span class="o">=</span> <span class="n">location_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files_to_pack</span> <span class="o">=</span> <span class="n">files_to_pack</span>
+
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</pre></div>
+<p>At first, I created a simple base class to have a common interface for all archive classes.
+There is nothing sophisticated here: only setting up all necessary arguments in
+<tt class="docutils literal">__init__</tt> and telling that all children of <tt class="docutils literal">BaseArchive</tt> have to implement <tt class="docutils literal">generate</tt>
+method. Let's look how these children look like:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+
+
+<span class="k">class</span> <span class="nc">ZIPArchive</span><span class="p">(</span><span class="n">BaseArchive</span><span class="p">):</span>
+    <span class="n">EXTENSION</span> <span class="o">=</span> <span class="s1">&#39;zip&#39;</span>
+
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="s1">&#39;{}.{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EXTENSION</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">file_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files_to_pack</span><span class="p">:</span>
+                <span class="n">zip_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">TARArchive</span><span class="p">(</span><span class="n">BaseArchive</span><span class="p">):</span>
+    <span class="n">EXTENSION</span> <span class="o">=</span> <span class="s1">&#39;tar&#39;</span>
+
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;{}.{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">EXTENSION</span><span class="p">),</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">tar_file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">file_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files_to_pack</span><span class="p">:</span>
+                <span class="n">tar_file</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">file_</span><span class="p">)</span>
+</pre></div>
+<p>Basically, <tt class="docutils literal">ZIPArchive</tt> and <tt class="docutils literal">TARArchive</tt> classes have <tt class="docutils literal">generate</tt> method to create
+archives in given format using <tt class="docutils literal">ZipFile</tt> or <tt class="docutils literal">tarfile</tt> modules from standardlib as
+follows:</p>
+<div class="highlight"><pre><span></span><span class="n">zip_archive</span> <span class="o">=</span> <span class="n">ZIPArchive</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s1">&#39;zip&#39;</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;for_zip&#39;</span><span class="p">])</span>
+<span class="n">zip_archive</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+<span class="n">tar_archive</span> <span class="o">=</span> <span class="n">TARArchive</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s1">&#39;tar&#39;</span><span class="p">),</span> <span class="p">[</span><span class="s1">&#39;for_tar.txt&#39;</span><span class="p">])</span>
+<span class="n">tar_archive</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+</pre></div>
+<p>Then the real fun begins. Say I want to generate archive just only by providing path
+and files to pack into the archive. For this purpose I use something called <tt class="docutils literal">ArchiveManager</tt>
+which is factory:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ArchiveManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">ARCHIVE_ENGINES</span> <span class="o">=</span> <span class="p">[</span><span class="n">ZIPArchive</span><span class="p">,</span> <span class="n">TARArchive</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">location_path</span><span class="p">,</span> <span class="n">files_to_pack</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">location_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">location_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">files_to_pack</span> <span class="o">=</span> <span class="n">files_to_pack</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">archive_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">choose_archive_engine</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">choose_archive_engine</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">engine</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ARCHIVE_ENGINES</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">engine</span><span class="o">.</span><span class="n">check_extenstion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">extension</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">location_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">files_to_pack</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">create_archive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">archive_engine</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+</pre></div>
+<p>Here I have <tt class="docutils literal">ARCHIVE_ENGINES</tt> class attribute for every archive engine that I
+want to use. Below in <tt class="docutils literal">__init__</tt> I setup all necessary attributes with extension
+to use in <tt class="docutils literal">choose_archive_engine</tt>. Here is the place where factory pattern starts
+to work: I iterate through all engines to <tt class="docutils literal">check_extenstion</tt> and if there is a match
+I simply return the correct engine to <tt class="docutils literal">self.archive_engine</tt>. To use that I need to write
+some more code in <tt class="docutils literal">BaseArchive</tt>:</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BaseArchive</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+  <span class="c1"># rest of the code</span>
+
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">check_extenstion</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span><span class="n">extension</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">extension</span> <span class="o">==</span> <span class="bp">cls</span><span class="o">.</span><span class="n">EXTENSION</span><span class="p">:</span>
+</pre></div>
+<p>This <tt class="docutils literal">check_extenstion</tt> that is classmethod helps me in figuring out which
+underlying archive class should I use. Thanks to that in <tt class="docutils literal">ArchiveManager.create_archive</tt>
+I only need to provide <tt class="docutils literal">self.archive_engine.generate()</tt>. This method doesnt't know
+if there is <tt class="docutils literal">ZIPArchive</tt> or <tt class="docutils literal">TARArchive</tt> class being used.</p>
+<p>This was quick introduction how to use factory pattern in python. The code for this
+is available in this <a class="reference external" href="https://github.com/krzysztofzuraw/personal-blog-projects/tree/master/factory_pattern">repo</a>. Do you know more
+usages? Or maybe you don't agree with what I write- feel free to comment.</p>
+<p>Edits (12.08.2016):</p>
+<ul class="simple">
+<li>Refactor of check_extenstion method</li>
+</ul>
+<p>Edits (30.07.2017):</p>
+<ul class="simple">
+<li>Add missing EXTENSION parameter (by Jayesh Pawar)</li>
+</ul>
+<p>Cover image by <a class="reference external" href="https://pixabay.com/pl/users/tpsdave-12019/">Tpsdave</a>  released into public domain.</p>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/python.html">python</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

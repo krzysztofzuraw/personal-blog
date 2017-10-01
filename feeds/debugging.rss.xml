@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"><channel><title>Krzysztof Żuraw - debugging</title><link>https://krzysztofzuraw.com/</link><description>Personal site</description><lastBuildDate>Sun, 01 Oct 2017 10:00:00 +0200</lastBuildDate><item><title>Debugging python code with wdb</title><link>https://krzysztofzuraw.com/blog/2017/debugging-python-code-with-wdb.html</link><description>&lt;p&gt;&lt;strong&gt;While I was on PyConPL conference last year I heard about interesting debugger called wdb. Since then
+I don't have much chance to find out how it is to work with the tool. Yet I decided to write a quick blog
+post about it. Let's get started!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;What exactly is …&lt;/p&gt;</description><dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Krzysztof Żuraw</dc:creator><pubDate>Sun, 01 Oct 2017 10:00:00 +0200</pubDate><guid isPermaLink="false">tag:krzysztofzuraw.com,2017-10-01:/blog/2017/debugging-python-code-with-wdb.html</guid><category>python</category><category>debugging</category><category>wdb</category></item></channel></rss>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Transcoding with AWS- part three</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Automate transcoding files by AWS Lambda">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="aws">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-three.html">
+	<meta property="og:title" content="Transcoding with AWS- part three">
+	<meta property="article:published_time" content="2016-12-18 10:00:00+01:00">
+            <meta property="og:description" content="Automate transcoding files by AWS Lambda">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/cloud.jpg">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/cloud.jpg">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Transcoding with AWS- part three" />
+            <meta name="twitter:description" content="Automate transcoding files by AWS Lambda" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/cloud.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/cloud.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Transcoding with AWS- part three</h1>
+                            <h3 class="subheading" >Automate transcoding files by AWS Lambda</h3>
+                        <span class="meta">Posted on Sun 18 December 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>In previous</strong> <a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-two.html">blog post</a> <strong>I've ran transcoder
+from django application using AWS python API. But there is also one more way to do the same
+- use AWS Lambda. Today I will write how to use this tool to trigger transcoding
+of uploaded files.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-aws-lambda" id="id1">What is AWS Lambda</a></li>
+<li><a class="reference internal" href="#setting-up-aws-lambda-for-transcoder" id="id2">Setting up AWS Lambda for transcoder</a></li>
+<li><a class="reference internal" href="#other-blog-posts-in-this-series" id="id3">Other blog posts in this series</a></li>
+</ul>
+</div>
+<div class="section" id="what-is-aws-lambda">
+<h2><a class="toc-backref" href="#id1">What is AWS Lambda</a></h2>
+<p><a class="reference external" href="http://docs.aws.amazon.com/lambda/latest/dg/welcome.html">AWS Lambda</a> is a service
+that allows you to run code against some event. What event may you say? For instance
+uploading a file to S3 bucket. In my example, I use this service to start transcode
+jobs. User upload file to <tt class="docutils literal">media/music_file</tt> and then instead of firing up event
+from django application I trigger AWS Lambda function that does the same job.</p>
+<p>Right now it's time to jump into the code.</p>
+</div>
+<div class="section" id="setting-up-aws-lambda-for-transcoder">
+<h2><a class="toc-backref" href="#id2">Setting up AWS Lambda for transcoder</a></h2>
+<p>When you want to create an AWS Lambda functions you can use a couple of predefined
+functions a.k.a blueprints. As a base, I used one called: <tt class="docutils literal"><span class="pre">s3-get-object-python</span></tt>.
+As you chosen your function now it's time to add trigger so the function can run.</p>
+<img alt="AWS Lambda configuration" src="/images/aws_lambda1.png" />
+<p>And AWS Lambda function is created! But by default, it only gets content type of the
+object that is put in the S3 bucket. If I want to start to transcode job I can use
+following code:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+
+
+<span class="k">def</span> <span class="nf">lambda_handler</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+  <span class="n">transcoder</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;elastictranscoder&#39;</span><span class="p">,</span> <span class="s1">&#39;eu-west-1&#39;</span><span class="p">)</span>
+  <span class="n">pipeline_id</span> <span class="o">=</span> <span class="n">get_pipeline</span><span class="p">(</span><span class="n">transcoder</span><span class="p">,</span> <span class="s1">&#39;Audio Files&#39;</span><span class="p">)</span>
+  <span class="n">base_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;Records&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;s3&#39;</span><span class="p">][</span><span class="s1">&#39;object&#39;</span><span class="p">][</span><span class="s1">&#39;key&#39;</span><span class="p">])</span>
+  <span class="n">output</span> <span class="o">=</span> <span class="n">transcoder</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span>
+      <span class="n">PipelineId</span><span class="o">=</span><span class="n">pipeline_id</span><span class="p">,</span>
+      <span class="n">Input</span><span class="o">=</span><span class="p">{</span>
+          <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="n">create_aws_filename</span><span class="p">(</span><span class="s1">&#39;media&#39;</span><span class="p">,</span> <span class="n">base_filename</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+          <span class="s1">&#39;FrameRate&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;Resolution&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;AspectRatio&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;Interlaced&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;Container&#39;</span> <span class="p">:</span> <span class="s1">&#39;auto&#39;</span>
+      <span class="p">},</span>
+      <span class="n">Outputs</span><span class="o">=</span><span class="p">[{</span>
+          <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="n">create_aws_filename</span><span class="p">(</span><span class="s1">&#39;transcoded&#39;</span><span class="p">,</span> <span class="n">base_filename</span><span class="p">,</span> <span class="s1">&#39;.wav&#39;</span><span class="p">),</span>
+          <span class="s1">&#39;PresetId&#39;</span><span class="p">:</span> <span class="s1">&#39;1351620000001-300300&#39;</span>
+          <span class="p">},</span> <span class="p">{</span>
+          <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="n">create_aws_filename</span><span class="p">(</span><span class="s1">&#39;transcoded&#39;</span><span class="p">,</span> <span class="n">base_filename</span><span class="p">,</span> <span class="s1">&#39;.flac&#39;</span><span class="p">),</span>
+          <span class="s1">&#39;PresetId&#39;</span><span class="p">:</span> <span class="s1">&#39;1351620000001-300110&#39;</span>
+          <span class="p">},</span> <span class="p">{</span>
+          <span class="s1">&#39;Key&#39;</span><span class="p">:</span> <span class="n">create_aws_filename</span><span class="p">(</span><span class="s1">&#39;transcoded&#39;</span><span class="p">,</span> <span class="n">base_filename</span><span class="p">,</span> <span class="s1">&#39;.mp4&#39;</span><span class="p">),</span>
+          <span class="s1">&#39;PresetId&#39;</span><span class="p">:</span> <span class="s1">&#39;1351620000001-100110&#39;</span>
+          <span class="p">}</span>
+      <span class="p">]</span>
+  <span class="p">)</span>
+  <span class="k">return</span> <span class="n">output</span>
+
+
+<span class="k">def</span> <span class="nf">get_pipeline</span><span class="p">(</span><span class="n">transcoder</span><span class="p">,</span> <span class="n">pipeline_name</span><span class="p">):</span>
+      <span class="n">paginator</span> <span class="o">=</span> <span class="n">transcoder</span><span class="o">.</span><span class="n">get_paginator</span><span class="p">(</span><span class="s1">&#39;list_pipelines&#39;</span><span class="p">)</span>
+      <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">paginator</span><span class="o">.</span><span class="n">paginate</span><span class="p">():</span>
+          <span class="k">for</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="n">page</span><span class="p">[</span><span class="s1">&#39;Pipelines&#39;</span><span class="p">]:</span>
+              <span class="k">if</span> <span class="n">pipeline</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">pipeline_name</span><span class="p">:</span>
+                  <span class="k">return</span> <span class="n">pipeline</span><span class="p">[</span><span class="s1">&#39;Id&#39;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">create_aws_filename</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">extension</span><span class="p">):</span>
+      <span class="n">aws_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+          <span class="n">folder</span><span class="p">,</span> <span class="n">filename</span> <span class="o">+</span> <span class="n">extension</span>
+      <span class="p">)</span>
+      <span class="k">return</span> <span class="n">aws_filename</span>
+</pre></div>
+<p>It's code from my previous posts but modified in a few places so it can work in
+AWS Lambda. In this service, you can use python 2.7. The main function is called
+<tt class="docutils literal">lambda_handler</tt> and takes an event from S3 in form of JSON and context which is
+python object. As you can see creating <tt class="docutils literal">transcoder</tt> and <tt class="docutils literal">pipeline_id</tt> are the
+same as previously. <tt class="docutils literal">base_filename</tt> is taken from event JSON. Then I create
+transcode job and return its output.</p>
+<p>As you may noticed I specified a different folder for outputs than for inputs. Why?
+Because this function has trigger for put in <tt class="docutils literal">media</tt>. Then it starts transcoder jobs that are
+creating files on S3 bucket. If I specified the same location for output I can start recursion and
+AWS Lambda start triggering itself. It's not a good idea and doesn't try this at home unless you have
+a lot of money. That's why it is so important to test your code before you run it.
+It's possible - while saving your code you can add the event to test so your AWS Lambda
+the function will run against this test event:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="nt">&quot;Records&quot;</span><span class="p">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;eventVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;eventTime&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-12-15T21:20:44.231Z&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;requestParameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;sourceIPAddress&quot;</span><span class="p">:</span> <span class="s2">&quot;IP_ADDRESS&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;s3&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;configurationId&quot;</span><span class="p">:</span> <span class="s2">&quot;configurationId&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;object&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;eTag&quot;</span><span class="p">:</span> <span class="s2">&quot;eTag&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;sequencer&quot;</span><span class="p">:</span> <span class="s2">&quot;sequencer&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;media/5981d6e9-8e88-44a9-bd7b-f8dce886877b&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;size&quot;</span><span class="p">:</span> <span class="mi">571258</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;bucket&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;arn&quot;</span><span class="p">:</span> <span class="s2">&quot;arn:aws:s3:::YOUR_BUCKET_NAME&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;YOUR_BUCKET_NAME&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;ownerIdentity&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="nt">&quot;principalId&quot;</span><span class="p">:</span> <span class="s2">&quot;YOUR_BUCKET_ID&quot;</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;s3SchemaVersion&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;responseElements&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;x-amz-id-2&quot;</span><span class="p">:</span> <span class="s2">&quot;x-amz-id-2&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;x-amz-request-id&quot;</span><span class="p">:</span> <span class="s2">&quot;x-amz-request-id&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;awsRegion&quot;</span><span class="p">:</span> <span class="s2">&quot;eu-west-1&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;eventName&quot;</span><span class="p">:</span> <span class="s2">&quot;ObjectCreated:Put&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;userIdentity&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;principalId&quot;</span><span class="p">:</span> <span class="s2">&quot;AWS:USER_ID&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;eventSource&quot;</span><span class="p">:</span> <span class="s2">&quot;aws:s3&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+<p>Right now clicking test you can know if your function is behaving correctly:</p>
+<img alt="AWS Lambda test function result" src="/images/aws_lambda2.png" />
+<p>That's all! Your function is working and creating transcode jobs.
+This is another way of accomplishing the same result -
+transcoding the files uploaded from Django. If you have any questions don't
+hesitate to comment!</p>
+<p>It's the last blog post in this year - Merry Christmas and Happy New Year!</p>
+<p>Special thanks to Kasia for being an editor for this post. Thank you.</p>
+</div>
+<div class="section" id="other-blog-posts-in-this-series">
+<h2><a class="toc-backref" href="#id3">Other blog posts in this series</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-one.html">Transcoding with AWS- part one</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2016/transcoding-aws-part-two.html">Transcoding with AWS- part two</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-four.html">Transcoding with AWS- part four</a></li>
+<li><a class="reference external" href="https://krzysztofzuraw.com/blog/2017/transcoding-aws-part-five.html">Transcoding with AWS- part five</a></li>
+</ul>
+<p>Cover image by <a class="reference external" href="http://www.flickr.com/people/25691430&#64;N04">Harald Hoyer</a> under <a class="reference external" href="http://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a>, via Wikimedia Commons</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/aws.html">aws</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>

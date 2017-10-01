@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Krzysztof Żuraw">
+
+
+        <title>Makefiles in python projects</title>
+
+            <link href="https://krzysztofzuraw.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Full Atom Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="Krzysztof Żuraw RSS Feed" />
+            <link href="https://krzysztofzuraw.com/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Krzysztof Żuraw Categories Atom Feed" />
+        <!-- Bootstrap Core CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="https://krzysztofzuraw.com/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="https://krzysztofzuraw.com/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="Do you need such thing as makefile in python projects?">
+
+        <meta name="author" content="Krzysztof Żuraw">
+
+        <meta name="tags" content="python">
+
+	                <meta property="og:locale" content="en_US.utf8">
+		<meta property="og:site_name" content="Krzysztof Żuraw">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="Krzysztof Żuraw" >
+	<meta property="og:url" content="https://krzysztofzuraw.com/blog/2016/makefiles-in-python-projects.html">
+	<meta property="og:title" content="Makefiles in python projects">
+	<meta property="article:published_time" content="2016-09-03 10:00:00+02:00">
+            <meta property="og:description" content="Do you need such thing as makefile in python projects?">
+
+            <meta property="og:image" content="https://krzysztofzuraw.com//images/covers/python.png">
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:image" content="/images/covers/python.png">
+        <meta name="twitter:site" content="@krzysztof_zuraw" />
+        <meta name="twitter:title" content="Makefiles in python projects" />
+            <meta name="twitter:description" content="Do you need such thing as makefile in python projects?" />
+            <meta name="twitter:image" content="https://krzysztofzuraw.com//images/covers/python.png">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="https://krzysztofzuraw.com/">Krzysztof Żuraw</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+
+                        <li><a href="/pages/about.html">About</a></li>
+                        <li><a href="/archives.html">Archive</a></li>
+                        <li><a href="/tags.html">Tags</a></li>
+                        <li><a href="http://feeds.feedburner.com/krzysztofzuraw">RSS Feed</a></li>
+                        <li><a href="https://feedburner.google.com/fb/a/mailverify?uri=krzysztofzuraw&amp;loc=en_US">Email Updates</a></li>
+
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/images/covers/python.png')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 >Makefiles in python projects</h1>
+                            <h3 class="subheading" >Do you need such thing as makefile in python projects?</h3>
+                        <span class="meta">Posted on Sat 03 September 2016
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <!-- TOC -->
+
+    <article>
+        <p><strong>When I join my current company I saw in their git repos strange file. It wasn't
+used by any python code. It just sits in the main directory of the project. I asked my
+colleagues what is this file for? They told me- to make your life easier. That's
+why today I write about this file- Makefile.</strong></p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#what-is-makefile-and-what-is-it-typical-use" id="id1">What is makefile and what is it typical use</a></li>
+<li><a class="reference internal" href="#what-specific-to-python-you-can-put-in-makefile" id="id2">What specific to python you can put in makefile</a></li>
+<li><a class="reference internal" href="#what-benefit-you-can-have-by-using-makefile-in-python-projects" id="id3">What benefit you can have by using makefile in python projects</a></li>
+</ul>
+</div>
+<div class="section" id="what-is-makefile-and-what-is-it-typical-use">
+<h2><a class="toc-backref" href="#id1">What is makefile and what is it typical use</a></h2>
+<p>From this <a class="reference external" href="http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/">tutorial</a>:</p>
+<blockquote>
+Makefiles are a simple way to organize code compilation.</blockquote>
+<p>Typically they are used in writing C programs to ease all stuff that needs to be
+done before code can be used as a program. You can specify rules to tell
+<a class="reference external" href="https://www.gnu.org/software/make/">make</a> how to compile your programs. Simple
+makefile for C code can be as follows:</p>
+<div class="highlight"><pre><span></span><span class="nf">helloword</span><span class="o">:</span> <span class="n">helloword</span>.<span class="n">c</span>
+    gcc -o hellword hellword.c -I.
+</pre></div>
+<p>Then running:</p>
+<div class="highlight"><pre><span></span>$ make helloword
+</pre></div>
+<p>you compile C code using gcc.</p>
+<p>How is this even connected with python? This programming language is compiled itself
+while invoked so it doesn't need any makefiles to work. As I said in the beginning in
+python projects you can ease your life and save a lot of keystrokes using makefile.</p>
+</div>
+<div class="section" id="what-specific-to-python-you-can-put-in-makefile">
+<h2><a class="toc-backref" href="#id2">What specific to python you can put in makefile</a></h2>
+<p>Have you ever wanted to clean up <tt class="docutils literal">.pyc</tt> files from your project or remove artifacts
+after building python packages? Or maybe you want to run tests with coverage? Use
+pep8, lint or isort? Maybe run the application in docker container and end up writing commands
+that are too long for your screen?</p>
+<p>This is where makefile comes. You can have everything kept in one place and use only <tt class="docutils literal">make clean</tt>
+to clean up unnecessary files or <tt class="docutils literal">make tests</tt> to test your application.</p>
+<p>Let start with some examples from makefile that I am using:</p>
+<div class="highlight"><pre><span></span><span class="nv">HOST</span><span class="o">=</span><span class="m">127</span>.0.0.1
+<span class="nv">TEST_PATH</span><span class="o">=</span>./
+
+<span class="nf">clean-pyc</span><span class="o">:</span>
+    find . -name <span class="s1">&#39;*.pyc&#39;</span> -exec rm --force <span class="o">{}</span> +
+    find . -name <span class="s1">&#39;*.pyo&#39;</span> -exec rm --force <span class="o">{}</span> +
+    find . -name <span class="s1">&#39;*~&#39;</span> -exec rm --force  <span class="o">{}</span> +
+
+<span class="nf">clean-build</span><span class="o">:</span>
+    rm --force --recursive build/
+    rm --force --recursive dist/
+    rm --force --recursive *.egg-info
+
+<span class="nf">isort</span><span class="o">:</span>
+    sh -c <span class="s2">&quot;isort --skip-glob=.tox --recursive . &quot;</span>
+
+<span class="nf">lint</span><span class="o">:</span>
+    flake8 --exclude<span class="o">=</span>.tox
+
+<span class="nf">test</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">pyc</span>
+    py.test --verbose --color<span class="o">=</span>yes <span class="k">$(</span>TEST_PATH<span class="k">)</span>
+
+<span class="nf">run</span><span class="o">:</span>
+    python manage.py runserver
+
+<span class="nf">docker-run</span><span class="o">:</span>
+    docker build <span class="se">\</span>
+      --file<span class="o">=</span>./Dockerfile <span class="se">\</span>
+      --tag<span class="o">=</span>my_project ./
+    docker run <span class="se">\</span>
+      --detach<span class="o">=</span><span class="nb">false</span> <span class="se">\</span>
+      --name<span class="o">=</span>my_project <span class="se">\</span>
+      --publish<span class="o">=</span><span class="k">$(</span>HOST<span class="k">)</span>:8080 <span class="se">\</span>
+      my_project
+</pre></div>
+<p>At the beginning, I add two variables <tt class="docutils literal">HOST</tt> and <tt class="docutils literal">TEST_PATH</tt> for every command
+to use them. Rule <tt class="docutils literal"><span class="pre">clean-pyc</span></tt> finds all files that end with <tt class="docutils literal">*.pyc</tt>, <tt class="docutils literal">*.pyo</tt> or <tt class="docutils literal">*~</tt>
+and delete them. The plus sign at the end of the command is for <tt class="docutils literal"><span class="pre">-exec</span> command {}</tt> which
+means that the total number of invocations  of the command will be much less than the
+number of matched files.</p>
+<p>Next one <tt class="docutils literal"><span class="pre">clean-build</span></tt> is for removing build artifacts. In <tt class="docutils literal">isort</tt> shell is executing
+isort command with proper attributes, <tt class="docutils literal"><span class="pre">-c</span></tt> flag is for reading commands from a string rather
+than from standard input. <tt class="docutils literal">lint</tt> and <tt class="docutils literal">run</tt> works on the same pattern. In <tt class="docutils literal">test</tt> I added the
+additional rule to execute before actual tests- <tt class="docutils literal"><span class="pre">clean-pyc</span></tt>. Last <tt class="docutils literal"><span class="pre">docker-run</span></tt>
+rule builds and runs docker.</p>
+<p>Additional things that you want to add is something called <tt class="docutils literal">PHONY</tt>. By default, makefile operates
+on files so if there will be a file called <tt class="docutils literal"><span class="pre">clean-pyc</span></tt> it will try to use it instead of a command. To
+avoid this use <tt class="docutils literal">PHONY</tt> at the beginning of your makefile:</p>
+<div class="highlight"><pre><span></span><span class="nf">.PHONY</span><span class="o">:</span> <span class="n">clean</span>-<span class="n">pyc</span> <span class="n">clean</span>-<span class="n">build</span>
+</pre></div>
+<p>I also like to have help function for my makefile so I put this somewhere inside:</p>
+<div class="highlight"><pre><span></span><span class="nf">help</span><span class="o">:</span>
+    @echo <span class="s2">&quot;    clean-pyc&quot;</span>
+    @echo <span class="s2">&quot;        Remove python artifacts.&quot;</span>
+    @echo <span class="s2">&quot;    clean-build&quot;</span>
+    @echo <span class="s2">&quot;        Remove build artifacts.&quot;</span>
+    @echo <span class="s2">&quot;    isort&quot;</span>
+    @echo <span class="s2">&quot;        Sort import statements.&quot;</span>
+    @echo <span class="s2">&quot;    lint&quot;</span>
+    @echo <span class="s2">&quot;        Check style with flake8.&quot;</span>
+    @echo <span class="s2">&quot;    test&quot;</span>
+    @echo <span class="s2">&quot;        Run py.test&quot;</span>
+    @echo <span class="s1">&#39;    run&#39;</span>
+    @echo <span class="s1">&#39;        Run the `my_project` service on your local machine.&#39;</span>
+    @echo <span class="s1">&#39;    docker-run&#39;</span>
+    @echo <span class="s1">&#39;        Build and run the `my_project` service in a Docker container.&#39;</span>
+</pre></div>
+<p>There is <tt class="docutils literal">&#64;</tt> before each <tt class="docutils literal">echo</tt> because by default <tt class="docutils literal">make</tt> prints every line to the
+console before it's executed. <tt class="docutils literal">At</tt> sign is to suppress this and <tt class="docutils literal">&#64;</tt> is discarded
+before line is passed to the shell.</p>
+<p>But what if I wanted to run my application on different host and port using makefile?
+It's simple just add:</p>
+<div class="highlight"><pre><span></span><span class="nf">run</span><span class="o">:</span>
+    python manage.py runserver --host <span class="k">$(</span>HOST<span class="k">)</span> --port <span class="k">$(</span>PORT<span class="k">)</span>
+</pre></div>
+<p>Then you can simply run:</p>
+<div class="highlight"><pre><span></span>$ make run <span class="nv">HOST</span><span class="o">=</span><span class="m">127</span>.0.0.1 <span class="nv">PORT</span><span class="o">=</span><span class="m">8000</span>
+</pre></div>
+<p>Lastly be aware that indentation in makefile has to be made using TAB, not spaces.</p>
+</div>
+<div class="section" id="what-benefit-you-can-have-by-using-makefile-in-python-projects">
+<h2><a class="toc-backref" href="#id3">What benefit you can have by using makefile in python projects</a></h2>
+<p>As you can see using makefile in python projects can bring many good things. If you
+are tired of writing complicated shell commands- put them under a rule in the makefile.
+Want other people easily run tests against your project? Put pytest calls in makefile.
+Ideas are endless.</p>
+<p>Do you use makefile in your project? Do you find it usefull or maybe
+not? What else you put inside? Please write it in comments!</p>
+<p>Cover image by <a class="reference external" href="https://pixabay.com/pl/users/JohnsonMartin-724525/">JohnsonMartin</a> under <a class="reference external" href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.</p>
+</div>
+
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="https://krzysztofzuraw.com/tag/python.html">python</a>, </p>
+        </div>
+        <p>If you find this blog post interesting please share:</p>
+        <div class="addthis_sharing_toolbox"></div>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57a7802d9a259bbe"></script>
+
+        <div class="comments">
+            <h2>Comments !</h2>
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                var disqus_shortname = 'krzysztofzuraw';
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//krzysztofzuraw.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://twitter.com/krzysztof_zuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="mailto:krzysztof.zuraw@gmail.com">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://pl.linkedin.com/in/krzysztofzuraw">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>.
+    This site use cookies for disqus and google analitics.
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://krzysztofzuraw.com/theme/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://krzysztofzuraw.com/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="https://krzysztofzuraw.com/theme/js/clean-blog.min.js"></script>
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-72188452-2']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+<script type="text/javascript">
+    var disqus_shortname = 'krzysztofzuraw';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+</body>
+
+</html>
